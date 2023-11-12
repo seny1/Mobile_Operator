@@ -43,6 +43,15 @@ ALTER TABLE Client
     ADD PRIMARY KEY (client_id);
 
 
+CREATE TABLE Role
+(
+    role_id SERIAL NOT NULL,
+    role_name VARCHAR(255),
+    description VARCHAR(255)
+);
+
+ALTER TABLE Role
+    ADD PRIMARY KEY (role_id);
 
 CREATE TABLE Client_Contact
 (
@@ -325,6 +334,9 @@ ALTER TABLE "Check"
 ALTER TABLE Client
     ADD FOREIGN KEY (passport_id) REFERENCES Client_Passport (passport_id);
 
+
+ALTER TABLE Employee
+    ADD FOREIGN KEY (role_id) REFERENCES Role (role_id);
 
 
 ALTER TABLE Client

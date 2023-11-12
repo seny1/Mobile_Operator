@@ -1,11 +1,11 @@
-package org.elSasen.entities;
+package org.elSasen.dto;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
-public class Employee {
+public class EmployeeDto {
     long employeeId;
     long departmentId;
     long salonId;
