@@ -1,13 +1,15 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 @Data
+@Builder
 public class Department {
     long departmentId;
     String departmentName;
-    Time start_time;
-    Time end_time;
+    LocalTime startTime;
+    LocalTime endTime;
 }

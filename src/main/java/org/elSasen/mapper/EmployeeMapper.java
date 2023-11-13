@@ -10,16 +10,16 @@ public class EmployeeMapper implements Mapper<Employee, EmployeeDto>{
     public EmployeeDto mapFrom(Employee employee) {
         return EmployeeDto.builder()
                 .employeeId(employee.getEmployeeId())
-                .departmentId(employee.getDepartmentId())
-                .salonId(employee.getSalonId())
+                .department(employee.getDepartment())
+                .salon(employee.getSalon())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
-                .postId(employee.getPostId())
-                .passportId(employee.getPassportId())
-                .contactId(employee.getContactId())
+                .post(employee.getPost())
+                .passport(employee.getPassport())
+                .contact(employee.getContact())
                 .login(employee.getLogin())
                 .password(employee.getPassword())
-                .roleId(employee.getRoleId())
+                .role(employee.getRole())
                 .build();
     }
 

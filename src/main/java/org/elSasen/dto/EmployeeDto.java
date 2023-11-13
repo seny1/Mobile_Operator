@@ -2,19 +2,20 @@ package org.elSasen.dto;
 
 import lombok.Builder;
 import lombok.Value;
+import org.elSasen.entities.*;
 
 @Value
 @Builder
 public class EmployeeDto {
     long employeeId;
-    long departmentId;
-    long salonId;
+    Department department;
+    CommunicationSalon salon;
     String firstName;
     String lastName;
-    long postId;
-    long passportId;
-    int contactId;
+    Post post;
+    EmployeePassport passport;
+    EmployeeContact contact;
     String login;
     String password;
-    long roleId;
+    Role role;
 }
