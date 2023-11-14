@@ -5,6 +5,7 @@
 </head>
 <body>
 <%@include file="headerJSP.jsp"%>
+<%@include file="leftMenu.jsp"%>
     <span>Hello!</span>
 </body>
 </html>

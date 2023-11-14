@@ -22,7 +22,7 @@ public class EmployeeDao {
                          JOIN public.employee_contact ec on ec.contact_id = employee.contact_id
                          JOIN public.employee_passport ep on employee.passport_id = ep.passport_id
                          JOIN public.post p on employee.post_id = p.post_id
-                         JOIN public.role r on employee.role_id = r.role_id
+                         JOIN public.role r on employee.role = r.role_id
                 WHERE login = ? AND password = ?;
                                 
                 """;

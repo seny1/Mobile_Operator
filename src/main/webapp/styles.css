@@ -63,7 +63,13 @@ button:disabled {
     background-color: #ced3de;
     margin: 0;
 }
-
+.buttons-on-left {
+    justify-content: left;
+}
+.buttons-in-menu{
+    display: block;
+    margin: 0 50px 0 50px;
+}
 .info-container {
     display: inline-block;
 }
