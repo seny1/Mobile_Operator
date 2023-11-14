@@ -5,7 +5,7 @@
 </head>
 <div>
     <div class="buttons-on-right">
-        <form method="get" action="${pageContext.request.contextPath}/success" class="buttons-in-main-menu">
+        <form method="get" action="${pageContext.request.contextPath}/main" class="buttons-in-main-menu">
             <c:if test="${not empty sessionScope.user}">
                 <div class="buttons-in-main-menu">
                     <button type="submit">Главная</button>

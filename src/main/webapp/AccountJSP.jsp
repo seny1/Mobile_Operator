@@ -5,8 +5,8 @@
 </head>
 <body>
 <%@include file="headerJSP.jsp"%>
-    <div>
-        <div class="background-righter" style="height: 300px; width: 100px"></div>
+    <div class="account-main">
+        <div class="background-righter"></div>
         <div class="info-container">
             <h1>Основная информация</h1>
             <div>Имя: <span>${sessionScope.user.firstName}</span></div>

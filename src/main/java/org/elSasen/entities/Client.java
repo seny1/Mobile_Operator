@@ -1,12 +1,14 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Client {
     long clientId;
-    long passportId;
+    ClientPassport passport;
     String firstName;
     String lastName;
-    long contactId;
+    ClientContact contact;
 }

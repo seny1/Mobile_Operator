@@ -1,10 +1,12 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class ClientContact {
-    long contact_id;
+    long contactId;
     String number;
     String type;
 }

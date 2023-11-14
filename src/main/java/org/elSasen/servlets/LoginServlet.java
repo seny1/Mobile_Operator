@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
     private void successLogin(EmployeeDto employeeDto, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", employeeDto);
         try {
-            resp.sendRedirect("/success");
+            resp.sendRedirect("/main");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

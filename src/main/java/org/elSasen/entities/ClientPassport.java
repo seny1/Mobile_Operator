@@ -3,7 +3,7 @@ package org.elSasen.entities;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Data
@@ -12,5 +12,5 @@ public class ClientPassport {
     long passportId;
     String series;
     String number;
-    Date birthday;
+    LocalDate birthday;
 }

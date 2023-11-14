@@ -3,11 +3,13 @@
 <head>
     <link rel="stylesheet" href="styles.css">
 </head>
-<div>
+<div class="scroll-bar-wrap">
     <div class="buttons-on-left">
+        <form method="get" action="${pageContext.request.contextPath}/clientTable">
             <div class="buttons-in-menu">
-                <button>Табл1</button>
+                <button>Клиенты</button>
             </div>
+        </form>
             <div class="buttons-in-menu">
                 <button>Табл2</button>
             </div>
@@ -66,5 +68,6 @@
                 <button>Табл20</button>
             </div>
     </div>
+    <div class="cover-bar"></div>
 </div>
 
