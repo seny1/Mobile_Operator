@@ -8,7 +8,7 @@
         <form method="get" action="${pageContext.request.contextPath}/main" class="buttons-in-main-menu">
             <c:if test="${not empty sessionScope.user}">
                 <div class="buttons-in-main-menu">
-                    <button type="submit">Главная</button>
+                    <button class="button1" type="submit">Главная</button>
                 </div>
             </c:if>
         </form>

@@ -15,7 +15,7 @@ body {
     display: flex;
 }
 
-button {
+.button1 {
     display: inline-block;
     box-sizing: border-box;
     padding: 0 25px;
@@ -38,18 +38,18 @@ button {
     vertical-align: top;
     transition: box-shadow 0.2s;
 }
-button:focus-visible {
+.button1:focus-visible {
     border: 1px solid #4c51f9;
     outline: none;
 }
-button:hover {
+.button1:hover {
     transition: all 0.2s;
     box-shadow: 0 7px 14px rgb(65 132 144 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
 }
-button:active {
+.button1:active {
     background-color: #808080;
 }
-button:disabled {
+.button1:disabled {
     background-color: #eee;
     border-color: #eee;
     color: #444;
@@ -65,14 +65,10 @@ button:disabled {
 .buttons-on-right {
     justify-content: center;
     display: flex;
-    background-color: #ced3de;
+    background-color: #b5e6eb;
     margin: 0;
 }
 
-.buttons-in-menu{
-    display: block;
-    margin: 0 50px 0 50px;
-}
 .info-container {
     display: table-cell;
 }
@@ -111,6 +107,7 @@ button:disabled {
 .scroll-bar-wrap {
     flex: 0 0 220px;
     display: inline-block;
+    background-color: azure;
 }
 .buttons-on-left {
     width: 100%;
@@ -194,4 +191,29 @@ button:disabled {
 
 .tables-container {
     flex: auto;
+}
+
+
+.buttons-in-menu button {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 4px;
+    color: #555555;
+    display:block;
+    width:120px;
+    font-size: 14px;
+    text-align:center;
+    height: 20px;
+    line-height: 20px;
+    margin: 20px auto 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+    text-decoration:none;
+}
+.buttons-in-menu button:hover, .buttons-in-menu button:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
 }

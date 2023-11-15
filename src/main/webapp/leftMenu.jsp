@@ -7,12 +7,14 @@
     <div class="buttons-on-left">
         <form method="get" action="${pageContext.request.contextPath}/clientTable">
             <div class="buttons-in-menu">
-                <button>Клиенты</button>
+                <button class="button-in-menu">Клиенты</button>
             </div>
         </form>
+        <form method="get" action="${pageContext.request.contextPath}/callTable">
             <div class="buttons-in-menu">
-                <button>Табл2</button>
+                <button>Звонки</button>
             </div>
+        </form>
             <div class="buttons-in-menu">
                 <button>Табл3</button>
             </div>
