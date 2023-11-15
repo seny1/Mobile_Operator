@@ -16,8 +16,8 @@ public class CallService {
 
     private final CallMapper callMapper = CallMapper.getInstance();
     public Set<CallDto> getCallTable() {
-        var clientTable = callDao.getCallTable();
-        return clientTable.stream()
+        var callTable = callDao.getCallTable();
+        return callTable.stream()
                 .map(callMapper::mapFrom)
                 .collect(Collectors.toSet());
     }

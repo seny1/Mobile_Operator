@@ -15,21 +15,31 @@
                 <button>Звонки</button>
             </div>
         </form>
+        <form method="get" action="${pageContext.request.contextPath}/checkTable">
             <div class="buttons-in-menu">
-                <button>Табл3</button>
+                <button>Чеки</button>
             </div>
-             <div class="buttons-in-menu">
-                <button>Табл4</button>
-            </div>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientContactTable">
             <div class="buttons-in-menu">
-                <button>Табл5</button>
+                <button>Номера клиентов</button>
             </div>
-             <div class="buttons-in-menu">
-                <button>Табл6</button>
-            </div>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientDeviceTable">
             <div class="buttons-in-menu">
-                <button>Табл7</button>
+                <button>Устройства клиентов</button>
             </div>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientPassportTable">
+            <div class="buttons-in-menu">
+                <button>Паспорта клиентов</button>
+            </div>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/communicationSalonTable">
+            <div class="buttons-in-menu">
+                <button>Салоны связи</button>
+            </div>
+        </form>
             <div class="buttons-in-menu">
                 <button>Табл8</button>
             </div>
