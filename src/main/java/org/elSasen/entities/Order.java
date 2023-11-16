@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Order {
-    long serviceId;
+    ExtraService service;
     Employee employee;
     Client client;
     long orderId;

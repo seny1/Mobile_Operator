@@ -1,13 +1,12 @@
 package org.elSasen.dto;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
 @Builder
 @Value
 public class TariffPlanDto {
-    int planId;
+    long planId;
     String planName;
     int callMinutes;
     int internetGb;

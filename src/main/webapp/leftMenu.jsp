@@ -38,6 +38,36 @@
         <form method="get" action="${pageContext.request.contextPath}/employeeContactTable">
             <button class="button_scroll">Контакты сотрудников</button>
         </form>
+        <form method="get" action="${pageContext.request.contextPath}/employeePassportTable">
+            <button class="button_scroll">Паспорта сотрудников</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/extraServiceTable">
+            <button class="button_scroll">Услуги</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/orderTable">
+            <button class="button_scroll">Заказы</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/postTable">
+            <button class="button_scroll">Должности</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/productTable">
+            <button class="button_scroll">Продукты</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/productCategoryTable">
+            <button class="button_scroll">Категории продуктов</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/roleTable">
+            <button class="button_scroll">Роли</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/serviceCategoryTable">
+            <button class="button_scroll">Категории услуг</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/statusTable">
+            <button class="button_scroll">Статусы работы</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/tariffPlanTable">
+            <button class="button_scroll">Тарифные планы</button>
+        </form>
     </div>
     <div class="cover-bar"></div>
 </div>

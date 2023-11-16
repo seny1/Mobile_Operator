@@ -37,7 +37,7 @@ public class ProductCategoryDao {
     public List<String> getMetaData() {
         String sql = """
                 SELECT *
-                FROM product
+                FROM product_category;
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
