@@ -1,13 +1,15 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
+@Builder
 public class Contract {
     long contractId;
-    long planId;
-    long clientId;
-    Date date;
+    TariffPlan plan;
+    Client client;
+    LocalDate date;
 }

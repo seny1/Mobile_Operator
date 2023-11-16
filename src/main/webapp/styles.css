@@ -9,6 +9,7 @@
 body {
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
     font-size: 15px;
+    overflow: hidden;
 }
 
 .content {
@@ -102,17 +103,19 @@ body {
     table-layout: fixed;
     width: 100%;
     margin-top: 25px;
+    margin-left: 50px;
 }
 
 .scroll-bar-wrap {
     flex: 0 0 220px;
     display: inline-block;
     background-color: azure;
+    height: 89vh;
 }
 .buttons-on-left {
     width: 100%;
     overflow-y: scroll;
-    max-height: 500px;
+    max-height: 100%;
     display: inline-block;
 }
 .buttons-on-left::-webkit-scrollbar {
@@ -164,10 +167,10 @@ body {
     border-right: 1px solid #ddd;
 }
 .table1 thead tr th:first-child {
-    border-radius: 20px 0 0 0;
+    border-radius: 0px 0 0 0;
 }
 .table1 thead tr th:last-child {
-    border-radius: 0 20px 0 0;
+    border-radius: 0 0px 0 0;
 }
 .table1 tbody td {
     text-align: left;
@@ -183,37 +186,117 @@ body {
     border-bottom: 1px solid #ddd;
 }
 .table1 tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 20px;
+    border-radius: 0 0 0 0px;
 }
 .table1 tbody tr:last-child td:last-child {
-    border-radius: 0 0 20px 0;
+    border-radius: 0 0 0px 0;
 }
 
 .tables-container {
     flex: auto;
+    height: 80vh;
 }
 
+.button_scroll{
+    background-color: azure;
+    width: 200px;
+    height: 50px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.button_scroll:hover{
+    background-color: #82afaf;
+    border: none;
+}
 
-.buttons-in-menu button {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-    border-radius: 4px;
-    color: #555555;
-    display:block;
-    width:120px;
+.login_fon{
+    background-color: #c9ffff;
+    height: 500px;
+    width: 300px;
+    border-radius: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-form{
+    margin: 15px 40px;
+    text-align: center;
+}
+.input-form input{
+    padding: 10px;
+    width: 100%;
+    font-size: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: 2px #444444;
+}
+
+.input_button{
+    text-align: center;
+    padding: 10px;
+    width: 80%;
+    font-size: 20px;
+    box-sizing: border-box;
+    margin: 15px 30px;
+    border-radius: 10px;
+    outline: 2px #444444;
+}
+.login_text{
+    margin: 30px 100px;
+    padding: 0;
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.scroll-table-body {
+    height: 33vh;
+    overflow-x: auto;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: none;
+}
+.scroll-table table {
+    width:100%;
+    table-layout: fixed;
+    border: none;
+}
+.scroll-table thead th {
+    font-weight: bold;
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    background: #d8d8d8;
     font-size: 14px;
-    text-align:center;
-    height: 20px;
-    line-height: 20px;
-    margin: 20px auto 10px;
-    padding: 4px 6px;
-    vertical-align: middle;
-    text-decoration:none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
 }
-.buttons-in-menu button:hover, .buttons-in-menu button:focus {
-    border-color: rgba(82, 168, 236, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
-    outline: 0 none;
+.scroll-table tbody td {
+    text-align: left;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+}
+.scroll-table tbody tr:nth-child(even){
+    background: #f3f3f3;
+}
+
+/* Стили для скролла */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }

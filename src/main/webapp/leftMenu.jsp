@@ -6,69 +6,38 @@
 <div class="scroll-bar-wrap">
     <div class="buttons-on-left">
         <form method="get" action="${pageContext.request.contextPath}/clientTable">
-            <div class="buttons-in-menu">
-                <button class="button-in-menu">Клиенты</button>
-            </div>
+            <button class="button_scroll">Клиенты</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/callTable">
-            <div class="buttons-in-menu">
-                <button>Звонки</button>
-            </div>
+            <button class="button_scroll">Звонки</button>
         </form>
-            <div class="buttons-in-menu">
-                <button>Табл3</button>
-            </div>
-             <div class="buttons-in-menu">
-                <button>Табл4</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл5</button>
-            </div>
-             <div class="buttons-in-menu">
-                <button>Табл6</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл7</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл8</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл9</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл10</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл11</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл12</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл13</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл14</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл15</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл16</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл17</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл18</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл19</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл20</button>
-            </div>
+        <form method="get" action="${pageContext.request.contextPath}/checkTable">
+            <button class="button_scroll">Чеки</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientContactTable">
+            <button class="button_scroll">Номера клиентов</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientDeviceTable">
+            <button class="button_scroll">Устройства клиентов</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/clientPassportTable">
+            <button class="button_scroll">Паспорта клиентов</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/communicationSalonTable">
+            <button class="button_scroll">Салоны связи</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/contractTable">
+            <button class="button_scroll">Контракты</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/departmentTable">
+            <button class="button_scroll">Департаменты</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/employeeTable">
+            <button class="button_scroll">Сотрудники</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/employeeContactTable">
+            <button class="button_scroll">Контакты сотрудников</button>
+        </form>
     </div>
     <div class="cover-bar"></div>
 </div>

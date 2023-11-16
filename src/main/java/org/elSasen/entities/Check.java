@@ -1,11 +1,13 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Check {
-    long productId;
+    Product product;
     int productCount;
-    long CheckId;
-    long clientId;
+    long checkId;
+    Client client;
 }

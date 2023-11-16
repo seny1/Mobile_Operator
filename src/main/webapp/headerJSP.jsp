@@ -15,14 +15,14 @@
         <form method="get" action="${pageContext.request.contextPath}/account" class="buttons-in-main-menu">
             <c:if test="${not empty sessionScope.user}">
                 <div class="buttons-in-main-menu">
-                    <button type="submit">Личный кабинет</button>
+                    <button class="button1" type="submit">Личный кабинет</button>
                 </div>
             </c:if>
         </form>
         <form method="post" action="${pageContext.request.contextPath}/logout" class="buttons-in-main-menu">
             <c:if test="${not empty sessionScope.user}">
                 <div class="buttons-in-main-menu">
-                    <button type="submit">Выйти</button>
+                    <button class="button1" type="submit">Выйти</button>
                 </div>
             </c:if>
         </form>
