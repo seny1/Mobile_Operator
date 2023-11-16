@@ -1,0 +1,30 @@
+package org.elSasen.service;
+
+import org.elSasen.dao.ProductCategoryDao;
+import org.elSasen.dto.ProductCategoryDto;
+import org.elSasen.mapper.ProductCategoryMapper;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class ProductCategoryService {
+    private static final ProductCategoryService INSTANCE = new ProductCategoryService();
+    private final ProductCategoryDao productCategoryDao = ProductCategoryDao.getInstance();
+    private final ProductCategoryMapper productCategoryMapper = ProductCategoryMapper.getInstance();
+
+    public Set<ProductCategoryDto> getProductCategoryTable() {
+        var productCategoryTable = productCategoryDao.getProductCategoryTable();
+        return productCategoryTable.stream()
+                .map(productCategoryMapper::mapFrom)
+                .collect(Collectors.toSet());
+    }
+
+    public List<String> getColumnsOfProductCategory() {
+        return productCategoryDao.getMetaData();
+    }
+
+    public static ProductCategoryService getInstance() {
+        return INSTANCE;
+    }
+}
