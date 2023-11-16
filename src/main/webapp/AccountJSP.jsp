@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Личный кабинет</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <%@include file="headerJSP.jsp"%>

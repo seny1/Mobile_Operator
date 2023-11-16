@@ -1,14 +1,16 @@
 package org.elSasen.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Order {
     long serviceId;
-    long employeeId;
-    long clientId;
+    Employee employee;
+    Client client;
     long orderId;
-    int statusId;
-    int deviceId;
+    Status status;
+    ClientDevice device;
     String comment;
 }

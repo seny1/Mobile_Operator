@@ -6,79 +6,26 @@
 <div class="scroll-bar-wrap">
     <div class="buttons-on-left">
         <form method="get" action="${pageContext.request.contextPath}/clientTable">
-            <div class="buttons-in-menu">
-                <button class="button-in-menu">Клиенты</button>
-            </div>
+            <button class="button_scroll">Клиенты</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/callTable">
-            <div class="buttons-in-menu">
-                <button>Звонки</button>
-            </div>
+            <button class="button_scroll">Звонки</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/checkTable">
-            <div class="buttons-in-menu">
-                <button>Чеки</button>
-            </div>
+            <button class="button_scroll">Чеки</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/clientContactTable">
-            <div class="buttons-in-menu">
-                <button>Номера клиентов</button>
-            </div>
+            <button class="button_scroll">Номера клиентов</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/clientDeviceTable">
-            <div class="buttons-in-menu">
-                <button>Устройства клиентов</button>
-            </div>
+            <button class="button_scroll">Устройства клиентов</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/clientPassportTable">
-            <div class="buttons-in-menu">
-                <button>Паспорта клиентов</button>
-            </div>
+            <button class="button_scroll">Паспорта клиентов</button>
         </form>
         <form method="get" action="${pageContext.request.contextPath}/communicationSalonTable">
-            <div class="buttons-in-menu">
-                <button>Салоны связи</button>
-            </div>
+            <button class="button_scroll">Салоны связи</button>
         </form>
-            <div class="buttons-in-menu">
-                <button>Табл8</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл9</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл10</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл11</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл12</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл13</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл14</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл15</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл16</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл17</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл18</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл19</button>
-            </div>
-            <div class="buttons-in-menu">
-                <button>Табл20</button>
-            </div>
     </div>
     <div class="cover-bar"></div>
 </div>
