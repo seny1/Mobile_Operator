@@ -3,7 +3,7 @@ package org.elSasen.entities;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -11,5 +11,5 @@ public class Contract {
     long contractId;
     TariffPlan plan;
     Client client;
-    Date date;
+    LocalDate date;
 }

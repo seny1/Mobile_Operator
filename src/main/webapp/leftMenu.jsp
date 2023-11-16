@@ -26,6 +26,18 @@
         <form method="get" action="${pageContext.request.contextPath}/communicationSalonTable">
             <button class="button_scroll">Салоны связи</button>
         </form>
+        <form method="get" action="${pageContext.request.contextPath}/contractTable">
+            <button class="button_scroll">Контракты</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/departmentTable">
+            <button class="button_scroll">Департаменты</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/employeeTable">
+            <button class="button_scroll">Сотрудники</button>
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/employeeContactTable">
+            <button class="button_scroll">Контакты сотрудников</button>
+        </form>
     </div>
     <div class="cover-bar"></div>
 </div>
