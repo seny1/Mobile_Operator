@@ -5,7 +5,6 @@ import org.elSasen.dto.ClientDto;
 import org.elSasen.mapper.ClientMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientService {
@@ -14,11 +13,11 @@ public class ClientService {
     private final ClientDao clientDao = ClientDao.getInstance();
     private final ClientMapper clientMapper = ClientMapper.getInstance();
 
-    public Set<ClientDto> getClientTable() {
-        var clientTable = clientDao.getClientTable();
+    public List<ClientDto> getClientTable(String orderBy) {
+        var clientTable = clientDao.getClientTable(orderBy);
         return clientTable.stream()
                 .map(clientMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfClient() {

@@ -13,7 +13,12 @@ public class ClientDao {
 
     private static final ClientDao INSTANCE = new ClientDao();
 
-    public Set<Client> getClientTable() {
+    private final String DEFAULT_ORDER_BY = "client_id";
+
+    public List<Client> getClientTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
                 SELECT client_id,
                        cp.passport_id,
@@ -27,13 +32,14 @@ public class ClientDao {
                        type
                 FROM client
                 JOIN public.client_passport cp on cp.passport_id = client.passport_id
-                JOIN public.client_contact cc on client.contact_id = cc.contact_id;
-                """;
+                JOIN public.client_contact cc on client.contact_id = cc.contact_id
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             Client client;
-            var clientSet = new HashSet<Client>();
+            var clientSet = new ArrayList<Client>();
             while (resultSet.next()) {
                 client = Client.builder()
                         .clientId(resultSet.getLong("client_id"))
@@ -80,6 +86,17 @@ public class ClientDao {
             throw new RuntimeException(e);
         }
     }
+
+//    public List<Client> orderBy(String nameOfColumn) {
+//        String sql = """
+//                SELECT *
+//                FROM client
+//                JOIN public.client_passport cp on cp.passport_id = client.passport_id
+//                JOIN public.client_contact cc on client.contact_id = cc.contact_id
+//                ORDER BY
+//                """ + nameOfColumn;
+//        ConnectionManager.get();
+//    }
 
     public static ClientDao getInstance() {
         return INSTANCE;

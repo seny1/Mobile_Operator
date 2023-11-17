@@ -16,7 +16,7 @@ public class ClientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("clientTable", clientService.getClientTable());
+        req.setAttribute("clientTable", clientService.getClientTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", clientService.getColumnsOfClient());
         req.getRequestDispatcher("leftMainMenu/ClientJSP.jsp").forward(req, resp);
     }
