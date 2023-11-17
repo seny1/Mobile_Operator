@@ -41,6 +41,16 @@
                 </tbody>
             </table>
         </div>
+        <div class="dropdown">
+            <button class="dropbtn">Сортировать по</button>
+            <div class="dropdown-content">
+                <div class="scroll-table-body">
+                    <c:forEach var="column" items="${requestScope.columnNames}">
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=${column}">${column}</a>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

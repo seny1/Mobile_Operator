@@ -16,7 +16,7 @@ public class DepartmentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("departmentTable", departmentService.getDepartmentTable());
+        req.setAttribute("departmentTable", departmentService.getDepartmentTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", departmentService.getColumnsNamesOfDepartment());
         req.getRequestDispatcher("leftMainMenu/DepartmentJSP.jsp").forward(req, resp);
     }

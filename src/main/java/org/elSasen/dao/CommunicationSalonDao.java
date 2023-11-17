@@ -5,33 +5,36 @@ import org.elSasen.util.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CommunicationSalonDao {
 
     private static final CommunicationSalonDao INSTANCE = new CommunicationSalonDao();
+    private final String DEFAULT_ORDER_BY = "salon_id";
 
-    public Set<CommunicationSalon> getCommunicationTable() {
+    public List<CommunicationSalon> getCommunicationTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
                 SELECT *
-                FROM communication_salon;
-                """;
+                FROM communication_salon
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             CommunicationSalon communicationSalon;
-            var communicationSalonSet = new HashSet<CommunicationSalon>();
+            var communicationSalonList = new ArrayList<CommunicationSalon>();
             while (resultSet.next()) {
                 communicationSalon = CommunicationSalon.builder()
                         .salonId(resultSet.getLong("salon_id"))
                         .address(resultSet.getString("address"))
                         .employeeNumber(resultSet.getInt("employee_number"))
                         .build();
-                communicationSalonSet.add(communicationSalon);
+                communicationSalonList.add(communicationSalon);
             }
-            return communicationSalonSet;
+            return communicationSalonList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

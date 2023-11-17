@@ -15,7 +15,7 @@ public class ContractServlet extends HttpServlet {
     private final ContractService contractService = ContractService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("contractTable", contractService.getContractTable());
+        req.setAttribute("contractTable", contractService.getContractTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", contractService.getColumnsOfContract());
         req.getRequestDispatcher("/leftMainMenu/ContractJSP.jsp").forward(req, resp);
     }

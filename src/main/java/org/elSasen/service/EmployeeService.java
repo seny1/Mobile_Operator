@@ -6,7 +6,6 @@ import org.elSasen.mapper.EmployeeMapper;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EmployeeService {
@@ -19,10 +18,10 @@ public class EmployeeService {
                 .map(employeeMapper::mapFrom);
     }
 
-    public Set<EmployeeDto> getEmployeeTable() {
-        return employeeDao.getEmployeeTable().stream()
+    public List<EmployeeDto> getEmployeeTable(String orderBy) {
+        return employeeDao.getEmployeeTable(orderBy).stream()
                 .map(employeeMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfEmployee() {

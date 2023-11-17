@@ -15,7 +15,7 @@ public class CommunicationSalonServlet extends HttpServlet {
     private final CommunicationSalonService communicationSalonService = CommunicationSalonService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("communicationSalonTable", communicationSalonService.getClientCommunicationSalonTable());
+        req.setAttribute("communicationSalonTable", communicationSalonService.getClientCommunicationSalonTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", communicationSalonService.getColumnsOfCommunicationSalon());
         req.getRequestDispatcher("leftMainMenu/CommunicationSalonJSP.jsp").forward(req, resp);
     }

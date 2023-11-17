@@ -20,20 +20,28 @@
             </tr>
             </thead>
         </table>
-    <div class="scroll-table-body">
-        <table class="table1">
-            <tbody>
-            <c:forEach var="clientContact" items="${requestScope.clientContactTable}">
-                <tr>
-                    <td>${clientContact.contactId}</td>
-                    <td>${clientContact.number}</td>
-                    <td>${clientContact.type}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+        <div class="scroll-table-body">
+            <table class="table1">
+                <tbody>
+                <c:forEach var="clientContact" items="${requestScope.clientContactTable}">
+                    <tr>
+                        <td>${clientContact.contactId}</td>
+                        <td>${clientContact.number}</td>
+                        <td>${clientContact.type}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Сортировать по</button>
+            <div class="dropdown-content">
+                <c:forEach var="column" items="${requestScope.columnNames}">
+                    <a href="${pageContext.request.contextPath}/clientContactTable?orderBy=${column}">${column}</a>
+                </c:forEach>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 </body>
 </html>

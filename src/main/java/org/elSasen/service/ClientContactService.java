@@ -6,7 +6,6 @@ import org.elSasen.dto.ClientContactDto;
 import org.elSasen.mapper.ClientContactMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientContactService {
@@ -15,11 +14,11 @@ public class ClientContactService {
     private final ClientContactDao clientContactDao = ClientContactDao.getInstance();
     private final ClientContactMapper clientContactMapper = ClientContactMapper.getInstance();
 
-    public Set<ClientContactDto> getClientContactTable() {
-        var clientContactTable = clientContactDao.getClientContactTable();
+    public List<ClientContactDto> getClientContactTable(String orderBy) {
+        var clientContactTable = clientContactDao.getClientContactTable(orderBy);
         return clientContactTable.stream()
                 .map(clientContactMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfClientContact() {

@@ -5,7 +5,6 @@ import org.elSasen.dto.CallDto;
 import org.elSasen.mapper.CallMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CallService {
@@ -15,11 +14,11 @@ public class CallService {
     private final CallDao callDao = CallDao.getInstance();
 
     private final CallMapper callMapper = CallMapper.getInstance();
-    public Set<CallDto> getCallTable() {
-        var callTable = callDao.getCallTable();
+    public List<CallDto> getCallTable(String orderBy) {
+        var callTable = callDao.getCallTable(orderBy);
         return callTable.stream()
                 .map(callMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfCall() {

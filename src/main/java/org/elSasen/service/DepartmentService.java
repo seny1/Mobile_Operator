@@ -5,7 +5,6 @@ import org.elSasen.dto.DepartmentDto;
 import org.elSasen.mapper.DepartmentMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DepartmentService {
@@ -13,11 +12,11 @@ public class DepartmentService {
     private static final DepartmentService INSTANCE = new DepartmentService();
     private final DepartmentDao departmentDao = DepartmentDao.getInstance();
     private final DepartmentMapper departmentMapper = DepartmentMapper.getInstance();
-    public Set<DepartmentDto> getDepartmentTable() {
-        var departmentTable = departmentDao.getDepartmentTable();
+    public List<DepartmentDto> getDepartmentTable(String orderBy) {
+        var departmentTable = departmentDao.getDepartmentTable(orderBy);
         return departmentTable.stream()
                 .map(departmentMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsNamesOfDepartment() {

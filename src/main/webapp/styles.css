@@ -314,6 +314,7 @@ body {
 .dropdown {
     position: relative;
     display: inline-block;
+    width: 150px;
 }
 
 /* Выпадающее содержимое (скрыто по умолчанию) */

@@ -13,6 +13,7 @@ import java.util.*;
 public class EmployeeDao {
 
     private static final EmployeeDao INSTANCE = new EmployeeDao();
+    private final String DEFAULT_ORDER_BY = "employee_id";
 
     public Optional<Employee> findByLoginAndPassword(String login, String password) {
         String sql = """
@@ -42,27 +43,57 @@ public class EmployeeDao {
         }
     }
 
-    public Set<Employee> getEmployeeTable() {
+    public List<Employee> getEmployeeTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT employee_id,
+                       d.department_id,
+                       d.department_name,
+                       d.start_time,
+                       d.end_time,
+                       cs.salon_id,
+                       cs.address,
+                       cs.employee_number,
+                       first_name,
+                       last_name,
+                       p.post_id,
+                       p.post_name,
+                       p.post_description,
+                       ep.passport_id,
+                       ep.series,
+                       ep.number,
+                       ep.birthday,
+                       ep.issue_date,
+                       ep.place_code,
+                       ec.contact_id,
+                       ec.work_number,
+                       ec.personal_number,
+                       login,
+                       password,
+                       r.role_id,
+                       r.role_name,
+                       r.description
                 FROM employee
                          JOIN public.department d on d.department_id = employee.department_id
                          JOIN public.communication_salon cs on cs.salon_id = employee.salon_id
                          JOIN public.employee_contact ec on ec.contact_id = employee.contact_id
                          JOIN public.employee_passport ep on employee.passport_id = ep.passport_id
                          JOIN public.post p on employee.post_id = p.post_id
-                         JOIN public.role r on employee.role_id = r.role_id;
-                """;
+                         JOIN public.role r on employee.role_id = r.role_id
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             Employee employee;
-            var employeeSet = new HashSet<Employee>();
+            var employeeList = new ArrayList<Employee>();
             while (resultSet.next()) {
                 employee = buildEmployee(resultSet);
-                employeeSet.add(employee);
+                employeeList.add(employee);
             }
-            return employeeSet;
+            return employeeList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
