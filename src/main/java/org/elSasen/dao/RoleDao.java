@@ -10,15 +10,22 @@ import java.util.Set;
 
 public class RoleDao {
     private static final RoleDao INSTANCE = new RoleDao();
-    public Set<Role> getRoleTable() {
+    private final String DEFAULT_ORDER_BY = "role_id";
+    public List<Role> getRoleTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT role_id,
+                role_name,
+                description
                 FROM role
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var roleSet = new HashSet<Role>();
+            var roleList = new ArrayList<Role>();
             Role role;
             while (resultSet.next()) {
                 role = Role.builder()
@@ -26,16 +33,18 @@ public class RoleDao {
                         .roleName(resultSet.getString("role_name"))
                         .description(resultSet.getString("description"))
                         .build();
-                roleSet.add(role);
+                roleList.add(role);
             }
-            return roleSet;
+            return roleList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT role_id,
+                role_name,
+                description
                 FROM role
                 """;
         try (var connection = ConnectionManager.get();

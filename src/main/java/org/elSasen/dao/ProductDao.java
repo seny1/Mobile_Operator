@@ -13,16 +13,29 @@ import java.util.Set;
 
 public class ProductDao {
     private static final ProductDao INSTANCE = new ProductDao();
-    public Set<Product> getProductTable() {
+    private final String DEFAULT_ORDER_BY = "product_id";
+    public List<Product> getProductTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT product_id,
+                price,
+                product_description,
+                product_name,
+                product.category_id,
+                count,
+                product_category.category_id,
+                product_category.name,
+                product_category.description
                 FROM product
                 JOIN product_category on product.category_id = product_category.category_id
-                """;
+                ORDER BY product.
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var productSet = new HashSet<Product>();
+            var productList = new ArrayList<Product>();
             Product product;
             while (resultSet.next()) {
                 product = Product.builder()
@@ -37,16 +50,21 @@ public class ProductDao {
                                 .build())
                         .count(resultSet.getInt("count"))
                         .build();
-                productSet.add(product);
+                productList.add(product);
             }
-            return productSet;
+            return productList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT product_id,
+                price,
+                product_description,
+                product_name,
+                category_id,
+                count
                 FROM product
                 """;
         try (var connection = ConnectionManager.get();

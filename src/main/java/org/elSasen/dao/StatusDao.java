@@ -11,15 +11,22 @@ import java.util.Set;
 
 public class StatusDao {
     private static final StatusDao INSTANCE = new StatusDao();
-    public Set<Status> getStatusTable() {
+    private final String DEFAULT_ORDER_BY = "status_id";
+    public List<Status> getStatusTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT status_id,
+                name,
+                description
                 FROM status
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var statusSet = new HashSet<Status>();
+            var statusList = new ArrayList<Status>();
             Status status;
             while (resultSet.next()) {
                 status = Status.builder()
@@ -27,16 +34,18 @@ public class StatusDao {
                         .name(resultSet.getString("name"))
                         .description(resultSet.getString("description"))
                         .build();
-                statusSet.add(status);
+                statusList.add(status);
             }
-            return statusSet;
+            return statusList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT status_id,
+                name,
+                description
                 FROM status
                 """;
         try (var connection = ConnectionManager.get();

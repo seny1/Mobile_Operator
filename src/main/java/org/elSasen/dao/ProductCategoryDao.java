@@ -11,15 +11,22 @@ import java.util.Set;
 
 public class ProductCategoryDao {
     private static final ProductCategoryDao INSTANCE = new ProductCategoryDao();
-    public Set<ProductCategory> getProductCategoryTable() {
+    private final String DEFAULT_ORDER_BY = "category_id";
+    public List<ProductCategory> getProductCategoryTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT category_id,
+                name,
+                description
                 FROM product_category
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var productCategorySet = new HashSet<ProductCategory>();
+            var productCategoryList = new ArrayList<ProductCategory>();
             ProductCategory productCategory;
             while (resultSet.next()) {
                 productCategory = ProductCategory.builder()
@@ -27,17 +34,19 @@ public class ProductCategoryDao {
                         .name(resultSet.getString("name"))
                         .description(resultSet.getString("description"))
                         .build();
-                productCategorySet.add(productCategory);
+                productCategoryList.add(productCategory);
             }
-            return productCategorySet;
+            return productCategoryList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
-                FROM product_category;
+                SELECT category_id,
+                name,
+                description
+                FROM product_category
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {

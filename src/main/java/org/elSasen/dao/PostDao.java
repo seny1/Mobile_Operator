@@ -13,15 +13,22 @@ import java.util.Set;
 
 public class PostDao {
     private static final PostDao INSTANCE = new PostDao();
-    public Set<Post> getPostTable() {
+    private final String DEFAULT_ORDER_BY = "post_id";
+    public List<Post> getPostTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT post_id,
+                post_name,
+                post_description
                 FROM post
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var postSet = new HashSet<Post>();
+            var postList = new ArrayList<Post>();
             Post post;
             while (resultSet.next()) {
                 post = Post.builder()
@@ -29,16 +36,18 @@ public class PostDao {
                         .postName(resultSet.getString("post_name"))
                         .postDescription(resultSet.getString("post_description"))
                         .build();
-                postSet.add(post);
+                postList.add(post);
             }
-            return postSet;
+            return postList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT post_id,
+                post_name,
+                post_description
                 FROM post
                 """;
         try (var connection = ConnectionManager.get();

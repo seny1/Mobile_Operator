@@ -12,35 +12,51 @@ import java.util.Set;
 
 public class EmployeePassportDao {
     private static final EmployeePassportDao INSTANCE = new EmployeePassportDao();
-    public Set<EmployeePassport> getEmployeePassportTable() {
+    private final String DEFAULT_ORDER_BY = "passport_id";
+
+    public List<EmployeePassport> getEmployeePassportTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT passport_id,
+                series,
+                number,
+                birthday,
+                issue_date,
+                place_code
                 FROM employee_passport
-                """;
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var employeePassportSet = new HashSet<EmployeePassport>();
             EmployeePassport employeePassport;
+            var employeePassportList = new ArrayList<EmployeePassport>();
             while (resultSet.next()) {
                 employeePassport = EmployeePassport.builder()
-                        .passportId(resultSet.getLong("passport_id"))
+                        .passportId(resultSet.getInt("passport_id"))
                         .series(resultSet.getString("series"))
                         .number(resultSet.getString("number"))
                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                         .issueDate(resultSet.getObject("issue_date", LocalDate.class))
                         .placeCode(resultSet.getString("place_code"))
                         .build();
-                employeePassportSet.add(employeePassport);
+                employeePassportList.add(employeePassport);
             }
-            return employeePassportSet;
+            return employeePassportList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT passport_id,
+                series,
+                number,
+                birthday,
+                issue_date,
+                place_code
                 FROM employee_passport
                 """;
         try (var connection = ConnectionManager.get();

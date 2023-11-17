@@ -13,11 +13,11 @@ public class TariffPlanService {
     private final TariffPlanDao tariffPlanDao = TariffPlanDao.getInstance();
     private final TariffPlanMapper tariffPlanMapper = TariffPlanMapper.getInstance();
 
-    public Set<TariffPlanDto> getTariffPlanTable() {
-        var tariffPlanTable = tariffPlanDao.getTariffPlanTable();
+    public List<TariffPlanDto> getTariffPlanTable(String orderBy) {
+        var tariffPlanTable = tariffPlanDao.getTariffPlanTable(orderBy);
         return tariffPlanTable.stream()
                 .map(tariffPlanMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfTariffPlan() {

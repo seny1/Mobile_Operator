@@ -16,7 +16,7 @@ public class ProductCategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("productCategoryTable", productCategoryService.getProductCategoryTable());
+        req.setAttribute("productCategoryTable", productCategoryService.getProductCategoryTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", productCategoryService.getColumnsOfProductCategory());
         req.getRequestDispatcher("leftMainMenu/ProductCategoryJSP.jsp").forward(req, resp);
     }

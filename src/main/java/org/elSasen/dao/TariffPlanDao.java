@@ -11,15 +11,25 @@ import java.util.Set;
 
 public class TariffPlanDao {
     private static final TariffPlanDao INSTANCE = new TariffPlanDao();
-    public Set<TariffPlan> getTariffPlanTable() {
+    private final String DEFAULT_ORDER_BY = "plan_id";
+    public List<TariffPlan> getTariffPlanTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT plan_id,
+                plan_name,
+                call_minutes,
+                internet_gb,
+                sms_number,
+                price
                 FROM tariff_plan
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var tariffPlanSet = new HashSet<TariffPlan>();
+            var tariffPlanList = new ArrayList<TariffPlan>();
             TariffPlan tariffPlan;
             while (resultSet.next()) {
                 tariffPlan = TariffPlan.builder()
@@ -30,16 +40,21 @@ public class TariffPlanDao {
                         .smsNumber(resultSet.getInt("sms_number"))
                         .price(resultSet.getInt("price"))
                         .build();
-                tariffPlanSet.add(tariffPlan);
+                tariffPlanList.add(tariffPlan);
             }
-            return tariffPlanSet;
+            return tariffPlanList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT plan_id,
+                plan_name,
+                call_minutes,
+                internet_gb,
+                sms_number,
+                price
                 FROM tariff_plan
                 """;
         try (var connection = ConnectionManager.get();

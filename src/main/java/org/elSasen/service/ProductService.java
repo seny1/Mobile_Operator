@@ -13,11 +13,11 @@ public class ProductService {
     private final ProductDao productDao = ProductDao.getInstance();
     private final ProductMapper productMapper = ProductMapper.getInstance();
 
-    public Set<ProductDto> getProductTable() {
-        var productTable = productDao.getProductTable();
+    public List<ProductDto> getProductTable(String orderBy) {
+        var productTable = productDao.getProductTable(orderBy);
         return productTable.stream()
                 .map(productMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfProduct() {

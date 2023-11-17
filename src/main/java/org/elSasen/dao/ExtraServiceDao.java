@@ -14,16 +14,28 @@ import java.util.Set;
 
 public class ExtraServiceDao {
     private static final ExtraServiceDao INSTANCE = new ExtraServiceDao();
-    public Set<ExtraService> getExtraServiceTable() {
+    private final String DEFAULT_ORDER_BY = "service_id";
+    public List<ExtraService> getExtraServiceTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT service_id,
+                service_description,
+                price,
+                service_name,
+                service_category.category_id,
+                service_category.name,
+                service_category.difficulty,
+                service_category.description
                 FROM extra_service
-                JOIN service_category on extra_service.category_id = service_category.category_id;
-                """;
+                JOIN service_category on extra_service.category_id = service_category.category_id
+                order by
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var extraServiceSet = new HashSet<ExtraService>();
+            var extraServiceList = new ArrayList<ExtraService>();
             ExtraService extraService;
             while (resultSet.next()) {
                 extraService = ExtraService.builder()
@@ -38,16 +50,20 @@ public class ExtraServiceDao {
                                 .description(resultSet.getString("description"))
                                 .build())
                         .build();
-                extraServiceSet.add(extraService);
+                extraServiceList.add(extraService);
             }
-            return extraServiceSet;
+            return extraServiceList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT service_id,
+                service_description,
+                price,
+                service_name,
+                category_id
                 FROM extra_service
                 """;
         try (var connection = ConnectionManager.get();

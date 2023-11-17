@@ -17,11 +17,11 @@ public class EmployeePassportService {
     private final EmployeePassportDao employeePassportDao = EmployeePassportDao.getInstance();
 
     private final EmployeePassportMapper employeePassportMapper = EmployeePassportMapper.getInstance();
-    public Set<EmployeePassportDto> getEmployeePassportTable() {
-        var clientTable = employeePassportDao.getEmployeePassportTable();
-        return clientTable.stream()
+    public List<EmployeePassportDto> getEmployeePassportTable(String orderBy) {
+        var employeePassportTable = employeePassportDao.getEmployeePassportTable(orderBy);
+        return employeePassportTable.stream()
                 .map(employeePassportMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfEmployeePassport() {

@@ -15,7 +15,7 @@ public class EmployeePassportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("employeePassportTable", employeePassportService.getEmployeePassportTable());
+        req.setAttribute("employeePassportTable", employeePassportService.getEmployeePassportTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", employeePassportService.getColumnsOfEmployeePassport());
         req.getRequestDispatcher("leftMainMenu/EmployeePassportJSP.jsp").forward(req, resp);
     }

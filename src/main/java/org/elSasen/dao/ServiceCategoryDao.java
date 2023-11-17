@@ -11,15 +11,23 @@ import java.util.Set;
 
 public class ServiceCategoryDao {
     private static final ServiceCategoryDao INSTANCE = new ServiceCategoryDao();
-    public Set<ServiceCategory> getServiceCategoryTable() {
+    private final String DEFAULT_ORDER_BY = "category_id";
+    public List<ServiceCategory> getServiceCategoryTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT category_id,
+                name,
+                difficulty,
+                description
                 FROM service_category
-                """;
+                ORDER BY 
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var serviceCategorySet = new HashSet<ServiceCategory>();
+            var serviceCategoryList = new ArrayList<ServiceCategory>();
             ServiceCategory serviceCategory;
             while (resultSet.next()) {
                 serviceCategory = ServiceCategory.builder()
@@ -28,16 +36,19 @@ public class ServiceCategoryDao {
                         .difficulty(resultSet.getString("difficulty"))
                         .description(resultSet.getString("description"))
                         .build();
-                serviceCategorySet.add(serviceCategory);
+                serviceCategoryList.add(serviceCategory);
             }
-            return serviceCategorySet;
+            return serviceCategoryList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT category_id,
+                name,
+                difficulty,
+                description
                 FROM service_category
                 """;
         try (var connection = ConnectionManager.get();

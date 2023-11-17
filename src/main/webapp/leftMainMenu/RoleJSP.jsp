@@ -32,6 +32,14 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <div class="dropdown">
+                <button class="dropbtn">Сортировать по</button>
+                <div class="dropdown-content">
+                    <c:forEach var="column" items="${requestScope.columnNames}">
+                        <a href="${pageContext.request.contextPath}/roleTable?orderBy=${column}">${column}</a>
+                    </c:forEach>
+                </div>
+            </div>
         </div>
     </div>
 </div>

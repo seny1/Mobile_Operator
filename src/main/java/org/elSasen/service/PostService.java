@@ -16,11 +16,11 @@ public class PostService {
     private final PostDao postDao = PostDao.getInstance();
     private final PostMapper postMapper = PostMapper.getInstance();
 
-    public Set<PostDto> getPostTable() {
-        var postTable = postDao.getPostTable();
+    public List<PostDto> getPostTable(String orderBy) {
+        var postTable = postDao.getPostTable(orderBy);
         return postTable.stream()
                 .map(postMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfPost() {

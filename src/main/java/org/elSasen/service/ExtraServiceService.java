@@ -13,11 +13,11 @@ public class ExtraServiceService {
     private final ExtraServiceDao extraServiceDao = ExtraServiceDao.getInstance();
     private final ExtraServiceMapper extraServiceMapper = ExtraServiceMapper.getInstance();
 
-    public Set<ExtraServiceDto> getExtraServiceTable() {
-        var extraServiceTable = extraServiceDao.getExtraServiceTable();
+    public List<ExtraServiceDto> getExtraServiceTable(String orderBy) {
+        var extraServiceTable = extraServiceDao.getExtraServiceTable(orderBy);
         return extraServiceTable.stream()
                 .map(extraServiceMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfExtraService() {

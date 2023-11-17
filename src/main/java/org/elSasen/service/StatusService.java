@@ -12,11 +12,11 @@ public class StatusService {
     private final StatusDao statusDao = StatusDao.getInstance();
     private final StatusMapper statusMapper = StatusMapper.getInstance();
 
-    public Set<StatusDto> getStatusTable() {
-        var statusTable = statusDao.getStatusTable();
+    public List<StatusDto> getStatusTable(String orderBy) {
+        var statusTable = statusDao.getStatusTable(orderBy);
         return statusTable.stream()
                 .map(statusMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfStatus() {

@@ -15,7 +15,7 @@ public class PostServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("postTable", postService.getPostTable());
+        req.setAttribute("postTable", postService.getPostTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", postService.getColumnsOfPost());
         req.getRequestDispatcher("leftMainMenu/PostJSP.jsp").forward(req, resp);
     }

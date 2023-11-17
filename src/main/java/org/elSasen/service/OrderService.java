@@ -13,11 +13,11 @@ public class OrderService {
     private final OrderDao orderDao = OrderDao.getInstance();
     private final OrderMapper orderMapper = OrderMapper.getInstance();
 
-    public Set<OrderDto> getOrderTable() {
-        var orderTable = orderDao.getOrderTable();
+    public List<OrderDto> getOrderTable(String orderBy) {
+        var orderTable = orderDao.getOrderTable(orderBy);
         return orderTable.stream()
                 .map(orderMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfOrder() {

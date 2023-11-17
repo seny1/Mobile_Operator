@@ -15,7 +15,7 @@ public class RoleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("roleTable", roleService.getRoleTable());
+        req.setAttribute("roleTable", roleService.getRoleTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", roleService.getColumnsOfRole());
         req.getRequestDispatcher("leftMainMenu/RoleJSP.jsp").forward(req, resp);
     }

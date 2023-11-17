@@ -15,7 +15,7 @@ public class ExtraServiceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("extraServiceTable", extraServiceService.getExtraServiceTable());
+        req.setAttribute("extraServiceTable", extraServiceService.getExtraServiceTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", extraServiceService.getColumnsOfExtraService());
         req.getRequestDispatcher("leftMainMenu/ExtraServiceJSP.jsp").forward(req, resp);
     }

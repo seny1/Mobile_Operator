@@ -13,11 +13,11 @@ public class RoleService {
     private final RoleDao roleDao = RoleDao.getInstance();
     private final RoleMapper roleMapper = RoleMapper.getInstance();
 
-    public Set<RoleDto> getRoleTable() {
-        var roleTable = roleDao.getRoleTable();
+    public List<RoleDto> getRoleTable(String orderBy) {
+        var roleTable = roleDao.getRoleTable(orderBy);
         return roleTable.stream()
                 .map(roleMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfRole() {

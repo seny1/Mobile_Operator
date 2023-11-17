@@ -16,11 +16,11 @@ public class ServiceCategoryService {
     private final ServiceCategoryDao serviceCategoryDao = ServiceCategoryDao.getInstance();
     private final ServiceCategoryMapper serviceCategoryMapper = ServiceCategoryMapper.getInstance();
 
-    public Set<ServiceCategoryDto> getServiceCategoryTable() {
-        var serviceCategoryTable = serviceCategoryDao.getServiceCategoryTable();
+    public List<ServiceCategoryDto> getServiceCategoryTable(String orderBy) {
+        var serviceCategoryTable = serviceCategoryDao.getServiceCategoryTable(orderBy);
         return serviceCategoryTable.stream()
                 .map(serviceCategoryMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfServiceCategory() {

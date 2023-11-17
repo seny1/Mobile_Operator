@@ -16,7 +16,7 @@ public class TariffPlanServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("tariffPlanTable", tariffPlanService.getTariffPlanTable());
+        req.setAttribute("tariffPlanTable", tariffPlanService.getTariffPlanTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", tariffPlanService.getColumnsOfTariffPlan());
         req.getRequestDispatcher("leftMainMenu/TariffPlanJSP.jsp").forward(req, resp);
     }

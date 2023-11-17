@@ -13,28 +13,96 @@ import java.util.Set;
 
 public class OrderDao {
     private static final OrderDao INSTANCE = new OrderDao();
-    public Set<Order> getOrderTable() {
+    private final String DEFAULT_ORDER_BY = "order_id";
+    public List<Order> getOrderTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT "Order".service_id,
+                "Order".employee_id,
+                "Order".client_id,
+                "Order".order_id,
+                "Order".status_id,
+                "Order".device_id,
+                "Order".comment,
+                es.service_id,
+                es.service_description,
+                es.price,
+                es.service_name,
+                es.category_id,
+                e.employee_id,
+                e.department_id,
+                e.salon_id,
+                e.first_name,
+                e.last_name,
+                e.post_id,
+                e.passport_id,
+                e.contact_id,
+                e.login,
+                e.role_id,
+                e.password,
+                c.client_id,
+                c.passport_id,
+                c.first_name,
+                c.last_name,
+                c.contact_id,
+                c.remain_minutes,
+                s.status_id,
+                s.name,
+                s.description,
+                cd.device_id,
+                cd.model,
+                cd.client_problem,
+                sc.category_id,
+                sc.name,
+                sc.difficulty,
+                sc.description,
+                d.department_id,
+                d.department_name,
+                d.start_time,
+                d.end_time,
+                cs.salon_id,
+                cs.address,
+                cs.employee_number,
+                p.post_id,
+                p.post_name,
+                p.post_description,
+                ep.passport_id,
+                ep.series,
+                ep.number,
+                ep.birthday,
+                ep.issue_date,
+                ep.place_code,
+                ec.contact_id,
+                ec.work_number,
+                ec.personal_number,
+                r.role_id,
+                r.role_name,
+                r.description,
+                cc.contact_id,
+                cc.number,
+                cc.type
                 FROM "Order"
-                JOIN extra_service on "Order".service_id = extra_service.service_id
-                join employee on "Order".employee_id = employee.employee_id
-                join client on "Order".client_id = client.client_id
-                join status on "Order".status_id = status.status_id
-                join client_device on "Order".device_id = client_device.device_id
-                join service_category on extra_service.category_id = service_category.category_id
-                join department on employee.department_id = department.department_id
-                join communication_salon on employee.salon_id = communication_salon.salon_id
-                join post on employee.post_id = post.post_id
-                join employee_passport on employee.passport_id = employee_passport.passport_id
-                join employee_contact on employee.contact_id = employee_contact.contact_id
-                join role on employee.role_id = role.role_id
-                join client_contact on client.contact_id = client_contact.contact_id
-                """;
+                JOIN extra_service as es on "Order".service_id = es.service_id
+                join employee as e on "Order".employee_id = e.employee_id
+                join client as c on "Order".client_id = c.client_id
+                join status as s on "Order".status_id = s.status_id
+                join client_device as cd on "Order".device_id = cd.device_id
+                join service_category as sc on es.category_id = sc.category_id
+                join department as d on e.department_id = d.department_id
+                join communication_salon as cs on e.salon_id = cs.salon_id
+                join post as p on e.post_id = p.post_id
+                join employee_passport as ep on e.passport_id = ep.passport_id
+                join employee_contact as ec on e.contact_id = ec.contact_id
+                join role as r on e.role_id = r.role_id
+                join client_contact as cc on c.contact_id = cc.contact_id
+                ORDER BY "Order".
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var orderSet = new HashSet<Order>();
+            var orderList = new ArrayList<Order>();
             Order order;
             while (resultSet.next()) {
                 order = Order.builder()
@@ -120,16 +188,22 @@ public class OrderDao {
                                 .build())
                         .comment(resultSet.getString("comment"))
                         .build();
-                orderSet.add(order);
+                orderList.add(order);
             }
-            return orderSet;
+            return orderList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public List<String> getMetaData() {
         String sql = """
-                SELECT *
+                SELECT "Order".service_id,
+                "Order".employee_id,
+                "Order".client_id,
+                "Order".order_id,
+                "Order".status_id,
+                "Order".device_id,
+                "Order".comment       
                 FROM "Order"
                 """;
         try (var connection = ConnectionManager.get();
