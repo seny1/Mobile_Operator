@@ -5,33 +5,38 @@ import org.elSasen.util.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.List;;
 
 public class ClientDeviceDao {
 
     private static final ClientDeviceDao INSTANCE = new ClientDeviceDao();
+    private final String DEFAULT_ORDER_BY = "device_id";
 
-    public Set<ClientDevice> getClientDeviceTable() {
+    public List<ClientDevice> getClientDeviceTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
-                FROM client_device;
-                """;
+                SELECT device_id,
+                       model,
+                       client_problem
+                FROM client_device
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             ClientDevice clientDevice;
-            var clientDeviceSet = new HashSet<ClientDevice>();
+            var clientDeviceList = new ArrayList<ClientDevice>();
             while (resultSet.next()) {
                 clientDevice = ClientDevice.builder()
                         .deviceId(resultSet.getInt("device_id"))
                         .model(resultSet.getString("model"))
                         .clientProblem(resultSet.getString("client_problem"))
                         .build();
-                clientDeviceSet.add(clientDevice);
+                clientDeviceList.add(clientDevice);
             }
-            return clientDeviceSet;
+            return clientDeviceList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

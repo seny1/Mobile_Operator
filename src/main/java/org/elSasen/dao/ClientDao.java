@@ -87,17 +87,6 @@ public class ClientDao {
         }
     }
 
-//    public List<Client> orderBy(String nameOfColumn) {
-//        String sql = """
-//                SELECT *
-//                FROM client
-//                JOIN public.client_passport cp on cp.passport_id = client.passport_id
-//                JOIN public.client_contact cc on client.contact_id = cc.contact_id
-//                ORDER BY
-//                """ + nameOfColumn;
-//        ConnectionManager.get();
-//    }
-
     public static ClientDao getInstance() {
         return INSTANCE;
     }

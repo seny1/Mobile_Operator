@@ -6,24 +6,30 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ClientPassportDao {
 
     private static final ClientPassportDao INSTANCE = new ClientPassportDao();
+    private final String DEFAULT_ORDER_BY = "passport_id";
 
-    public Set<ClientPassport> getClientPassportTable() {
+    public List<ClientPassport> getClientPassportTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
-                FROM client_passport;
-                """;
+                SELECT passport_id,
+                       series,
+                       number,
+                       birthday
+                FROM client_passport
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             ClientPassport clientPassport;
-            var clientPassportSet = new HashSet<ClientPassport>();
+            var clientPassportList = new ArrayList<ClientPassport>();
             while (resultSet.next()) {
                 clientPassport = ClientPassport.builder()
                         .passportId(resultSet.getLong("passport_id"))
@@ -31,9 +37,9 @@ public class ClientPassportDao {
                         .number(resultSet.getString("number"))
                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                         .build();
-                clientPassportSet.add(clientPassport);
+                clientPassportList.add(clientPassport);
             }
-            return clientPassportSet;
+            return clientPassportList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

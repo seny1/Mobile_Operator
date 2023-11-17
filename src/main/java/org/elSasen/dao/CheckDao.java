@@ -6,28 +6,50 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CheckDao {
 
     private static final CheckDao INSTANCE = new CheckDao();
+    private final String DEFAULT_ORDER_BY = "check_id";
 
-    public Set<Check> getCheckTable() {
+    public List<Check> getCheckTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT p.product_id,
+                       p.price,
+                       p.product_description,
+                       p.product_name,
+                       pc.category_id,
+                       pc.name,
+                       pc.description,
+                       p.count,
+                       product_count,
+                       check_id,
+                       c.client_id,
+                       cp.passport_id,
+                       cp.series,
+                       cp.number,
+                       cp.birthday,
+                       c.first_name,
+                       c.last_name,
+                       cc.contact_id,
+                       cc.number,
+                       cc.type
                 FROM "Check"
                 JOIN public.product p on "Check".product_id = p.product_id
                 JOIN public.client c on "Check".client_id = c.client_id
                 JOIN public.product_category pc on p.category_id = pc.category_id
                 JOIN public.client_passport cp on c.passport_id = cp.passport_id
-                JOIN public.client_contact cc on c.contact_id = cc.contact_id;
-                """;
+                JOIN public.client_contact cc on c.contact_id = cc.contact_id
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
-            var checkSet = new HashSet<Check>();
+            var checkSet = new ArrayList<Check>();
             Check check;
             while (resultSet.next()) {
                 check = Check.builder()

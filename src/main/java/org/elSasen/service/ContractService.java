@@ -5,7 +5,6 @@ import org.elSasen.dto.ContractDto;
 import org.elSasen.mapper.ContractMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ContractService {
@@ -14,11 +13,11 @@ public class ContractService {
     private final ContractDao contractDao = ContractDao.getInstance();
     private final ContractMapper contractMapper = ContractMapper.getInstance();
 
-    public Set<ContractDto> getContractTable() {
-        var contractTable = contractDao.getContractTable();
+    public List<ContractDto> getContractTable(String orderBy) {
+        var contractTable = contractDao.getContractTable(orderBy);
         return contractTable.stream()
                 .map(contractMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfContract() {

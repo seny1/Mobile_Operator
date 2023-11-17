@@ -6,28 +6,48 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContractDao {
 
     private static final ContractDao INSTANCE = new ContractDao();
+    private final String DEFAULT_ORDER_BY = "contract_id";
 
-    public Set<Contract> getContractTable() {
+    public List<Contract> getContractTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT contract_id,
+                       tp.plan_id,
+                       tp.plan_name,
+                       tp.call_minutes,
+                       tp.internet_gb,
+                       tp.sms_number,
+                       tp.price,
+                       c.client_id,
+                       cp.passport_id,
+                       cp.series,
+                       cp.number,
+                       cp.birthday,
+                       c.first_name,
+                       c.last_name,
+                       cc.contact_id,
+                       cc.number,
+                       cc.type,
+                       date
                 FROM contract
                 JOIN public.tariff_plan tp on contract.plan_id = tp.plan_id
                 JOIN public.client c on contract.client_id = c.client_id
                 JOIN public.client_passport cp on c.passport_id = cp.passport_id
-                JOIN public.client_contact cc on c.contact_id = cc.contact_id;
-                """;
+                JOIN public.client_contact cc on c.contact_id = cc.contact_id
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             Contract contract;
-            var contractSet = new HashSet<Contract>();
+            var contractList = new ArrayList<Contract>();
             while (resultSet.next()) {
                 contract = Contract.builder()
                         .contractId(resultSet.getLong("contract_id"))
@@ -57,9 +77,9 @@ public class ContractDao {
                                 .build())
                         .date(resultSet.getObject("date", LocalDate.class))
                         .build();
-                contractSet.add(contract);
+                contractList.add(contract);
             }
-            return contractSet;
+            return contractList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

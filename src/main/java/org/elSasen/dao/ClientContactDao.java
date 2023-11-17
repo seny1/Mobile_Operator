@@ -6,33 +6,38 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ClientContactDao {
 
     private static final ClientContactDao INSTANCE = new ClientContactDao();
+    private final String DEFAULT_ORDER_BY = "contact_id";
 
-    public Set<ClientContact> getClientContactTable() {
+    public List<ClientContact> getClientContactTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
-                FROM client_contact;
-                """;
+                SELECT contact_id,
+                       number,
+                       type
+                FROM client_contact
+                ORDER BY
+                """ + orderBy;
         try (Connection connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             ClientContact clientContact;
-            var clientContactSet = new HashSet<ClientContact>();
+            var clientContactList = new ArrayList<ClientContact>();
             while (resultSet.next()) {
                 clientContact = ClientContact.builder()
                         .contactId(resultSet.getLong("contact_id"))
                         .number(resultSet.getString("number"))
                         .type(resultSet.getString("type"))
                         .build();
-                clientContactSet.add(clientContact);
+                clientContactList.add(clientContact);
             }
-            return clientContactSet;
+            return clientContactList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

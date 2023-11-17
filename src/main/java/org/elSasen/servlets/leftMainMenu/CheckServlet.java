@@ -15,7 +15,7 @@ public class CheckServlet extends HttpServlet {
     private final CheckService checkService = CheckService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("checkTable", checkService.getCheckTable());
+        req.setAttribute("checkTable", checkService.getCheckTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", checkService.getColumnsOfCheck());
         req.getRequestDispatcher("leftMainMenu/CheckJSP.jsp").forward(req, resp);
     }

@@ -6,7 +6,6 @@ import org.elSasen.dto.EmployeeContactDto;
 import org.elSasen.mapper.EmployeeContactMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EmployeeContactService {
@@ -15,10 +14,10 @@ public class EmployeeContactService {
     private final EmployeeContactDao employeeContactDao = EmployeeContactDao.getInstance();
     private final EmployeeContactMapper employeeContactMapper = EmployeeContactMapper.getInstance();
 
-    public Set<EmployeeContactDto> getEmployeeContactTable() {
-        return employeeContactDao.getEmployeeContactTable().stream()
+    public List<EmployeeContactDto> getEmployeeContactTable(String orderBy) {
+        return employeeContactDao.getEmployeeContactTable(orderBy).stream()
                 .map(employeeContactMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfEmployeeContact() {

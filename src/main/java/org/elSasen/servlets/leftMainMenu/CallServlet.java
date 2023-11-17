@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.elSasen.service.CallService;
-import org.elSasen.service.ClientService;
 
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ public class CallServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("callTable", callService.getCallTable());
+        req.setAttribute("callTable", callService.getCallTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", callService.getColumnsOfCall());
         req.getRequestDispatcher("leftMainMenu/CallJSP.jsp").forward(req, resp);
     }

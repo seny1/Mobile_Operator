@@ -5,7 +5,6 @@ import org.elSasen.dto.ClientDeviceDto;
 import org.elSasen.mapper.ClientDeviceMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientDeviceService {
@@ -14,11 +13,11 @@ public class ClientDeviceService {
     private final ClientDeviceDao clientDeviceDao = ClientDeviceDao.getInstance();
     private final ClientDeviceMapper clientDeviceMapper = ClientDeviceMapper.getInstance();
 
-    public Set<ClientDeviceDto> getClientDeviceTable() {
-        var clientDeviceTable = clientDeviceDao.getClientDeviceTable();
+    public List<ClientDeviceDto> getClientDeviceTable(String orderBy) {
+        var clientDeviceTable = clientDeviceDao.getClientDeviceTable(orderBy);
         return clientDeviceTable.stream()
                 .map(clientDeviceMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfClientDevice() {

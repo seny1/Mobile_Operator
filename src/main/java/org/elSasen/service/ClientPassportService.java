@@ -5,7 +5,6 @@ import org.elSasen.dto.ClientPassportDto;
 import org.elSasen.mapper.ClientPassportMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientPassportService {
@@ -16,11 +15,11 @@ public class ClientPassportService {
 
     private final ClientPassportMapper clientPassportMapper = ClientPassportMapper.getInstance();
 
-    public Set<ClientPassportDto> getClientContactTable() {
-        var clientPassportTable = clientPassportDao.getClientPassportTable();
+    public List<ClientPassportDto> getClientContactTable(String orderBy) {
+        var clientPassportTable = clientPassportDao.getClientPassportTable(orderBy);
         return clientPassportTable.stream()
                 .map(clientPassportMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfClientPassport() {

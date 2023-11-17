@@ -15,7 +15,7 @@ public class ClientContactServlet extends HttpServlet {
     private final ClientContactService clientContactService = ClientContactService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("clientContactTable", clientContactService.getClientContactTable());
+        req.setAttribute("clientContactTable", clientContactService.getClientContactTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", clientContactService.getColumnsOfClientContact());
         req.getRequestDispatcher("/leftMainMenu/ClientContactJSP.jsp").forward(req, resp);
     }

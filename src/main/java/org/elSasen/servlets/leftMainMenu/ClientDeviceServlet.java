@@ -15,7 +15,7 @@ public class ClientDeviceServlet extends HttpServlet {
     private final ClientDeviceService clientDeviceService = ClientDeviceService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("clientDeviceTable", clientDeviceService.getClientDeviceTable());
+        req.setAttribute("clientDeviceTable", clientDeviceService.getClientDeviceTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", clientDeviceService.getColumnsOfClientDevice());
         req.getRequestDispatcher("leftMainMenu/ClientDeviceJSP.jsp").forward(req, resp);
     }

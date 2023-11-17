@@ -6,24 +6,30 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class DepartmentDao {
 
     private static final DepartmentDao INSTANCE = new DepartmentDao();
+    private final String DEFAULT_ORDER_BY = "department_id";
 
-    public Set<Department> getDepartmentTable() {
+    public List<Department> getDepartmentTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
-                FROM department;
-                """;
+                SELECT department_id,
+                       department_name,
+                       start_time,
+                       end_time
+                FROM department
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             Department department;
-            var departmentSet = new HashSet<Department>();
+            var departmentSet = new ArrayList<Department>();
             while (resultSet.next()) {
                 department = Department.builder()
                         .departmentId(resultSet.getLong("department_id"))

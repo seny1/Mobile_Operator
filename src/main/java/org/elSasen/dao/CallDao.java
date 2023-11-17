@@ -6,33 +6,46 @@ import org.elSasen.entities.ClientContact;
 import org.elSasen.entities.ClientPassport;
 import org.elSasen.util.ConnectionManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.lang.String;
 
 public class CallDao {
 
     private static final CallDao INSTANCE = new CallDao();
+    private final String DEFAULT_ORDER_BY = "call_id";
 
-    public Set<Call> getCallTable() {
+    public List<Call> getCallTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT call_id,
+                       c.client_id,
+                       cp.passport_id,
+                       cp.series,
+                       cp.number,
+                       cp.birthday,
+                       first_name,
+                       last_name,
+                       cc.contact_id,
+                       cc.number,
+                       cc.type,
+                       subscriber_number,
+                       call_duration
                 FROM call
                 JOIN public.client c on call.client_id = c.client_id
                 JOIN public.client_passport cp on c.passport_id = cp.passport_id
-                JOIN public.client_contact cc on c.contact_id = cc.contact_id;
-                """;
+                JOIN public.client_contact cc on c.contact_id = cc.contact_id
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
 
-            var callSet = new HashSet<Call>();
+            var callList = new ArrayList<Call>();
             Call call;
             while (resultSet.next()) {
                 call = Call.builder()
@@ -54,9 +67,9 @@ public class CallDao {
                         .subscriberNumber(resultSet.getString("subscriber_number"))
                         .callDuration(resultSet.getDouble("call_duration"))
                         .build();
-                callSet.add(call);
+                callList.add(call);
             }
-            return callSet;
+            return callList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +78,7 @@ public class CallDao {
     public List<String> getMetaData() {
         String sql = """
                 SELECT *
-                FROM call
+                FROM call;
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {

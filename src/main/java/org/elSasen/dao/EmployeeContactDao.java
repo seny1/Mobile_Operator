@@ -5,33 +5,38 @@ import org.elSasen.util.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class EmployeeContactDao {
 
     private static final EmployeeContactDao INSTANCE = new EmployeeContactDao();
+    private final String DEFAULT_ORDER_BY = "contact_id";
 
-    public Set<EmployeeContact> getEmployeeContactTable() {
+    public List<EmployeeContact> getEmployeeContactTable(String orderBy) {
+        if (orderBy == null) {
+            orderBy = DEFAULT_ORDER_BY;
+        }
         String sql = """
-                SELECT *
+                SELECT contact_id,
+                       work_number,
+                       personal_number
                 FROM employee_contact
-                """;
+                ORDER BY
+                """ + orderBy;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             EmployeeContact employeeContact;
-            var employeeContactSet = new HashSet<EmployeeContact>();
+            var employeeContactList = new ArrayList<EmployeeContact>();
             while (resultSet.next()) {
                 employeeContact = EmployeeContact.builder()
                         .contactId(resultSet.getInt("contact_id"))
                         .workNumber(resultSet.getString("work_number"))
                         .personalNumber(resultSet.getString("personal_number"))
                         .build();
-                employeeContactSet.add(employeeContact);
+                employeeContactList.add(employeeContact);
             }
-            return employeeContactSet;
+            return employeeContactList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

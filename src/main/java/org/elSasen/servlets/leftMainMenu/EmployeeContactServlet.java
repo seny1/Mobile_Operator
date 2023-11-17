@@ -16,7 +16,7 @@ public class EmployeeContactServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("employeeContactTable", employeeContactService.getEmployeeContactTable());
+        req.setAttribute("employeeContactTable", employeeContactService.getEmployeeContactTable(req.getParameter("orderBy")));
         req.setAttribute("columnsNames", employeeContactService.getColumnsOfEmployeeContact());
         req.getRequestDispatcher("leftMainMenu/EmployeeContactJSP.jsp").forward(req, resp);
     }

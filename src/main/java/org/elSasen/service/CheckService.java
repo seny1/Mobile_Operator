@@ -5,7 +5,6 @@ import org.elSasen.dto.CheckDto;
 import org.elSasen.mapper.CheckMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CheckService {
@@ -14,11 +13,11 @@ public class CheckService {
     private final CheckDao checkDao = CheckDao.getInstance();
     private final CheckMapper checkMapper = CheckMapper.getInstance();
 
-    public Set<CheckDto> getCheckTable() {
-        var checkTable = checkDao.getCheckTable();
+    public List<CheckDto> getCheckTable(String orderBy) {
+        var checkTable = checkDao.getCheckTable(orderBy);
         return checkTable.stream()
                 .map(checkMapper::mapFrom)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public List<String> getColumnsOfCheck() {

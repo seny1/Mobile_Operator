@@ -15,7 +15,7 @@ public class ClientPassportServlet extends HttpServlet {
     private final ClientPassportService clientPassportService = ClientPassportService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("clientPassportTable", clientPassportService.getClientContactTable());
+        req.setAttribute("clientPassportTable", clientPassportService.getClientContactTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", clientPassportService.getColumnsOfClientPassport());
         req.getRequestDispatcher("leftMainMenu/ClientPassportJSP.jsp").forward(req, resp);
     }
