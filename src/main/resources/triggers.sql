@@ -64,7 +64,7 @@ CREATE OR REPLACE FUNCTION validate_number_func()
     LANGUAGE plpgsql AS
 $$
 DECLARE
-    regex VARCHAR = '^\+7\d{10}$';
+    regex VARCHAR = '\+7\d{10}';
 BEGIN
     IF NEW.number NOT LIKE regex
     THEN
