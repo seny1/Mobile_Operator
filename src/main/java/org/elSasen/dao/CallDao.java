@@ -93,6 +93,23 @@ public class CallDao {
         }
     }
 
+    public void insertIntoCallTable(int clientId, String subscriberNumber, double callDuration) {
+        String sql = """
+                INSERT INTO call (client_id, subscriber_number, call_duration)
+                VALUES (?, ?, ?)
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, clientId);
+            preparedStatement.setString(2, subscriberNumber);
+            preparedStatement.setDouble(3, callDuration);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static CallDao getInstance() {
         return INSTANCE;
     }

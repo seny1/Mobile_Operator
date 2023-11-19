@@ -21,6 +21,10 @@ public class CallService {
                 .collect(Collectors.toList());
     }
 
+    public void insertIntoCallTable(int clientId, String subscriberNumber, double callDuration) {
+        callDao.insertIntoCallTable(clientId, subscriberNumber, callDuration);
+    }
+
     public List<String> getColumnsOfCall() {
         return callDao.getMetaData();
     }

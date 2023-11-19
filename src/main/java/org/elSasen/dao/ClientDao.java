@@ -87,10 +87,10 @@ public class ClientDao {
                 VALUES (?, ?, ?, ?);
                 """;
         try (var connection = ConnectionManager.get();
-        var preparedStatementPassCont = connection.prepareStatement(sqlInsertPassportContact);
-        var preparedStatementGetPass = connection.prepareStatement(sqlGetPassportId);
-        var preparedStatementGetCont = connection.prepareStatement(sqlGetContactId);
-        var preparedStatementClient = connection.prepareStatement(sqlInsertClient)) {
+             var preparedStatementPassCont = connection.prepareStatement(sqlInsertPassportContact);
+             var preparedStatementGetPass = connection.prepareStatement(sqlGetPassportId);
+             var preparedStatementGetCont = connection.prepareStatement(sqlGetContactId);
+             var preparedStatementClient = connection.prepareStatement(sqlInsertClient)) {
             preparedStatementPassCont.setString(1, series);
             preparedStatementPassCont.setString(2, numberOfPassport);
             preparedStatementPassCont.setObject(3, birthday);

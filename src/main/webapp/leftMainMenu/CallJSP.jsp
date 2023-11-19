@@ -42,6 +42,23 @@
                     </c:forEach>
                 </div>
             </div>
+            <a href="#win1" class="dropbtn">Добавить запись</a>
+            <a href="#x" class="overlay" id="win1"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/callTable">
+                    <label class="label" for="clientID">ID клиента:</label>
+                    <input class="input" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
+
+                    <label class="label" for="subscriberNumber">Номер абонента:</label>
+                    <input class="input" type="text" id="subscriberNumber" name="subscriberNumber" pattern="^\+7\d{10}$" required>
+
+                    <label class="label" for="callDuration">Продолжительность звонка:</label>
+                    <input class="input" type="text" id="callDuration" name="callDuration" pattern="^\d+$" required>
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
         </div>
     </div>
 </body>

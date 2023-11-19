@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CheckDao {
 
@@ -109,6 +110,54 @@ public class CheckDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void insertIntoCheckTable(Map<String, Integer> productNameCount, int clientId) {
+        String getProductId = """
+                SELECT product_id
+                FROM product
+                WHERE product_name = ?;
+                """;
+        String insertIntoCheck = """
+                INSERT INTO "Check" (product_id, product_count, check_id, client_id)
+                VALUES (?, ?, ?, ?);
+                """;
+        int currentCheckId = getCurrentCheckId();
+        try (var connection = ConnectionManager.get();
+        var preparedStatementGetProd = connection.prepareStatement(getProductId);
+        var preparedStatementInsertCheck = connection.prepareStatement(insertIntoCheck)) {
+            var productNames = productNameCount.keySet().toArray();
+            for (int i = 0; i < productNameCount.size(); i++) {
+                preparedStatementGetProd.setString(1, (String) productNames[i]);
+                var resultSet = preparedStatementGetProd.executeQuery();
+                resultSet.next();
+                int tempProductId = resultSet.getInt(1);
+
+                preparedStatementInsertCheck.setInt(1, tempProductId);
+                preparedStatementInsertCheck.setInt(2, productNameCount.get((String) productNames[i]));
+                preparedStatementInsertCheck.setInt(3, currentCheckId);
+                preparedStatementInsertCheck.setInt(4, clientId);
+                preparedStatementInsertCheck.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static int getCurrentCheckId() {
+        String sql = """
+                SELECT MAX(check_id) AS current
+                FROM "Check";
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("current") + 1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static CheckDao getInstance() {
         return INSTANCE;
     }

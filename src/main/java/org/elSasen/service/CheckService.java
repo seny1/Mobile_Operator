@@ -4,6 +4,7 @@ import org.elSasen.dao.CheckDao;
 import org.elSasen.dto.CheckDto;
 import org.elSasen.mapper.CheckMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,14 @@ public class CheckService {
         return checkTable.stream()
                 .map(checkMapper::mapFrom)
                 .collect(Collectors.toList());
+    }
+
+    public void insertIntoCheckTable(String[] productName, Integer[] productCount, int clientId) {
+        var productNamesCount = new HashMap<String, Integer>();
+        for (int i = 0; i < productName.length; i++) {
+            productNamesCount.put(productName[i], productCount[i]);
+        }
+        checkDao.insertIntoCheckTable(productNamesCount, clientId);
     }
 
     public List<String> getColumnsOfCheck() {

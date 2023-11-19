@@ -5,7 +5,6 @@ import org.elSasen.dto.ProductDto;
 import org.elSasen.mapper.ProductMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -18,6 +17,10 @@ public class ProductService {
         return productTable.stream()
                 .map(productMapper::mapFrom)
                 .collect(Collectors.toList());
+    }
+
+    public List<String> getProductNames() {
+        return productDao.getProductNames();
     }
 
     public List<String> getColumnsOfProduct() {

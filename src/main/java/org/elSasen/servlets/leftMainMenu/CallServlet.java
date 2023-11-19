@@ -20,4 +20,14 @@ public class CallServlet extends HttpServlet {
         req.setAttribute("columnNames", callService.getColumnsOfCall());
         req.getRequestDispatcher("leftMainMenu/CallJSP.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        callService.insertIntoCallTable(
+                Integer.parseInt(req.getParameter("clientID")),
+                req.getParameter("subscriberNumber"),
+                Integer.parseInt(req.getParameter("callDuration"))
+        );
+        resp.sendRedirect("/callTable");
+    }
 }

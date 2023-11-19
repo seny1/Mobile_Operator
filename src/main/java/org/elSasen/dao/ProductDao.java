@@ -1,15 +1,12 @@
 package org.elSasen.dao;
 
-import org.elSasen.entities.Post;
 import org.elSasen.entities.Product;
 import org.elSasen.entities.ProductCategory;
 import org.elSasen.util.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ProductDao {
     private static final ProductDao INSTANCE = new ProductDao();
@@ -75,6 +72,24 @@ public class ProductDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getProductNames() {
+        String sql = """
+                SELECT product_name
+                FROM product;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var list = new ArrayList<String>();
+            while (resultSet.next()) {
+                list.add(resultSet.getString(1));
+            }
+            return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
