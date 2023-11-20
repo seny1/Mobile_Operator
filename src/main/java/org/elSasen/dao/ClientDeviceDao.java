@@ -3,7 +3,10 @@ package org.elSasen.dao;
 import org.elSasen.entities.ClientDevice;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;;
 
@@ -55,6 +58,26 @@ public class ClientDeviceDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int insertDeviceAndReturnId(String model, String clientProblem) {
+        String sql = """
+                INSERT INTO client_device (model, client_problem)
+                VALUES (?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, model);
+            preparedStatement.setString(2, clientProblem);
+
+            preparedStatement.executeUpdate();
+
+            var generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt("device_id");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

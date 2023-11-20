@@ -5,6 +5,8 @@ import org.elSasen.entities.ExtraService;
 import org.elSasen.entities.ServiceCategory;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,6 +76,41 @@ public class ExtraServiceDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getServiceIdByName(String serviceName) {
+        String sql = """
+                SELECT service_id
+                FROM extra_service
+                WHERE service_name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, serviceName);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getServices() {
+        String sql = """
+                SELECT service_name
+                FROM extra_service;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var services = new ArrayList<String>();
+            while (resultSet.next()) {
+                services.add(resultSet.getString(1));
+            }
+            return services;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

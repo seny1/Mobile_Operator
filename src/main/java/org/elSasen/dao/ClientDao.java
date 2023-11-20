@@ -5,7 +5,9 @@ import org.elSasen.entities.ClientContact;
 import org.elSasen.entities.ClientPassport;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -65,7 +67,7 @@ public class ClientDao {
         }
     }
 
-    public void insertIntoClientTable(String first_name, String last_name, String series, String numberOfPassport, LocalDate birthday, String numberOfContact, String type) {
+    public int insertIntoClientTable(String first_name, String last_name, String series, String numberOfPassport, LocalDate birthday, String numberOfContact, String type) {
         String sqlInsertPassportContact = """
                 INSERT INTO client_passport (series, number, birthday)
                 VALUES (?, ?, ?);
@@ -90,7 +92,7 @@ public class ClientDao {
              var preparedStatementPassCont = connection.prepareStatement(sqlInsertPassportContact);
              var preparedStatementGetPass = connection.prepareStatement(sqlGetPassportId);
              var preparedStatementGetCont = connection.prepareStatement(sqlGetContactId);
-             var preparedStatementClient = connection.prepareStatement(sqlInsertClient)) {
+             var preparedStatementClient = connection.prepareStatement(sqlInsertClient, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementPassCont.setString(1, series);
             preparedStatementPassCont.setString(2, numberOfPassport);
             preparedStatementPassCont.setObject(3, birthday);
@@ -114,6 +116,10 @@ public class ClientDao {
             preparedStatementClient.setString(3, last_name);
             preparedStatementClient.setInt(4, tempContactId);
             preparedStatementClient.executeUpdate();
+
+            var generatedKeys = preparedStatementClient.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt("client_id");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

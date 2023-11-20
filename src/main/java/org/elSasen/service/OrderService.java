@@ -24,6 +24,9 @@ public class OrderService {
         return orderDao.getMetaData();
     }
 
+    public void insertIntoOrder(String serviceName, int employeeId, int clientId, String model, String clientProblem, String comment) {
+        orderDao.insertIntoOrder(serviceName, employeeId, clientId, model, clientProblem, comment);
+    }
     public static OrderService getInstance() {
         return INSTANCE;
     }

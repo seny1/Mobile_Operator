@@ -3,6 +3,7 @@ package org.elSasen.dao;
 import org.elSasen.entities.*;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,6 +15,8 @@ import java.util.Set;
 public class OrderDao {
     private static final OrderDao INSTANCE = new OrderDao();
     private final String DEFAULT_ORDER_BY = "order_id";
+    private final ClientDeviceDao clientDeviceDao = ClientDeviceDao.getInstance();
+    private final ExtraServiceDao extraServiceDao = ExtraServiceDao.getInstance();
     public List<Order> getOrderTable(String orderBy) {
         if (orderBy == null) {
             orderBy = DEFAULT_ORDER_BY;
@@ -203,7 +206,7 @@ public class OrderDao {
                 "Order".order_id,
                 "Order".status_id,
                 "Order".device_id,
-                "Order".comment       
+                "Order".comment
                 FROM "Order"
                 """;
         try (var connection = ConnectionManager.get();
@@ -214,6 +217,28 @@ public class OrderDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertIntoOrder(String serviceName, int employeeId, int clientId, String model, String clientProblem, String comment) {
+        String sql = """
+                INSERT INTO "Order" (service_id, employee_id, client_id, status_id, device_id, comment)
+                VALUES (?, ?, ?, 3, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var tempServiceId = extraServiceDao.getServiceIdByName(serviceName);
+            var tempDeviceId = clientDeviceDao.insertDeviceAndReturnId(model, clientProblem);
+
+            preparedStatement.setInt(1, tempServiceId);
+            preparedStatement.setInt(2, employeeId);
+            preparedStatement.setInt(3, clientId);
+            preparedStatement.setInt(4, tempDeviceId);
+            preparedStatement.setString(5, comment);
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

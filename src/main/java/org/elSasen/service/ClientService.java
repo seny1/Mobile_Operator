@@ -25,8 +25,8 @@ public class ClientService {
         return clientDao.getMetaData();
     }
 
-    public void insertIntoClientTable(String first_name, String last_name, String series, String numberOfPassport, LocalDate birthday, String numberOfContact, String type) {
-        clientDao.insertIntoClientTable(first_name, last_name, series, numberOfPassport, birthday, numberOfContact, type);
+    public int insertIntoClientTable(String first_name, String last_name, String series, String numberOfPassport, LocalDate birthday, String numberOfContact, String type) {
+        return clientDao.insertIntoClientTable(first_name, last_name, series, numberOfPassport, birthday, numberOfContact, type);
     }
 
     public static ClientService getInstance() {

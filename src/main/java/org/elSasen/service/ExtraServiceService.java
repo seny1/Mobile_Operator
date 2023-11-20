@@ -24,6 +24,9 @@ public class ExtraServiceService {
         return extraServiceDao.getMetaData();
     }
 
+    public List<String> getServices() {
+        return extraServiceDao.getServices();
+    }
     public static ExtraServiceService getInstance() {
         return INSTANCE;
     }
