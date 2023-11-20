@@ -20,4 +20,16 @@ public class TariffPlanServlet extends HttpServlet {
         req.setAttribute("columnNames", tariffPlanService.getColumnsOfTariffPlan());
         req.getRequestDispatcher("leftMainMenu/TariffPlanJSP.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        tariffPlanService.insertIntoTariffPlan(
+                req.getParameter("planName"),
+                Integer.parseInt(req.getParameter("callMinutes")),
+                Integer.parseInt(req.getParameter("internetGb")),
+                Integer.parseInt(req.getParameter("smsNumber")),
+                Integer.parseInt(req.getParameter("price"))
+        );
+        resp.sendRedirect("/tariffPlanTable");
+    }
 }

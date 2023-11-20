@@ -3,6 +3,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.ServiceCategory;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +24,7 @@ public class ServiceCategoryDao {
                 difficulty,
                 description
                 FROM service_category
-                ORDER BY 
+                ORDER BY
                 """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
@@ -64,6 +66,40 @@ public class ServiceCategoryDao {
         }
     }
 
+    public List<String> getServiceCategories() {
+        String sql = """
+                SELECT name
+                FROM service_category;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var serviceCategories = new ArrayList<String>();
+            while(resultSet.next()) {
+                serviceCategories.add(resultSet.getString(1));
+            }
+            return serviceCategories;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getCategoryIdByName(String name) {
+        String sql = """
+                SELECT category_id
+                FROM service_category
+                WHERE name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static ServiceCategoryDao getInstance() {
         return INSTANCE;
     }

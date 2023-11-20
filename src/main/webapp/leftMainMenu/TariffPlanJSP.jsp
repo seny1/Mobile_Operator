@@ -44,6 +44,29 @@
                 </c:forEach>
             </div>
         </div>
+        <a href="#win1" class="dropbtn">Добавить запись</a>
+        <a href="#x" class="overlay" id="win1"></a>
+        <div class="popup">
+            <form class="form" method="post" action="${pageContext.request.contextPath}/tariffPlanTable">
+                <label class="label" for="planName">Имя плана:</label>
+                <input class="input" type="text" id="planName" name="planName" required>
+
+                <label class="label" for="callMinutes">Минуты:</label>
+                <input class="input" type="text" id="callMinutes" name="callMinutes" required>
+
+                <label class="label" for="internetGb">Гигабайты:</label>
+                <input class="input" type="text" id="internetGb" name="internetGb" required>
+
+                <label class="label" for="smsNumber">Сообщения:</label>
+                <input class="input" type="text" id="smsNumber" name="smsNumber" required>
+
+                <label class="label" for="price">Стоимость:</label>
+                <input class="input" type="text" id="price" name="price" required>
+
+                <input class="input" type="submit" value="Отправить">
+            </form>
+            <a class="close" title="Закрыть" href="#close"></a>
+        </div>
     </div>
 </div>
 </body>

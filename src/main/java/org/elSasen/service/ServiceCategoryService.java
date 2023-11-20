@@ -27,6 +27,9 @@ public class ServiceCategoryService {
         return serviceCategoryDao.getMetaData();
     }
 
+    public List<String> getServiceCategories() {
+        return serviceCategoryDao.getServiceCategories();
+    }
     public static ServiceCategoryService getInstance() {
         return INSTANCE;
     }

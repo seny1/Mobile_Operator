@@ -26,7 +26,7 @@ public class TariffPlanDao {
                 sms_number,
                 price
                 FROM tariff_plan
-                ORDER BY 
+                ORDER BY
                 """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
@@ -90,6 +90,24 @@ public class TariffPlanDao {
         }
     }
 
+    public void insertIntoTariffPlan(String planName, int callMinutes, int internetGb, int smsNumber, int price) {
+        String sql = """
+                INSERT INTO tariff_plan (plan_name, call_minutes, internet_gb, sms_number, price)
+                VALUES (?, ?, ?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, planName);
+            preparedStatement.setInt(2, callMinutes);
+            preparedStatement.setInt(3, internetGb);
+            preparedStatement.setInt(4, smsNumber);
+            preparedStatement.setInt(5, price);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static TariffPlanDao getInstance() {
         return INSTANCE;
     }

@@ -1,22 +1,18 @@
 package org.elSasen.dao;
 
-import org.elSasen.entities.EmployeePassport;
 import org.elSasen.entities.ExtraService;
 import org.elSasen.entities.ServiceCategory;
 import org.elSasen.util.ConnectionManager;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ExtraServiceDao {
     private static final ExtraServiceDao INSTANCE = new ExtraServiceDao();
     private final String DEFAULT_ORDER_BY = "service_id";
+    private final ServiceCategoryDao serviceCategoryDao = ServiceCategoryDao.getInstance();
     public List<ExtraService> getExtraServiceTable(String orderBy) {
         if (orderBy == null) {
             orderBy = DEFAULT_ORDER_BY;
@@ -116,6 +112,24 @@ public class ExtraServiceDao {
         }
     }
 
+    public void insertIntoService(String serviceDescription, double price, String serviceName, String categoryName) {
+        String sql = """
+                INSERT INTO extra_service (service_description, price, service_name, category_id)
+                VALUES (?, ?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var tempCategoryId = serviceCategoryDao.getCategoryIdByName(categoryName);
+            preparedStatement.setString(1, serviceDescription);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setString(3, serviceName);
+            preparedStatement.setInt(4, tempCategoryId);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static ExtraServiceDao getInstance() {
         return INSTANCE;
     }

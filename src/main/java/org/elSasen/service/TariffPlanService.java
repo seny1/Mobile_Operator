@@ -28,6 +28,9 @@ public class TariffPlanService {
         return tariffPlanDao.getMetaData();
     }
 
+    public void insertIntoTariffPlan(String planName, int callMinutes, int internetGb, int smsNumber, int price) {
+        tariffPlanDao.insertIntoTariffPlan(planName, callMinutes, internetGb, smsNumber, price);
+    }
     public static TariffPlanService getInstance() {
         return INSTANCE;
     }

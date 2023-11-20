@@ -27,6 +27,10 @@ public class ExtraServiceService {
     public List<String> getServices() {
         return extraServiceDao.getServices();
     }
+
+    public void insertIntoService(String serviceDescription, double price, String serviceName, String categoryName) {
+        extraServiceDao.insertIntoService(serviceDescription, price, serviceName, categoryName);
+    }
     public static ExtraServiceService getInstance() {
         return INSTANCE;
     }
