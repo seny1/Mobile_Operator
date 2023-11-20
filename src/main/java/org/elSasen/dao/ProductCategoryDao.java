@@ -3,6 +3,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.ProductCategory;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,6 +58,24 @@ public class ProductCategoryDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getCategories() {
+        String sql = """
+                SELECT name
+                FROM product_category;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var categories = new ArrayList<String>();
+            while (resultSet.next()) {
+                categories.add(resultSet.getString(1));
+            }
+            return categories;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

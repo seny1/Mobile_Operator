@@ -4,6 +4,7 @@ package org.elSasen.dao;
 import org.elSasen.entities.*;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -13,6 +14,12 @@ import java.util.*;
 public class EmployeeDao {
 
     private static final EmployeeDao INSTANCE = new EmployeeDao();
+    private final DepartmentDao departmentDao = DepartmentDao.getInstance();
+    private final CommunicationSalonDao communicationSalonDao = CommunicationSalonDao.getInstance();
+    private final PostDao postDao = PostDao.getInstance();
+    private final EmployeeContactDao employeeContactDao = EmployeeContactDao.getInstance();
+    private final EmployeePassportDao employeePassportDao = EmployeePassportDao.getInstance();
+    private final RoleDao roleDao = RoleDao.getInstance();
     private final String DEFAULT_ORDER_BY = "employee_id";
 
     public Optional<Employee> findByLoginAndPassword(String login, String password) {
@@ -112,6 +119,37 @@ public class EmployeeDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertIntoEmployee(String departmentName, String salonAddress, String firstName, String lastName, String postName, String series, String number, LocalDate birthday, LocalDate issueDate, String placeCode, String workNumber, String personalNumber, String login, String password, String roleName) {
+        String sql = """
+                INSERT INTO employee (department_id, salon_id, first_name, last_name, post_id, passport_id, contact_id, login, password, role_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var tempDepartmentId = departmentDao.getDepartmentIdByDepartmentName(departmentName);
+            var tempSalonId = communicationSalonDao.getSalonIdByAddress(salonAddress);
+            var tempPostId = postDao.getPostIdByPostName(postName);
+            var tempPassportId = employeePassportDao.insertIntoPassportAndReturnId(series, number, birthday, issueDate, placeCode);
+            var tempContactId = employeeContactDao.insertIntoContactAndReturnId(workNumber, personalNumber);
+            var tempRoleId = roleDao.getRoleIdByRoleName(roleName);
+
+            preparedStatement.setInt(1, tempDepartmentId);
+            preparedStatement.setInt(2, tempSalonId);
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, lastName);
+            preparedStatement.setInt(5, tempPostId);
+            preparedStatement.setInt(6, tempPassportId);
+            preparedStatement.setInt(7, tempContactId);
+            preparedStatement.setString(8, login);
+            preparedStatement.setString(9, password);
+            preparedStatement.setInt(10, tempRoleId);
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

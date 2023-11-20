@@ -25,7 +25,9 @@ public class CommunicationSalonService {
         return communicationSalonDao.getMetaData();
     }
 
-
+    public List<String> getSalons() {
+        return communicationSalonDao.getAddresses();
+    }
     public static CommunicationSalonService getInstance() {
         return INSTANCE;
     }

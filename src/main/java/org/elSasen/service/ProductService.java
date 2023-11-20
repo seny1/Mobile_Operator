@@ -19,6 +19,9 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public void insertIntoProductTable(double price, String productDescription, String productName, String categoryName, int count) {
+        productDao.insertIntoProductTable(price, productDescription, productName, categoryName, count);
+    }
     public List<String> getProductNames() {
         return productDao.getProductNames();
     }

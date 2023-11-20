@@ -49,6 +49,7 @@ BEGIN
         NEW.date = date(now());
         RETURN NEW;
     END IF;
+    RETURN NEW;
 END;
 $$;
 CREATE TRIGGER check_contract

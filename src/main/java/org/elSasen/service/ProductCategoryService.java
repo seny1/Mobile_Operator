@@ -24,6 +24,9 @@ public class ProductCategoryService {
         return productCategoryDao.getMetaData();
     }
 
+    public List<String> getCategories() {
+        return productCategoryDao.getCategories();
+    }
     public static ProductCategoryService getInstance() {
         return INSTANCE;
     }

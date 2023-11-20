@@ -2,6 +2,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.Role;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -55,6 +57,41 @@ public class RoleDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getRoleIdByRoleName(String roleName) {
+        String sql = """
+                SELECT role_id
+                FROM role
+                WHERE role_name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, roleName);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getRoles() {
+        String sql = """
+                SELECT role_name
+                FROM role;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var roles = new ArrayList<String>();
+            while (resultSet.next()) {
+                roles.add(resultSet.getString(1));
+            }
+            return roles;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

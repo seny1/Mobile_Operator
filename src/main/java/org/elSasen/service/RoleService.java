@@ -24,6 +24,9 @@ public class RoleService {
         return roleDao.getMetaData();
     }
 
+    public List<String> getRoles() {
+        return roleDao.getRoles();
+    }
     public static RoleService getInstance() {
         return INSTANCE;
     }

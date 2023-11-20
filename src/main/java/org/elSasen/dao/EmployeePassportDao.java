@@ -3,7 +3,10 @@ package org.elSasen.dao;
 import org.elSasen.entities.*;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -67,6 +70,29 @@ public class EmployeePassportDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int insertIntoPassportAndReturnId(String series, String number, LocalDate birthday, LocalDate issueDate, String placeCode) {
+        String sql = """
+                INSERT INTO employee_passport (series, number, birthday, issue_date, place_code)
+                VALUES (?, ?, ?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, series);
+            preparedStatement.setString(2, number);
+            preparedStatement.setObject(3, birthday);
+            preparedStatement.setObject(4, issueDate);
+            preparedStatement.setString(5, placeCode);
+
+            preparedStatement.executeUpdate();
+
+            var generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt("passport_id");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

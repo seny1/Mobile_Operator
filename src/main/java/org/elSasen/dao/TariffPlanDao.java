@@ -3,6 +3,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.TariffPlan;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -65,6 +67,24 @@ public class TariffPlanDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getPlans() {
+        String sql = """
+                SELECT plan_name
+                FROM tariff_plan;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var plans = new ArrayList<String>();
+            while (resultSet.next()) {
+                plans.add(resultSet.getString(1));
+            }
+            return plans;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -3,6 +3,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.CommunicationSalon;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,40 @@ public class CommunicationSalonDao {
         }
     }
 
+    public int getSalonIdByAddress(String address) {
+        String sql = """
+                SELECT salon_id
+                FROM communication_salon
+                WHERE address = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, address);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getAddresses() {
+        String sql = """
+                SELECT address
+                FROM communication_salon;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var addresses = new ArrayList<String>();
+            while (resultSet.next()) {
+                addresses.add(resultSet.getString(1));
+            }
+            return addresses;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static CommunicationSalonDao getInstance() {
         return INSTANCE;
     }

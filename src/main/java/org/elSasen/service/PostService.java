@@ -27,6 +27,9 @@ public class PostService {
         return postDao.getMetaData();
     }
 
+    public List<String> getPosts() {
+        return postDao.getPosts();
+    }
     public static PostService getInstance() {
         return INSTANCE;
     }

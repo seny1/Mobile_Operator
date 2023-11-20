@@ -3,6 +3,8 @@ package org.elSasen.dao;
 import org.elSasen.entities.*;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -98,6 +100,33 @@ public class ContractDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertIntoContract(String planName, int clientId, LocalDate date) {
+        String getPlanId = """
+                SELECT plan_id
+                FROM tariff_plan
+                WHERE plan_name = ?;
+                """;
+        String insertContract = """
+                INSERT INTO contract (plan_id, client_id, date)
+                VALUES (?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatementPlanId = connection.prepareStatement(getPlanId);
+        var preparedStatementContract = connection.prepareStatement(insertContract)) {
+            preparedStatementPlanId.setString(1, planName);
+            var resultSet = preparedStatementPlanId.executeQuery();
+            resultSet.next();
+            var tempPlanId = resultSet.getInt(1);
+
+            preparedStatementContract.setInt(1, tempPlanId);
+            preparedStatementContract.setInt(2, clientId);
+            preparedStatementContract.setObject(3, date);
+            preparedStatementContract.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

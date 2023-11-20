@@ -569,3 +569,23 @@ select option:hover {
 .dropdown-item:hover {
     background-color: #f4f4f4;
 }
+
+.scroll {
+    width: 550px;
+    height: 650px;
+    overflow: auto;
+    float: left;
+    margin: 0 10px;
+}
+
+.scroll1::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll1::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+.scroll1::-webkit-scrollbar-thumb {
+    background: #666;
+}

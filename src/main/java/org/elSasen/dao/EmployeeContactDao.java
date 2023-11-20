@@ -4,6 +4,8 @@ import org.elSasen.entities.EmployeeContact;
 import org.elSasen.util.ConnectionManager;
 
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,26 @@ public class EmployeeContactDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int insertIntoContactAndReturnId(String workNumber, String personalNumber) {
+        String sql = """
+                INSERT INTO employee_contact (work_number, personal_number)
+                VALUES (?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, workNumber);
+            preparedStatement.setString(2, personalNumber);
+
+            preparedStatement.executeUpdate();
+
+            var generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt("contact_id");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

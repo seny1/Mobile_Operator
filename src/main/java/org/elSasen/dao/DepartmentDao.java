@@ -1,8 +1,11 @@
 package org.elSasen.dao;
 
+import org.elSasen.entities.CommunicationSalon;
 import org.elSasen.entities.Department;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -63,6 +66,40 @@ public class DepartmentDao {
         }
     }
 
+    public int getDepartmentIdByDepartmentName(String departmentName) {
+        String sql = """
+                SELECT department_id
+                FROM department
+                WHERE department_name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, departmentName);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getDepartments() {
+        String sql = """
+                SELECT department_name
+                FROM department;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var departments = new ArrayList<String>();
+            while (resultSet.next()) {
+                departments.add(resultSet.getString(1));
+            }
+            return departments;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static DepartmentDao getInstance() {
         return INSTANCE;
     }

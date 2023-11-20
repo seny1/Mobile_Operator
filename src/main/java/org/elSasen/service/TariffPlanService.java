@@ -20,6 +20,10 @@ public class TariffPlanService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getPlans() {
+        return tariffPlanDao.getPlans();
+    }
+
     public List<String> getColumnsOfTariffPlan() {
         return tariffPlanDao.getMetaData();
     }

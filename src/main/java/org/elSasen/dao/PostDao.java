@@ -5,6 +5,8 @@ import org.elSasen.entities.Post;
 import org.elSasen.entities.ServiceCategory;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,6 +60,41 @@ public class PostDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getPostIdByPostName(String postName) {
+        String sql = """
+                SELECT post_id
+                FROM post
+                WHERE post_name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, postName);
+            var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getPosts() {
+        String sql = """
+                SELECT post_name
+                FROM post;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var posts = new ArrayList<String>();
+            while (resultSet.next()) {
+                posts.add(resultSet.getString(1));
+            }
+            return posts;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

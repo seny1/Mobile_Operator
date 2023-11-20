@@ -4,6 +4,7 @@ import org.elSasen.dao.ContractDao;
 import org.elSasen.dto.ContractDto;
 import org.elSasen.mapper.ContractMapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,10 @@ public class ContractService {
         return contractTable.stream()
                 .map(contractMapper::mapFrom)
                 .collect(Collectors.toList());
+    }
+
+    public void insertIntoContract(String planName, int clientId, LocalDate date) {
+        contractDao.insertIntoContract(planName, clientId, date);
     }
 
     public List<String> getColumnsOfContract() {

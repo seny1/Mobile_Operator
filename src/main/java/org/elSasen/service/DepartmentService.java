@@ -23,6 +23,9 @@ public class DepartmentService {
         return departmentDao.getMetaData();
     }
 
+    public List<String> getDepartments() {
+        return departmentDao.getDepartments();
+    }
     public static DepartmentService getInstance() {
         return INSTANCE;
     }

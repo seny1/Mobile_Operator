@@ -4,6 +4,8 @@ import org.elSasen.entities.Product;
 import org.elSasen.entities.ProductCategory;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,35 @@ public class ProductDao {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
             return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertIntoProductTable(double price, String productDescription, String productName, String categoryName, int count) {
+        String getCategoryId = """
+                SELECT category_id
+                FROM product_category
+                WHERE name = ?;
+                """;
+        String insertProduct = """
+                INSERT INTO product (price, product_description, product_name, category_id, count)
+                VALUES (?, ?, ?, ?, ?);
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatementCategoryId = connection.prepareStatement(getCategoryId);
+        var preparedStatementInsertProduct = connection.prepareStatement(insertProduct)) {
+            preparedStatementCategoryId.setString(1, categoryName);
+            var resultSet = preparedStatementCategoryId.executeQuery();
+            resultSet.next();
+            var tempCategoryId = resultSet.getInt(1);
+
+            preparedStatementInsertProduct.setDouble(1, price);
+            preparedStatementInsertProduct.setString(2, productDescription);
+            preparedStatementInsertProduct.setString(3, productName);
+            preparedStatementInsertProduct.setInt(4, tempCategoryId);
+            preparedStatementInsertProduct.setInt(5, count);
+            preparedStatementInsertProduct.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
