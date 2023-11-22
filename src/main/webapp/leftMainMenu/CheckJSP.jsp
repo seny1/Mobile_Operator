@@ -48,7 +48,6 @@
             <form class="form" method="post" action="${pageContext.request.contextPath}/checkTable">
                 <label class="label" for="numberOfTypes">Количество товаров разных типов:</label>
                 <input class="input" type="text" id="numberOfTypes" name="numberOfTypes" pattern="^\d+$" required>
-
                 <input class="input" type="submit" value="Отправить">
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
@@ -56,6 +55,7 @@
         <a href="#win2" class="dropbtn"></a>
         <a href="#x" class="overlay" id="win2"></a>
         <div class="popup">
+           <div class="scroll scroll1">
             <form class="form" method="post" action="${pageContext.request.contextPath}/checkTable?i=${param.numberOfTypes}">
                 <label class="label" for="clientID">ID клиента: </label>
                 <input class="input" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
@@ -75,6 +75,7 @@
                 </c:forEach>
                 <input class="input" type="submit" value="Отправить">
             </form>
+           </div>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
         <c:if test="${not empty requestScope.errors}">
