@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ClientContactDto;
+import org.elSasen.dto.select.ClientContactDto;
 import org.elSasen.entities.ClientContact;
 
 public class ClientContactMapper implements Mapper<ClientContact, ClientContactDto> {

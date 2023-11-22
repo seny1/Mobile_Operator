@@ -112,17 +112,17 @@ public class ExtraServiceDao {
         }
     }
 
-    public void insertIntoService(String serviceDescription, double price, String serviceName, String categoryName) {
+    public void insertIntoService(ExtraService extraService) {
         String sql = """
                 INSERT INTO extra_service (service_description, price, service_name, category_id)
                 VALUES (?, ?, ?, ?);
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
-            var tempCategoryId = serviceCategoryDao.getCategoryIdByName(categoryName);
-            preparedStatement.setString(1, serviceDescription);
-            preparedStatement.setDouble(2, price);
-            preparedStatement.setString(3, serviceName);
+            var tempCategoryId = serviceCategoryDao.getCategoryIdByName(extraService.getCategory().getName());
+            preparedStatement.setString(1, extraService.getServiceDescription());
+            preparedStatement.setDouble(2, extraService.getPrice());
+            preparedStatement.setString(3, extraService.getServiceName());
             preparedStatement.setInt(4, tempCategoryId);
 
             preparedStatement.executeUpdate();

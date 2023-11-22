@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.DepartmentDto;
+import org.elSasen.dto.select.DepartmentDto;
 import org.elSasen.entities.Department;
 
 public class DepartmentMapper implements Mapper<Department, DepartmentDto> {

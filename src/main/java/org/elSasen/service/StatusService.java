@@ -1,10 +1,9 @@
 package org.elSasen.service;
 import org.elSasen.dao.StatusDao;
-import org.elSasen.dto.StatusDto;
+import org.elSasen.dto.select.StatusDto;
 import org.elSasen.mapper.StatusMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StatusService {

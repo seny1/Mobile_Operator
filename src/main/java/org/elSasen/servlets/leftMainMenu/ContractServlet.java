@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.elSasen.dto.insert.ContractDtoInsert;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.service.ContractService;
 import org.elSasen.service.TariffPlanService;
 
@@ -26,11 +28,17 @@ public class ContractServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        contractService.insertIntoContract(
-                req.getParameter("tariffName"),
-                Integer.parseInt(req.getParameter("clientID")),
-                LocalDate.parse(req.getParameter("date"))
-        );
-        resp.sendRedirect("/contractTable");
+        var contractDtoInsert = ContractDtoInsert.builder()
+                .clientId(Integer.parseInt(req.getParameter("clientID")))
+                .date(LocalDate.parse(req.getParameter("date")))
+                .planName(req.getParameter("tariffName"))
+                .build();
+        try {
+            contractService.insertIntoContract(contractDtoInsert);
+            resp.sendRedirect("/contractTable");
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
+        }
     }
 }

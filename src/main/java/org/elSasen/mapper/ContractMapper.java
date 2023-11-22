@@ -1,7 +1,10 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ContractDto;
+import org.elSasen.dto.insert.ContractDtoInsert;
+import org.elSasen.dto.select.ContractDto;
+import org.elSasen.entities.Client;
 import org.elSasen.entities.Contract;
+import org.elSasen.entities.TariffPlan;
 
 public class ContractMapper implements Mapper<Contract, ContractDto> {
 
@@ -13,6 +16,18 @@ public class ContractMapper implements Mapper<Contract, ContractDto> {
                 .plan(contract.getPlan())
                 .client(contract.getClient())
                 .date(contract.getDate())
+                .build();
+    }
+
+    public Contract mapFrom(ContractDtoInsert contractDtoInsert) {
+        return Contract.builder()
+                .client(Client.builder()
+                        .clientId(contractDtoInsert.getClientId())
+                        .build())
+                .plan(TariffPlan.builder()
+                        .planName(contractDtoInsert.getPlanName())
+                        .build())
+                .date(contractDtoInsert.getDate())
                 .build();
     }
 

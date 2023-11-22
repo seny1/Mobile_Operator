@@ -1,9 +1,9 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.EmployeePassportDto;
-import org.elSasen.dto.ExtraServiceDto;
-import org.elSasen.entities.EmployeePassport;
+import org.elSasen.dto.insert.ExtraServiceDtoInsert;
+import org.elSasen.dto.select.ExtraServiceDto;
 import org.elSasen.entities.ExtraService;
+import org.elSasen.entities.ServiceCategory;
 
 public class ExtraServiceMapper implements Mapper<ExtraService, ExtraServiceDto> {
 
@@ -20,6 +20,17 @@ public class ExtraServiceMapper implements Mapper<ExtraService, ExtraServiceDto>
                 .price(extraService.getPrice())
                 .serviceName(extraService.getServiceName())
                 .category(extraService.getCategory())
+                .build();
+    }
+
+    public ExtraService mapFrom(ExtraServiceDtoInsert extraServiceDtoInsert) {
+        return ExtraService.builder()
+                .serviceName(extraServiceDtoInsert.getServiceName())
+                .price(extraServiceDtoInsert.getPrice())
+                .category(ServiceCategory.builder()
+                        .name(extraServiceDtoInsert.getCategoryName())
+                        .build())
+                .serviceDescription(extraServiceDtoInsert.getServiceDescription())
                 .build();
     }
 }

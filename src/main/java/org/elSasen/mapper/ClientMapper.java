@@ -1,7 +1,10 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ClientDto;
+import org.elSasen.dto.insert.ClientDtoInsert;
+import org.elSasen.dto.select.ClientDto;
 import org.elSasen.entities.Client;
+import org.elSasen.entities.ClientContact;
+import org.elSasen.entities.ClientPassport;
 
 public class ClientMapper implements Mapper<Client, ClientDto> {
 
@@ -15,6 +18,22 @@ public class ClientMapper implements Mapper<Client, ClientDto> {
                 .firstName(client.getFirstName())
                 .lastName(client.getLastName())
                 .contact(client.getContact())
+                .build();
+    }
+
+    public Client mapFrom(ClientDtoInsert clientDto) {
+        return Client.builder()
+                .passport(ClientPassport.builder()
+                        .series(clientDto.getSeries())
+                        .number(clientDto.getNumberOfPassport())
+                        .birthday(clientDto.getBirthday())
+                        .build())
+                .firstName(clientDto.getFirstName())
+                .lastName(clientDto.getLastName())
+                .contact(ClientContact.builder()
+                        .number(clientDto.getNumberOfContact())
+                        .type(clientDto.getType())
+                        .build())
                 .build();
     }
 

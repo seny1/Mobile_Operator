@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.elSasen.dto.insert.CallDtoInsert;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.service.CallService;
 
 import java.io.IOException;
@@ -23,11 +25,17 @@ public class CallServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        callService.insertIntoCallTable(
-                Integer.parseInt(req.getParameter("clientID")),
-                req.getParameter("subscriberNumber"),
-                Integer.parseInt(req.getParameter("callDuration"))
-        );
-        resp.sendRedirect("/callTable");
+        var callDtoInsert = CallDtoInsert.builder()
+                .clientId(Integer.parseInt(req.getParameter("clientID")))
+                .subscriberNumber(req.getParameter("subscriberNumber"))
+                .callDuration(Double.parseDouble(req.getParameter("callDuration")))
+                .build();
+        try {
+            callService.insertIntoCallTable(callDtoInsert);
+            resp.sendRedirect("/callTable");
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
+        }
     }
 }

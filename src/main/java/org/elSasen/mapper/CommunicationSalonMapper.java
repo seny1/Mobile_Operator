@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.CommunicationSalonDto;
+import org.elSasen.dto.select.CommunicationSalonDto;
 import org.elSasen.entities.CommunicationSalon;
 
 public class CommunicationSalonMapper implements Mapper<CommunicationSalon, CommunicationSalonDto> {

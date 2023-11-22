@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.elSasen.dto.EmployeeDto;
+import org.elSasen.dto.select.EmployeeDto;
 import org.elSasen.service.EmployeeService;
 
 import java.io.IOException;

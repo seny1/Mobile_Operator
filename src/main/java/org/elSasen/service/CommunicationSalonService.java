@@ -1,7 +1,7 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.CommunicationSalonDao;
-import org.elSasen.dto.CommunicationSalonDto;
+import org.elSasen.dto.select.CommunicationSalonDto;
 import org.elSasen.mapper.CommunicationSalonMapper;
 
 import java.util.List;

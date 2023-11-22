@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ClientDeviceDto;
+import org.elSasen.dto.select.ClientDeviceDto;
 import org.elSasen.entities.ClientDevice;
 
 public class ClientDeviceMapper implements Mapper<ClientDevice, ClientDeviceDto> {

@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.elSasen.dto.insert.CheckDtoInsert;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.service.CheckService;
 import org.elSasen.service.ProductService;
 
@@ -35,8 +37,18 @@ public class CheckServlet extends HttpServlet {
                 productNames[i - 1] = req.getParameter("productName" + i);
                 productCounts[i - 1] = Integer.parseInt(req.getParameter("productCount" + i));
             }
-            checkService.insertIntoCheckTable(productNames, productCounts, Integer.parseInt(req.getParameter("clientID")));
-            resp.sendRedirect("/checkTable");
+            var checkDto = CheckDtoInsert.builder()
+                    .productName(productNames)
+                    .productCount(productCounts)
+                    .clientId(Integer.parseInt(req.getParameter("clientID")))
+                    .build();
+            try {
+                checkService.insertIntoCheckTable(checkDto);
+                resp.sendRedirect("/checkTable");
+            } catch (ValidationException exception) {
+                req.setAttribute("errors", exception.getErrors());
+                doGet(req, resp);
+            }
         }
     }
 }

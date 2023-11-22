@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ClientPassportDto;
+import org.elSasen.dto.select.ClientPassportDto;
 import org.elSasen.entities.ClientPassport;
 
 public class ClientPassportMapper implements Mapper<ClientPassport, ClientPassportDto> {

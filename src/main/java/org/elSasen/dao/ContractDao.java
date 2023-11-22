@@ -105,7 +105,7 @@ public class ContractDao {
         }
     }
 
-    public void insertIntoContract(String planName, int clientId, LocalDate date) {
+    public void insertIntoContract(Contract contract) {
         String getPlanId = """
                 SELECT plan_id
                 FROM tariff_plan
@@ -118,14 +118,14 @@ public class ContractDao {
         try (var connection = ConnectionManager.get();
         var preparedStatementPlanId = connection.prepareStatement(getPlanId);
         var preparedStatementContract = connection.prepareStatement(insertContract)) {
-            preparedStatementPlanId.setString(1, planName);
+            preparedStatementPlanId.setString(1, contract.getPlan().getPlanName());
             var resultSet = preparedStatementPlanId.executeQuery();
             resultSet.next();
             var tempPlanId = resultSet.getInt(1);
 
             preparedStatementContract.setInt(1, tempPlanId);
-            preparedStatementContract.setInt(2, clientId);
-            preparedStatementContract.setObject(3, date);
+            preparedStatementContract.setLong(2, contract.getClient().getClientId());
+            preparedStatementContract.setObject(3, contract.getDate());
             preparedStatementContract.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

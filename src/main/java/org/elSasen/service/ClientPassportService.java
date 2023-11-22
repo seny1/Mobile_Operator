@@ -1,7 +1,7 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.ClientPassportDao;
-import org.elSasen.dto.ClientPassportDto;
+import org.elSasen.dto.select.ClientPassportDto;
 import org.elSasen.mapper.ClientPassportMapper;
 
 import java.util.List;

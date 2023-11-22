@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.elSasen.dto.insert.EmployeeDtoInsert;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.service.*;
 
 import java.io.IOException;
@@ -32,23 +34,29 @@ public class EmployeeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        employeeService.insertIntoEmployee(
-                req.getParameter("department"),
-                req.getParameter("salon"),
-                req.getParameter("firstName"),
-                req.getParameter("lastName"),
-                req.getParameter("post"),
-                req.getParameter("series"),
-                req.getParameter("numberOfPassport"),
-                LocalDate.parse(req.getParameter("birthday")),
-                LocalDate.parse(req.getParameter("issueDate")),
-                req.getParameter("placeCode"),
-                req.getParameter("workNumber"),
-                req.getParameter("personalNumber"),
-                req.getParameter("login"),
-                req.getParameter("password"),
-                req.getParameter("role")
-        );
-        resp.sendRedirect("/employeeTable");
+        var employeeDtoinsert = EmployeeDtoInsert.builder()
+                .departmentName(req.getParameter("department"))
+                .salonAddress(req.getParameter("salon"))
+                .firstName(req.getParameter("firstName"))
+                .lastName(req.getParameter("lastName"))
+                .postName(req.getParameter("post"))
+                .series(req.getParameter("series"))
+                .numberOfPassport(req.getParameter("numberOfPassport"))
+                .birthday(LocalDate.parse(req.getParameter("birthday")))
+                .issueDate(LocalDate.parse(req.getParameter("issueDate")))
+                .placeCode(req.getParameter("placeCode"))
+                .workNumber(req.getParameter("workNumber"))
+                .personalNumber(req.getParameter("personalNumber"))
+                .login(req.getParameter("login"))
+                .password(req.getParameter("password"))
+                .roleName(req.getParameter("role"))
+                .build();
+        try {
+            employeeService.insertIntoEmployee(employeeDtoinsert);
+            resp.sendRedirect("/employeeTable");
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.DepartmentDao;
-import org.elSasen.dto.DepartmentDto;
+import org.elSasen.dto.select.DepartmentDto;
 import org.elSasen.mapper.DepartmentMapper;
 
 import java.util.List;

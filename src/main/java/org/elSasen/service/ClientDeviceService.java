@@ -1,7 +1,7 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.ClientDeviceDao;
-import org.elSasen.dto.ClientDeviceDto;
+import org.elSasen.dto.select.ClientDeviceDto;
 import org.elSasen.mapper.ClientDeviceMapper;
 
 import java.util.List;

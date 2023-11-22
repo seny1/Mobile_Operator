@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.TariffPlanDto;
+import org.elSasen.dto.select.TariffPlanDto;
 import org.elSasen.entities.TariffPlan;
 
 public class TariffPlanMapper implements Mapper<TariffPlan, TariffPlanDto> {

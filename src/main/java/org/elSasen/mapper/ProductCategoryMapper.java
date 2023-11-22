@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ProductCategoryDto;
+import org.elSasen.dto.select.ProductCategoryDto;
 import org.elSasen.entities.ProductCategory;
 
 public class ProductCategoryMapper implements Mapper<ProductCategory, ProductCategoryDto> {

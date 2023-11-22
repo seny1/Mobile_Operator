@@ -57,13 +57,13 @@
                     <input class="input" type="date" id="birthday" name="birthday" required>
 
                     <label class="label" for="series">Серия паспорта:</label>
-                    <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" required>
+                    <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" placeholder="xxxx" required>
 
                     <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                    <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" required>
+                    <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" placeholder="xxxxxx" required>
 
                     <label class="label" for="numberOfContact">Номер телефона:</label>
-                    <input class="input" type="tel" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" required>
+                    <input class="input" type="text" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx" required>
 
                     <label class="label" for="type">Тип телефона:</label>
                     <select id="type" name="type">
@@ -75,6 +75,14 @@
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
+            <c:if test="${not empty requestScope.errors}">
+                <div style="color: red">
+                    <c:forEach var="error" items="${requestScope.errors}">
+                        <span>${error.message}</span>
+                        <br>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </div>
 </body>

@@ -124,29 +124,29 @@ public class EmployeeDao {
         }
     }
 
-    public void insertIntoEmployee(String departmentName, String salonAddress, String firstName, String lastName, String postName, String series, String number, LocalDate birthday, LocalDate issueDate, String placeCode, String workNumber, String personalNumber, String login, String password, String roleName) {
+    public void insertIntoEmployee(Employee employee) {
         String sql = """
                 INSERT INTO employee (department_id, salon_id, first_name, last_name, post_id, passport_id, contact_id, login, password, role_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
-            var tempDepartmentId = departmentDao.getDepartmentIdByDepartmentName(departmentName);
-            var tempSalonId = communicationSalonDao.getSalonIdByAddress(salonAddress);
-            var tempPostId = postDao.getPostIdByPostName(postName);
-            var tempPassportId = employeePassportDao.insertIntoPassportAndReturnId(series, number, birthday, issueDate, placeCode);
-            var tempContactId = employeeContactDao.insertIntoContactAndReturnId(workNumber, personalNumber);
-            var tempRoleId = roleDao.getRoleIdByRoleName(roleName);
+            var tempDepartmentId = departmentDao.getDepartmentIdByDepartmentName(employee.getDepartment().getDepartmentName());
+            var tempSalonId = communicationSalonDao.getSalonIdByAddress(employee.getSalon().getAddress());
+            var tempPostId = postDao.getPostIdByPostName(employee.getPost().getPostName());
+            var tempPassportId = employeePassportDao.insertIntoPassportAndReturnId(employee.getPassport().getSeries(), employee.getPassport().getNumber(), employee.getPassport().getBirthday(), employee.getPassport().getIssueDate(), employee.getPassport().getPlaceCode());
+            var tempContactId = employeeContactDao.insertIntoContactAndReturnId(employee.getContact().getWorkNumber(), employee.getContact().getPersonalNumber());
+            var tempRoleId = roleDao.getRoleIdByRoleName(employee.getRole().getRoleName());
 
             preparedStatement.setInt(1, tempDepartmentId);
             preparedStatement.setInt(2, tempSalonId);
-            preparedStatement.setString(3, firstName);
-            preparedStatement.setString(4, lastName);
+            preparedStatement.setString(3, employee.getFirstName());
+            preparedStatement.setString(4, employee.getLastName());
             preparedStatement.setInt(5, tempPostId);
             preparedStatement.setInt(6, tempPassportId);
             preparedStatement.setInt(7, tempContactId);
-            preparedStatement.setString(8, login);
-            preparedStatement.setString(9, password);
+            preparedStatement.setString(8, employee.getLogin());
+            preparedStatement.setString(9, employee.getPassword());
             preparedStatement.setInt(10, tempRoleId);
 
             preparedStatement.executeUpdate();

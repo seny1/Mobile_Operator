@@ -262,6 +262,7 @@ body {
     margin-bottom: 20px;
     width: 100%;
     border: none;
+    animation: slideInTable 0.3s ease;
 }
 .scroll-table table {
     width:100%;
@@ -588,4 +589,15 @@ select option:hover {
 
 .scroll1::-webkit-scrollbar-thumb {
     background: #666;
+}
+
+@keyframes slideInTable {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

@@ -1,8 +1,12 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.CheckDao;
-import org.elSasen.dto.CheckDto;
+import org.elSasen.dto.insert.CheckDtoInsert;
+import org.elSasen.dto.select.CheckDto;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.CheckMapper;
+import org.elSasen.validator.CheckValidator;
+import org.elSasen.validator.ValidationResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +17,7 @@ public class CheckService {
     private static final CheckService INSTANCE = new CheckService();
     private final CheckDao checkDao = CheckDao.getInstance();
     private final CheckMapper checkMapper = CheckMapper.getInstance();
+    private final CheckValidator checkValidator = CheckValidator.getInstance();
 
     public List<CheckDto> getCheckTable(String orderBy) {
         var checkTable = checkDao.getCheckTable(orderBy);
@@ -21,12 +26,16 @@ public class CheckService {
                 .collect(Collectors.toList());
     }
 
-    public void insertIntoCheckTable(String[] productName, Integer[] productCount, int clientId) {
-        var productNamesCount = new HashMap<String, Integer>();
-        for (int i = 0; i < productName.length; i++) {
-            productNamesCount.put(productName[i], productCount[i]);
+    public void insertIntoCheckTable(CheckDtoInsert checkDtoInsert) {
+        var validationResult = checkValidator.isValid(checkDtoInsert);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
         }
-        checkDao.insertIntoCheckTable(productNamesCount, clientId);
+        var productNamesCount = new HashMap<String, Integer>();
+        for (int i = 0; i < checkDtoInsert.getProductName().length; i++) {
+            productNamesCount.put(checkDtoInsert.getProductName()[i], checkDtoInsert.getProductCount()[i]);
+        }
+        checkDao.insertIntoCheckTable(productNamesCount, checkDtoInsert.getClientId());
     }
 
     public List<String> getColumnsOfCheck() {

@@ -222,21 +222,21 @@ public class OrderDao {
         }
     }
 
-    public void insertIntoOrder(String serviceName, int employeeId, int clientId, String model, String clientProblem, String comment) {
+    public void insertIntoOrder(Order order) {
         String sql = """
                 INSERT INTO "Order" (service_id, employee_id, client_id, status_id, device_id, comment)
                 VALUES (?, ?, ?, 3, ?, ?);
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
-            var tempServiceId = extraServiceDao.getServiceIdByName(serviceName);
-            var tempDeviceId = clientDeviceDao.insertDeviceAndReturnId(model, clientProblem);
+            var tempServiceId = extraServiceDao.getServiceIdByName(order.getService().getServiceName());
+            var tempDeviceId = clientDeviceDao.insertDeviceAndReturnId(order.getDevice().getModel(), order.getDevice().getClientProblem());
 
             preparedStatement.setInt(1, tempServiceId);
-            preparedStatement.setInt(2, employeeId);
-            preparedStatement.setInt(3, clientId);
+            preparedStatement.setLong(2, order.getEmployee().getEmployeeId());
+            preparedStatement.setLong(3, order.getClient().getClientId());
             preparedStatement.setInt(4, tempDeviceId);
-            preparedStatement.setString(5, comment);
+            preparedStatement.setString(5, order.getComment());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

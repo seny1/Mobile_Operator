@@ -1,7 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.PostDto;
-import org.elSasen.dto.ProductDto;
+import org.elSasen.dto.select.ProductDto;
 import org.elSasen.entities.Product;
 
 public class ProductMapper implements Mapper<Product, ProductDto> {

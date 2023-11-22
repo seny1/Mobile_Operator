@@ -1,14 +1,10 @@
 package org.elSasen.service;
 
-import org.elSasen.dao.ExtraServiceDao;
 import org.elSasen.dao.PostDao;
-import org.elSasen.dto.OrderDto;
-import org.elSasen.dto.PostDto;
-import org.elSasen.mapper.ExtraServiceMapper;
+import org.elSasen.dto.select.PostDto;
 import org.elSasen.mapper.PostMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PostService {

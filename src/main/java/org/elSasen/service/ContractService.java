@@ -1,8 +1,12 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.ContractDao;
-import org.elSasen.dto.ContractDto;
+import org.elSasen.dto.insert.ContractDtoInsert;
+import org.elSasen.dto.select.ContractDto;
+import org.elSasen.entities.Contract;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ContractMapper;
+import org.elSasen.validator.ContractValidator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +17,7 @@ public class ContractService {
     private static final ContractService INSTANCE = new ContractService();
     private final ContractDao contractDao = ContractDao.getInstance();
     private final ContractMapper contractMapper = ContractMapper.getInstance();
+    private final ContractValidator contractValidator = ContractValidator.getInstance();
 
     public List<ContractDto> getContractTable(String orderBy) {
         var contractTable = contractDao.getContractTable(orderBy);
@@ -21,8 +26,13 @@ public class ContractService {
                 .collect(Collectors.toList());
     }
 
-    public void insertIntoContract(String planName, int clientId, LocalDate date) {
-        contractDao.insertIntoContract(planName, clientId, date);
+    public void insertIntoContract(ContractDtoInsert contractDtoInsert) {
+        var validationResult = contractValidator.isValid(contractDtoInsert);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
+        var contract = contractMapper.mapFrom(contractDtoInsert);
+        contractDao.insertIntoContract(contract);
     }
 
     public List<String> getColumnsOfContract() {

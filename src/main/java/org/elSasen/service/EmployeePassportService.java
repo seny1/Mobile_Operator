@@ -1,14 +1,10 @@
 package org.elSasen.service;
 
-import org.elSasen.dao.CallDao;
 import org.elSasen.dao.EmployeePassportDao;
-import org.elSasen.dto.CallDto;
-import org.elSasen.dto.EmployeePassportDto;
-import org.elSasen.mapper.CallMapper;
+import org.elSasen.dto.select.EmployeePassportDto;
 import org.elSasen.mapper.EmployeePassportMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EmployeePassportService {

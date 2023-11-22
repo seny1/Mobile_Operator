@@ -1,4 +1,4 @@
-package org.elSasen.dto;
+package org.elSasen.dto.select;
 
 import lombok.Builder;
 import lombok.Data;

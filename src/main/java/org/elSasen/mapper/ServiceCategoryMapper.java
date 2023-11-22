@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.ServiceCategoryDto;
+import org.elSasen.dto.select.ServiceCategoryDto;
 import org.elSasen.entities.ServiceCategory;
 
 public class ServiceCategoryMapper implements Mapper<ServiceCategory, ServiceCategoryDto> {

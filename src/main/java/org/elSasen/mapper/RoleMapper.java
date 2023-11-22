@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.RoleDto;
+import org.elSasen.dto.select.RoleDto;
 import org.elSasen.entities.Role;
 
 public class RoleMapper implements Mapper<Role, RoleDto>{

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductDao {
     private static final ProductDao INSTANCE = new ProductDao();
@@ -37,18 +38,7 @@ public class ProductDao {
             var productList = new ArrayList<Product>();
             Product product;
             while (resultSet.next()) {
-                product = Product.builder()
-                        .productId(resultSet.getInt("product_id"))
-                        .price(resultSet.getDouble("price"))
-                        .productDescription(resultSet.getString("product_description"))
-                        .productName(resultSet.getString("product_name"))
-                        .category(ProductCategory.builder()
-                                .categoryId(resultSet.getInt("category_id"))
-                                .name(resultSet.getString("name"))
-                                .description(resultSet.getString("description"))
-                                .build())
-                        .count(resultSet.getInt("count"))
-                        .build();
+                product = productBuilder(resultSet);
                 productList.add(product);
             }
             return productList;
@@ -124,6 +114,41 @@ public class ProductDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Optional<Product> getProductByName(String name) {
+        String sql = """
+                SELECT *
+                FROM product
+                JOIN product_category on product.category_id = product_category.category_id
+                WHERE product_name = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.ofNullable(productBuilder(resultSet));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Product productBuilder(ResultSet resultSet) throws SQLException {
+        return Product.builder()
+                .productId(resultSet.getInt("product_id"))
+                .price(resultSet.getDouble("price"))
+                .productDescription(resultSet.getString("product_description"))
+                .productName(resultSet.getString("product_name"))
+                .category(ProductCategory.builder()
+                        .categoryId(resultSet.getInt("category_id"))
+                        .name(resultSet.getString("name"))
+                        .description(resultSet.getString("description"))
+                        .build())
+                .count(resultSet.getInt("count"))
+                .build();
     }
 
     public static ProductDao getInstance() {

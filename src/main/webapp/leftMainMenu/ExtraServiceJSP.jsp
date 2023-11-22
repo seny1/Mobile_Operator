@@ -51,7 +51,7 @@
                 <input class="input" type="text" id="serviceName" name="serviceName" required>
 
                 <label class="label" for="price">Стоимость услуги:</label>
-                <input class="input" type="text" id="price" name="price" required>
+                <input class="input" type="text" id="price" name="price" pattern="^\d+$" required>
 
                 <div class="dropdown">
                     <label class="label" for="serviceCategory">Категория услуги:</label>
@@ -70,6 +70,14 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <c:if test="${not empty requestScope.errors}">
+            <div style="color: red">
+                <c:forEach var="error" items="${requestScope.errors}">
+                    <span>${error.message}</span>
+                    <br>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

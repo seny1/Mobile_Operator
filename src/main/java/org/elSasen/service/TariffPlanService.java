@@ -1,11 +1,10 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.TariffPlanDao;
-import org.elSasen.dto.TariffPlanDto;
+import org.elSasen.dto.select.TariffPlanDto;
 import org.elSasen.mapper.TariffPlanMapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TariffPlanService {

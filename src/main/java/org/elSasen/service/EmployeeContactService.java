@@ -2,7 +2,7 @@ package org.elSasen.service;
 
 
 import org.elSasen.dao.EmployeeContactDao;
-import org.elSasen.dto.EmployeeContactDto;
+import org.elSasen.dto.select.EmployeeContactDto;
 import org.elSasen.mapper.EmployeeContactMapper;
 
 import java.util.List;

@@ -1,8 +1,10 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dao.CallDao;
-import org.elSasen.dto.CallDto;
+import org.elSasen.dto.insert.CallDtoInsert;
+import org.elSasen.dto.select.CallDto;
 import org.elSasen.entities.Call;
+import org.elSasen.entities.Client;
+import org.elSasen.entities.ClientPassport;
 
 public class CallMapper implements Mapper<Call, CallDto> {
 
@@ -15,6 +17,16 @@ public class CallMapper implements Mapper<Call, CallDto> {
                 .client(call.getClient())
                 .subscriberNumber(call.getSubscriberNumber())
                 .callDuration(call.getCallDuration())
+                .build();
+    }
+
+    public Call mapFrom(CallDtoInsert callDto) {
+        return Call.builder()
+                .client(Client.builder()
+                        .clientId(callDto.getClientId())
+                        .build())
+                .subscriberNumber(callDto.getSubscriberNumber())
+                .callDuration(callDto.getCallDuration())
                 .build();
     }
 

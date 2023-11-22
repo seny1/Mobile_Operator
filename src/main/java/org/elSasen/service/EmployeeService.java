@@ -1,8 +1,12 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.EmployeeDao;
-import org.elSasen.dto.EmployeeDto;
+import org.elSasen.dto.insert.EmployeeDtoInsert;
+import org.elSasen.dto.select.EmployeeDto;
+import org.elSasen.entities.Employee;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.EmployeeMapper;
+import org.elSasen.validator.EmployeeValidator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +17,7 @@ public class EmployeeService {
 
     private static final EmployeeService INSTANCE = new EmployeeService();
     private final EmployeeDao employeeDao = EmployeeDao.getInstance();
+    private final EmployeeValidator employeeValidator = EmployeeValidator.getInstance();
     private final EmployeeMapper employeeMapper = EmployeeMapper.getInstance();
     public Optional<EmployeeDto> findUser(String login, String password) {
         return employeeDao.findByLoginAndPassword(login, password)
@@ -25,8 +30,13 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public void insertIntoEmployee(String departmentName, String salonAddress, String firstName, String lastName, String postName, String series, String number, LocalDate birthday, LocalDate issueDate, String placeCode, String workNumber, String personalNumber, String login, String password, String roleName) {
-        employeeDao.insertIntoEmployee(departmentName, salonAddress, firstName, lastName, postName, series, number, birthday, issueDate, placeCode, workNumber, personalNumber, login, password, roleName);
+    public void insertIntoEmployee(EmployeeDtoInsert employeeDtoInsert) {
+        var validationResult = employeeValidator.isValid(employeeDtoInsert);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
+        var employee = employeeMapper.mapFrom(employeeDtoInsert);
+        employeeDao.insertIntoEmployee(employee);
     }
 
     public List<String> getColumnsOfEmployee() {

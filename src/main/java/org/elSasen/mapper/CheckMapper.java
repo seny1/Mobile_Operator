@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.CheckDto;
+import org.elSasen.dto.select.CheckDto;
 import org.elSasen.entities.Check;
 
 public class CheckMapper implements Mapper<Check, CheckDto> {

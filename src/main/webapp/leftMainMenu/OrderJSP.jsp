@@ -112,10 +112,10 @@
                 </div>
 
                 <label class="label" for="employeeId">ID сотрудника:</label>
-                <input class="input-box" type="text" id="employeeId" name="employeeId" required>
+                <input class="input-box" type="text" id="employeeId" name="employeeId" pattern="^\d+$" required>
 
                 <label class="label" for="clientId">ID клиента:</label>
-                <input class="input-box" type="text" id="clientId" name="clientId" value="${sessionScope.clientId}" required>
+                <input class="input-box" type="text" id="clientId" name="clientId" value="${sessionScope.clientId}" pattern="^\d+$" required>
 
                 <label class="label" for="model">Модель устройства:</label>
                 <input class="input-box" type="text" id="model" name="model" required>
@@ -130,6 +130,14 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <c:if test="${not empty requestScope.errors}">
+            <div style="color: red">
+                <c:forEach var="error" items="${requestScope.errors}">
+                    <span>${error.message}</span>
+                    <br>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

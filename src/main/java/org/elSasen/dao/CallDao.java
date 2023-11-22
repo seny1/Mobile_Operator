@@ -1,5 +1,6 @@
 package org.elSasen.dao;
 
+import org.elSasen.dto.insert.CallDtoInsert;
 import org.elSasen.entities.Call;
 import org.elSasen.entities.Client;
 import org.elSasen.entities.ClientContact;
@@ -93,16 +94,16 @@ public class CallDao {
         }
     }
 
-    public void insertIntoCallTable(int clientId, String subscriberNumber, double callDuration) {
+    public void insertIntoCallTable(Call call) {
         String sql = """
                 INSERT INTO call (client_id, subscriber_number, call_duration)
                 VALUES (?, ?, ?)
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, clientId);
-            preparedStatement.setString(2, subscriberNumber);
-            preparedStatement.setDouble(3, callDuration);
+            preparedStatement.setLong(1, call.getClient().getClientId());
+            preparedStatement.setString(2, call.getSubscriberNumber());
+            preparedStatement.setDouble(3, call.getCallDuration());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,10 +1,11 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.ProductDao;
-import org.elSasen.dto.ProductDto;
+import org.elSasen.dto.select.ProductDto;
 import org.elSasen.mapper.ProductMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -30,6 +31,10 @@ public class ProductService {
         return productDao.getMetaData();
     }
 
+    public Optional<ProductDto> getProductByName(String name) {
+        return productDao.getProductByName(name)
+                .map(productMapper::mapFrom);
+    }
     public static ProductService getInstance() {
         return INSTANCE;
     }

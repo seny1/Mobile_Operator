@@ -71,14 +71,20 @@
                     </div>
 
                     <label class="label" for="productCount${i}">Количество товара:</label>
-                    <input class="input" type="text" id="productCount${i}" name="productCount${i}" required>
-
-                    <br>
+                    <input class="input" type="text" id="productCount${i}" name="productCount${i}" pattern="^\d+$" required>
                 </c:forEach>
                 <input class="input" type="submit" value="Отправить">
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <c:if test="${not empty requestScope.errors}">
+            <div style="color: red">
+                <c:forEach var="error" items="${requestScope.errors}">
+                    <span>${error.message}</span>
+                    <br>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

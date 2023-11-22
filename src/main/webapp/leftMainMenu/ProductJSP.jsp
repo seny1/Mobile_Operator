@@ -68,7 +68,7 @@
                 </div>
 
                 <label class="label" for="productCount">Количество товара:</label>
-                <input class="input" type="text" id="productCount" name="productCount" pattern="\d+" required>
+                <input class="input" type="text" id="productCount" name="productCount" pattern="^\d+$" required>
 
                 <input class="input" type="submit" value="Отправить">
             </form>

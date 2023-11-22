@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.StatusDto;
+import org.elSasen.dto.select.StatusDto;
 import org.elSasen.entities.Status;
 
 public class StatusMapper implements Mapper<Status, StatusDto> {

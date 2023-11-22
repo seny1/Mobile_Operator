@@ -5,6 +5,8 @@ import org.elSasen.entities.ClientContact;
 import org.elSasen.entities.ClientPassport;
 import org.elSasen.util.ConnectionManager;
 
+import javax.swing.text.html.parser.Entity;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,12 +27,12 @@ public class ClientDao {
                 SELECT client_id,
                        cp.passport_id,
                        birthday,
-                       cp.number,
+                       cp.number as number_of_passport,
                        series,
                        first_name,
                        last_name,
                        cc.contact_id,
-                       cc.number,
+                       cc.number as number_of_contact,
                        type
                 FROM client
                 JOIN public.client_passport cp on cp.passport_id = client.passport_id
@@ -41,33 +43,18 @@ public class ClientDao {
         var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             Client client;
-            var clientSet = new ArrayList<Client>();
+            var clientList = new ArrayList<Client>();
             while (resultSet.next()) {
-                client = Client.builder()
-                        .clientId(resultSet.getLong("client_id"))
-                        .passport(ClientPassport.builder()
-                                .passportId(resultSet.getLong("passport_id"))
-                                .birthday(resultSet.getObject("birthday", LocalDate.class))
-                                .number(resultSet.getString("number"))
-                                .series(resultSet.getString("series"))
-                                .build())
-                        .firstName(resultSet.getString("first_name"))
-                        .lastName(resultSet.getString("last_name"))
-                        .contact(ClientContact.builder()
-                                .contactId(resultSet.getLong("contact_id"))
-                                .number(resultSet.getString("number"))
-                                .type(resultSet.getString("type"))
-                                .build())
-                        .build();
-                clientSet.add(client);
+                client = buildClient(resultSet);
+                clientList.add(client);
             }
-            return clientSet;
+            return clientList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int insertIntoClientTable(String first_name, String last_name, String series, String numberOfPassport, LocalDate birthday, String numberOfContact, String type) {
+    public int insertIntoClientTable(Client client) {
         String sqlInsertPassportContact = """
                 INSERT INTO client_passport (series, number, birthday)
                 VALUES (?, ?, ?);
@@ -93,27 +80,27 @@ public class ClientDao {
              var preparedStatementGetPass = connection.prepareStatement(sqlGetPassportId);
              var preparedStatementGetCont = connection.prepareStatement(sqlGetContactId);
              var preparedStatementClient = connection.prepareStatement(sqlInsertClient, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatementPassCont.setString(1, series);
-            preparedStatementPassCont.setString(2, numberOfPassport);
-            preparedStatementPassCont.setObject(3, birthday);
-            preparedStatementPassCont.setString(4, numberOfContact);
-            preparedStatementPassCont.setString(5, type);
+            preparedStatementPassCont.setString(1, client.getPassport().getSeries());
+            preparedStatementPassCont.setString(2, client.getPassport().getNumber());
+            preparedStatementPassCont.setObject(3, client.getPassport().getBirthday());
+            preparedStatementPassCont.setString(4, client.getContact().getNumber());
+            preparedStatementPassCont.setString(5, client.getContact().getType());
             preparedStatementPassCont.executeUpdate();
 
-            preparedStatementGetPass.setString(1, series);
-            preparedStatementGetPass.setString(2, numberOfPassport);
+            preparedStatementGetPass.setString(1, client.getPassport().getSeries());
+            preparedStatementGetPass.setString(2, client.getPassport().getNumber());
             var resultSet = preparedStatementGetPass.executeQuery();
             resultSet.next();
             int tempPassportId = resultSet.getInt("passport_id");
 
-            preparedStatementGetCont.setString(1, numberOfContact);
+            preparedStatementGetCont.setString(1, client.getContact().getNumber());
             resultSet = preparedStatementGetCont.executeQuery();
             resultSet.next();
             int tempContactId = resultSet.getInt("contact_id");
 
             preparedStatementClient.setInt(1, tempPassportId);
-            preparedStatementClient.setString(2, first_name);
-            preparedStatementClient.setString(3, last_name);
+            preparedStatementClient.setString(2, client.getFirstName());
+            preparedStatementClient.setString(3, client.getLastName());
             preparedStatementClient.setInt(4, tempContactId);
             preparedStatementClient.executeUpdate();
 
@@ -147,6 +134,55 @@ public class ClientDao {
         }
     }
 
+    public Optional<Client> findClientById(int clientId) {
+        String sql = """
+                SELECT client_id,
+                       cp.passport_id,
+                       birthday,
+                       cp.number as number_of_passport,
+                       series,
+                       first_name,
+                       last_name,
+                       cc.contact_id,
+                       cc.number as number_of_contact,
+                       type
+                FROM client
+                JOIN public.client_passport cp on cp.passport_id = client.passport_id
+                JOIN public.client_contact cc on client.contact_id = cc.contact_id
+                WHERE client_id = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, clientId);
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            var client = buildClient(resultSet);
+            return Optional.ofNullable(client);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Client buildClient(ResultSet resultSet) throws SQLException {
+        return Client.builder()
+                .clientId(resultSet.getLong("client_id"))
+                .passport(ClientPassport.builder()
+                        .passportId(resultSet.getLong("passport_id"))
+                        .birthday(resultSet.getObject("birthday", LocalDate.class))
+                        .number(resultSet.getString("number_of_passport"))
+                        .series(resultSet.getString("series"))
+                        .build())
+                .firstName(resultSet.getString("first_name"))
+                .lastName(resultSet.getString("last_name"))
+                .contact(ClientContact.builder()
+                        .contactId(resultSet.getLong("contact_id"))
+                        .number(resultSet.getString("number_of_contact"))
+                        .type(resultSet.getString("type"))
+                        .build())
+                .build();
+    }
     public static ClientDao getInstance() {
         return INSTANCE;
     }

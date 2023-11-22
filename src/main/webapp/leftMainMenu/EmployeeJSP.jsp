@@ -63,11 +63,10 @@
                     <input class="input" type="text" id="lastName" name="lastName" required>
 
                     <label class="label" for="series">Серия паспорта:</label>
-                    <input class="input" type="text" id="series" name="series" pattern="\d{4}" required>
+                    <input class="input" type="text" id="series" name="series" pattern="\d{4}" placeholder="xxxx" required>
 
                     <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                    <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="\d{6}"
-                           required>
+                    <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="\d{6}" placeholder="xxxxxx" required>
 
                     <label class="label" for="birthday">Дата рождения:</label>
                     <input class="input" type="date" id="birthday" name="birthday" required>
@@ -76,14 +75,14 @@
                     <input class="input" type="date" id="issueDate" name="issueDate" required>
 
                     <label class="label" for="placeCode">Код подразделения:</label>
-                    <input class="input" type="text" id="placeCode" name="placeCode" pattern="^\d{3}\-\d{3}$" required>
+                    <input class="input" type="text" id="placeCode" name="placeCode" pattern="^\d{3}\-\d{3}$" placeholder="xxx-xxx" required>
 
                     <label class="label" for="personalNumber">Личный номер телефона:</label>
-                    <input class="input" type="text" id="personalNumber" name="personalNumber" pattern="^\+7\d{10}$"
+                    <input class="input" type="text" id="personalNumber" name="personalNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$"
                            required>
 
                     <label class="label" for="workNumber">Рабочий номер телефона:</label>
-                    <input class="input" type="text" id="workNumber" name="workNumber" pattern="^\+7\d{10}$" required>
+                    <input class="input" type="text" id="workNumber" name="workNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
 
                     <label class="label" for="login">Логин:</label>
                     <input class="input" type="text" id="login" name="login" required>
@@ -93,8 +92,7 @@
 
                     <div class="dropdown">
                         <label class="label" for="department">Департамент:</label>
-                        <input class="input-box" type="text" id="department" list="dropdown-options1" name="department"
-                               required>
+                        <input class="input-box" type="text" id="department" list="dropdown-options1" name="department" required>
                         <datalist id="dropdown-options1">
                             <c:forEach var="department" items="${sessionScope.departments}">
                                 <option value="${department}">${department}</option>
@@ -137,6 +135,14 @@
             </div>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <c:if test="${not empty requestScope.errors}">
+            <div style="color: red">
+                <c:forEach var="error" items="${requestScope.errors}">
+                    <span>${error.message}</span>
+                    <br>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

@@ -50,15 +50,23 @@
                     <input class="input" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
 
                     <label class="label" for="subscriberNumber">Номер абонента:</label>
-                    <input class="input" type="text" id="subscriberNumber" name="subscriberNumber" pattern="^\+7\d{10}$" required>
+                    <input class="input" type="text" id="subscriberNumber" name="subscriberNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
 
                     <label class="label" for="callDuration">Продолжительность звонка:</label>
-                    <input class="input" type="text" id="callDuration" name="callDuration" pattern="^\d+$" required>
+                    <input class="input" type="text" id="callDuration" name="callDuration" pattern="^\d+\.\d+$" placeholder="xx.xx" required>
 
                     <input class="input" type="submit" value="Отправить">
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
+            <c:if test="${not empty requestScope.errors}">
+                <div style="color: red">
+                    <c:forEach var="error" items="${requestScope.errors}">
+                        <span>${error.message}</span>
+                        <br>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </div>
 </body>

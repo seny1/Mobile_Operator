@@ -1,6 +1,6 @@
 package org.elSasen.mapper;
 
-import org.elSasen.dto.PostDto;
+import org.elSasen.dto.select.PostDto;
 import org.elSasen.entities.Post;
 
 public class PostMapper implements Mapper<Post, PostDto> {
