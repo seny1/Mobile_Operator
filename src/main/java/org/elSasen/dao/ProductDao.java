@@ -69,7 +69,7 @@ public class ProductDao {
         }
     }
 
-    public void insertIntoProductTable(double price, String productDescription, String productName, String categoryName, int count) {
+    public void insertIntoProductTable(Product product) {
         String getCategoryId = """
                 SELECT category_id
                 FROM product_category
@@ -82,16 +82,16 @@ public class ProductDao {
         try (var connection = ConnectionManager.get();
         var preparedStatementCategoryId = connection.prepareStatement(getCategoryId);
         var preparedStatementInsertProduct = connection.prepareStatement(insertProduct)) {
-            preparedStatementCategoryId.setString(1, categoryName);
+            preparedStatementCategoryId.setString(1, product.getCategory().getName());
             var resultSet = preparedStatementCategoryId.executeQuery();
             resultSet.next();
             var tempCategoryId = resultSet.getInt(1);
 
-            preparedStatementInsertProduct.setDouble(1, price);
-            preparedStatementInsertProduct.setString(2, productDescription);
-            preparedStatementInsertProduct.setString(3, productName);
+            preparedStatementInsertProduct.setDouble(1, product.getPrice());
+            preparedStatementInsertProduct.setString(2, product.getProductDescription());
+            preparedStatementInsertProduct.setString(3, product.getProductName());
             preparedStatementInsertProduct.setInt(4, tempCategoryId);
-            preparedStatementInsertProduct.setInt(5, count);
+            preparedStatementInsertProduct.setInt(5, product.getCount());
             preparedStatementInsertProduct.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Статусы заказов</title>
+    <title>Тарифные планы</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -52,21 +52,29 @@
                 <input class="input" type="text" id="planName" name="planName"  required>
 
                 <label class="label" for="callMinutes">Минуты:</label>
-                <input class="input" type="text" id="callMinutes" name="callMinutes" pattern="^\d+&" required>
+                <input class="input" type="text" id="callMinutes" name="callMinutes" pattern="^\d+" required>
 
                 <label class="label" for="internetGb">Гигабайты:</label>
-                <input class="input" type="text" id="internetGb" name="internetGb" pattern="^\d+&" required>
+                <input class="input" type="text" id="internetGb" name="internetGb" pattern="^\d+" required>
 
                 <label class="label" for="smsNumber">Сообщения:</label>
-                <input class="input" type="text" id="smsNumber" name="smsNumber" pattern="^\d+&" required>
+                <input class="input" type="text" id="smsNumber" name="smsNumber" pattern="^\d+" required>
 
                 <label class="label" for="price">Стоимость:</label>
-                <input class="input" type="text" id="price" name="price" pattern="^\d+&" required>
+                <input class="input" type="text" id="price" name="price" pattern="^\d+" required>
 
                 <input class="input" type="submit" value="Отправить">
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <c:if test="${not empty requestScope.errors}">
+            <div style="color: red">
+                <c:forEach var="error" items="${requestScope.errors}">
+                    <span>${error.message}</span>
+                    <br>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

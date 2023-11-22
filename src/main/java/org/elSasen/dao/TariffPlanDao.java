@@ -90,18 +90,18 @@ public class TariffPlanDao {
         }
     }
 
-    public void insertIntoTariffPlan(String planName, int callMinutes, int internetGb, int smsNumber, int price) {
+    public void insertIntoTariffPlan(TariffPlan tariffPlan) {
         String sql = """
                 INSERT INTO tariff_plan (plan_name, call_minutes, internet_gb, sms_number, price)
                 VALUES (?, ?, ?, ?, ?);
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, planName);
-            preparedStatement.setInt(2, callMinutes);
-            preparedStatement.setInt(3, internetGb);
-            preparedStatement.setInt(4, smsNumber);
-            preparedStatement.setInt(5, price);
+            preparedStatement.setString(1, tariffPlan.getPlanName());
+            preparedStatement.setInt(2, tariffPlan.getCallMinutes());
+            preparedStatement.setInt(3, tariffPlan.getInternetGb());
+            preparedStatement.setInt(4, tariffPlan.getSmsNumber());
+            preparedStatement.setInt(5, tariffPlan.getPrice());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

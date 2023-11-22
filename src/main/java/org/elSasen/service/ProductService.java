@@ -1,8 +1,13 @@
 package org.elSasen.service;
 
 import org.elSasen.dao.ProductDao;
+import org.elSasen.dto.insert.ProductDtoInsert;
 import org.elSasen.dto.select.ProductDto;
+import org.elSasen.entities.Product;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ProductMapper;
+import org.elSasen.validator.ProductValidator;
+import org.elSasen.validator.ValidationResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +17,7 @@ public class ProductService {
     private static final ProductService INSTANCE = new ProductService();
     private final ProductDao productDao = ProductDao.getInstance();
     private final ProductMapper productMapper = ProductMapper.getInstance();
+    private final ProductValidator productValidator = ProductValidator.getInstance();
 
     public List<ProductDto> getProductTable(String orderBy) {
         var productTable = productDao.getProductTable(orderBy);
@@ -20,8 +26,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void insertIntoProductTable(double price, String productDescription, String productName, String categoryName, int count) {
-        productDao.insertIntoProductTable(price, productDescription, productName, categoryName, count);
+    public void insertIntoProductTable(ProductDtoInsert productDtoInsert) {
+        var validationResult = productValidator.isValid(productDtoInsert);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
+        var product = productMapper.mapFrom(productDtoInsert);
+        productDao.insertIntoProductTable(product);
     }
     public List<String> getProductNames() {
         return productDao.getProductNames();

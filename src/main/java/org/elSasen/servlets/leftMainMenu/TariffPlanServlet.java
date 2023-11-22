@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.elSasen.dto.insert.TariffPlanDtoInsert;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.service.StatusService;
 import org.elSasen.service.TariffPlanService;
 
@@ -23,13 +25,19 @@ public class TariffPlanServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        tariffPlanService.insertIntoTariffPlan(
-                req.getParameter("planName"),
-                Integer.parseInt(req.getParameter("callMinutes")),
-                Integer.parseInt(req.getParameter("internetGb")),
-                Integer.parseInt(req.getParameter("smsNumber")),
-                Integer.parseInt(req.getParameter("price"))
-        );
-        resp.sendRedirect("/tariffPlanTable");
+        var tariffPlanDtoInsert = TariffPlanDtoInsert.builder()
+                .planName(req.getParameter("planName"))
+                .callMinutes(Integer.parseInt(req.getParameter("callMinutes")))
+                .internetGb(Integer.parseInt(req.getParameter("internetGb")))
+                .smsNumber(Integer.parseInt(req.getParameter("smsNumber")))
+                .price(Integer.parseInt(req.getParameter("price")))
+                .build();
+        try {
+            tariffPlanService.insertIntoTariffPlan(tariffPlanDtoInsert);
+            resp.sendRedirect("/tariffPlanTable");
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
+        }
     }
 }
