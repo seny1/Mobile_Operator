@@ -30,6 +30,7 @@
                             <td>${client.firstName}</td>
                             <td>${client.lastName}</td>
                             <td>${client.contact.contactId}</td>
+                            <td>${client.remainMinutes}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

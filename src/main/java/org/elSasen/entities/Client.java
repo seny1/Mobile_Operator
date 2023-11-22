@@ -11,4 +11,5 @@ public class Client {
     String firstName;
     String lastName;
     ClientContact contact;
+    int remainMinutes;
 }

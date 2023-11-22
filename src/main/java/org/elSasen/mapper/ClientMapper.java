@@ -18,6 +18,7 @@ public class ClientMapper implements Mapper<Client, ClientDto> {
                 .firstName(client.getFirstName())
                 .lastName(client.getLastName())
                 .contact(client.getContact())
+                .remainMinutes(client.getRemainMinutes())
                 .build();
     }
 

@@ -13,4 +13,5 @@ public class ClientDto {
     String firstName;
     String lastName;
     ClientContact contact;
+    int remainMinutes;
 }

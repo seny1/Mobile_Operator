@@ -33,7 +33,8 @@ public class ClientDao {
                        last_name,
                        cc.contact_id,
                        cc.number as number_of_contact,
-                       type
+                       type,
+                       remain_minutes
                 FROM client
                 JOIN public.client_passport cp on cp.passport_id = client.passport_id
                 JOIN public.client_contact cc on client.contact_id = cc.contact_id
@@ -118,7 +119,8 @@ public class ClientDao {
                        passport_id,
                        first_name,
                        last_name,
-                       contact_id
+                       contact_id,
+                       remain_minutes
                 FROM client;
                 """;
         try (var connection = ConnectionManager.get();
@@ -181,6 +183,7 @@ public class ClientDao {
                         .number(resultSet.getString("number_of_contact"))
                         .type(resultSet.getString("type"))
                         .build())
+                .remainMinutes(resultSet.getInt("remain_minutes"))
                 .build();
     }
     public static ClientDao getInstance() {
