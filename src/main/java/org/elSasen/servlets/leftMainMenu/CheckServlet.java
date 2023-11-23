@@ -21,6 +21,7 @@ public class CheckServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("checkTable", checkService.getCheckTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", checkService.getColumnsOfCheck());
+        req.setAttribute("goodColumnNames", checkService.getGoodMetaData());
         req.getRequestDispatcher("leftMainMenu/CheckJSP.jsp").forward(req, resp);
     }
 

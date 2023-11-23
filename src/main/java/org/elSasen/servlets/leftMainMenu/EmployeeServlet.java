@@ -29,6 +29,7 @@ public class EmployeeServlet extends HttpServlet {
         req.getSession().setAttribute("salons", communicationSalonService.getSalons());
         req.getSession().setAttribute("posts", postService.getPosts());
         req.getSession().setAttribute("roles", roleService.getRoles());
+        req.setAttribute("goodColumnNames", employeeService.getGoodColumnsOfEmployee());
         req.getRequestDispatcher("leftMainMenu/EmployeeJSP.jsp").forward(req, resp);
     }
 
