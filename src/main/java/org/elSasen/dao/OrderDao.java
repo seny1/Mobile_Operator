@@ -37,8 +37,8 @@ public class OrderDao {
                 e.employee_id,
                 e.department_id,
                 e.salon_id,
-                e.first_name,
-                e.last_name,
+                e.first_name AS employee_first_name,
+                e.last_name AS employee_last_name,
                 e.post_id,
                 e.passport_id,
                 e.contact_id,
@@ -47,8 +47,8 @@ public class OrderDao {
                 e.password,
                 c.client_id,
                 c.passport_id,
-                c.first_name,
-                c.last_name,
+                c.first_name AS client_first_name,
+                c.last_name AS client_last_name,
                 c.contact_id,
                 c.remain_minutes,
                 s.status_id,
@@ -100,7 +100,7 @@ public class OrderDao {
                 join employee_contact as ec on e.contact_id = ec.contact_id
                 join role as r on e.role_id = r.role_id
                 join client_contact as cc on c.contact_id = cc.contact_id
-                ORDER BY "Order".
+                ORDER BY
                 """ + orderBy;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
@@ -134,8 +134,8 @@ public class OrderDao {
                                         .address(resultSet.getString("address"))
                                         .employeeNumber(resultSet.getInt("employee_number"))
                                         .build())
-                                .firstName(resultSet.getString("first_name"))
-                                .lastName(resultSet.getString("last_name"))
+                                .firstName(resultSet.getString("employee_first_name"))
+                                .lastName(resultSet.getString("employee_last_name"))
                                 .post(Post.builder()
                                         .postId(resultSet.getInt("post_id"))
                                         .postName(resultSet.getString("post_name"))
@@ -170,8 +170,8 @@ public class OrderDao {
                                         .numberOfPassport(resultSet.getString("number"))
                                         .series(resultSet.getString("series"))
                                         .build())
-                                .firstName(resultSet.getString("first_name"))
-                                .lastName(resultSet.getString("last_name"))
+                                .firstName(resultSet.getString("client_first_name"))
+                                .lastName(resultSet.getString("client_last_name"))
                                 .contact(ClientContact.builder()
                                         .contactId(resultSet.getLong("contact_id"))
                                         .numberOfContact(resultSet.getString("number"))
@@ -208,6 +208,36 @@ public class OrderDao {
                 "Order".device_id,
                 "Order".comment
                 FROM "Order"
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT service_name,
+                       e.first_name AS employee_first_name,
+                       e.last_name AS employee_last_name,
+                       c.first_name AS client_first_name,
+                       c.last_name AS client_last_name,
+                       name AS status,
+                       model,
+                       client_problem
+                FROM "Order"
+                JOIN extra_service AS es ON "Order".service_id = es.service_id
+                JOIN employee AS e ON "Order".employee_id = e.employee_id
+                JOIN client AS c ON "Order".client_id = c.client_id
+                JOIN status AS s ON "Order".status_id = s.status_id
+                JOIN client_device AS cd ON "Order".device_id = cd.device_id;
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {

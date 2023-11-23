@@ -29,6 +29,9 @@ public class OrderService {
         return orderDao.getMetaData();
     }
 
+    public List<String> getGoodColumnsOfOrder() {
+        return orderDao.getGoodMetaData();
+    }
     public void insertIntoOrder(OrderDtoInsert orderDtoInsert) {
         var validationResult = orderValidator.isValid(orderDtoInsert);
         if (!validationResult.isValid()) {

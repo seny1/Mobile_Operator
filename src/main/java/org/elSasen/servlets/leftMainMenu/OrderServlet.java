@@ -25,6 +25,7 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("orderTable", orderService.getOrderTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", orderService.getColumnsOfOrder());
+        req.setAttribute("goodColumnNames", orderService.getGoodColumnsOfOrder());
         req.getSession().setAttribute("services", extraServiceService.getServices());
         req.getRequestDispatcher("leftMainMenu/OrderJSP.jsp").forward(req, resp);
     }
