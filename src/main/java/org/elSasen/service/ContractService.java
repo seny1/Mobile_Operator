@@ -38,6 +38,9 @@ public class ContractService {
     public List<String> getColumnsOfContract() {
         return contractDao.getMetaData();
     }
+    public List<String> getGoodColumnsOfContract() {
+        return contractDao.getGoodMetaData();
+    }
 
     public static ContractService getInstance() {
         return INSTANCE;

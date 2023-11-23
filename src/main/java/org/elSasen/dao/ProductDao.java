@@ -25,12 +25,12 @@ public class ProductDao {
                 product_name,
                 product.category_id,
                 count,
-                product_category.category_id,
-                product_category.name,
+                product_category.category_id as id_of_category,
+                product_category.name as service_name,
                 product_category.description
                 FROM product
                 JOIN product_category on product.category_id = product_category.category_id
-                ORDER BY product.
+                ORDER BY 
                 """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
@@ -55,6 +55,29 @@ public class ProductDao {
                 category_id,
                 count
                 FROM product
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT product_id,
+                price,
+                product_description,
+                product_name,
+                name as service_name,
+                count
+                FROM product
+                JOIN product_category ON product.category_id = product_category.category_id
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {
@@ -144,7 +167,7 @@ public class ProductDao {
                 .productName(resultSet.getString("product_name"))
                 .category(ProductCategory.builder()
                         .categoryId(resultSet.getInt("category_id"))
-                        .name(resultSet.getString("name"))
+                        .name(resultSet.getString("service_name"))
                         .description(resultSet.getString("description"))
                         .build())
                 .count(resultSet.getInt("count"))

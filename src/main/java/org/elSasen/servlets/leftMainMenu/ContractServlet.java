@@ -22,7 +22,7 @@ public class ContractServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("contractTable", contractService.getContractTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", contractService.getColumnsOfContract());
-        req.getSession().setAttribute("planNames", tariffPlanService.getPlans());
+        req.setAttribute("goodColumnNames", contractService.getGoodColumnsOfContract());
         req.getRequestDispatcher("/leftMainMenu/ContractJSP.jsp").forward(req, resp);
     }
 

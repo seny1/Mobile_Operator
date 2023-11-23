@@ -59,6 +59,8 @@ public class CallDao {
                                         .numberOfPassport(resultSet.getString("number"))
                                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                                         .build())
+                                .firstName(resultSet.getString("first_name"))
+                                .lastName(resultSet.getString("last_name"))
                                 .contact(ClientContact.builder()
                                         .contactId(resultSet.getLong("contact_id"))
                                         .numberOfContact(resultSet.getString("number"))
@@ -93,7 +95,28 @@ public class CallDao {
             throw new RuntimeException(e);
         }
     }
-
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT call_id,
+                subscriber_number,
+                call_duration,
+                first_name,
+                last_name
+                FROM call
+                join client on call.client_id = client.client_id;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void insertIntoCallTable(Call call) {
         String sql = """
                 INSERT INTO call (client_id, subscriber_number, call_duration)

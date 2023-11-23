@@ -10,6 +10,7 @@
 </header>
 <div class="content">
     <%@include file="../leftMenu.jsp" %>
+    <c:if test="${empty param.good}">
     <div class="scroll-table" style="width: 100%">
         <table style="width: 100%">
             <thead>
@@ -70,6 +71,9 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <form class="dropdown" method="get" action="${pageContext.request.contextPath}/extraServiceTablet">
+            <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
+        </form>
         <c:if test="${not empty requestScope.errors}">
             <div style="color: red">
                 <c:forEach var="error" items="${requestScope.errors}">
@@ -79,6 +83,47 @@
             </div>
         </c:if>
     </div>
+    </c:if>
+    <c:if test="${not empty param.good}">
+        <div class="scroll-table" style="width: 100%">
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
+                        <th>${column}</th>
+                    </c:forEach>
+                </tr>
+                </thead>
+            </table>
+            <div class="scroll-table-body">
+                <table class="table1">
+                    <tbody>
+                    <c:forEach var="extraService" items="${requestScope.extraServiceTable}">
+                        <tr>
+                            <td>${extraService.serviceId}</td>
+                            <td>${extraService.serviceDescription}</td>
+                            <td>${extraService.price}</td>
+                            <td>${extraService.serviceName}</td>
+                            <td>${extraService.category.name}</td>
+                            <td>${extraService.category.difficulty}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Сортировать по</button>
+                <div class="dropdown-content">
+                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
+                        <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=${column}">${column}</a>
+                    </c:forEach>
+                </div>
+            </div>
+            <form class="dropdown" method="get" action="${pageContext.request.contextPath}/extraServiceTable">
+                <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
+            </form>
+        </div>
+    </c:if>
 </div>
 </body>
 </html>

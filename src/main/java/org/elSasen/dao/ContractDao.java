@@ -30,7 +30,7 @@ public class ContractDao {
                        c.client_id,
                        cp.passport_id,
                        cp.series,
-                       cp.number,
+                       cp.number as number_of_phone,
                        cp.birthday,
                        c.first_name,
                        c.last_name,
@@ -66,7 +66,7 @@ public class ContractDao {
                                 .passport(ClientPassport.builder()
                                         .passportId(resultSet.getLong("passport_id"))
                                         .series(resultSet.getString("series"))
-                                        .numberOfPassport(resultSet.getString("number"))
+                                        .numberOfPassport(resultSet.getString("number_of_phone"))
                                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                                         .build())
                                 .firstName(resultSet.getString("first_name"))
@@ -91,6 +91,31 @@ public class ContractDao {
         String sql = """
                 SELECT *
                 FROM contract;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT contract_id,
+                plan_name,
+                first_name,
+                last_name,
+                client_contact.number as number_of_phone,
+                date
+                FROM contract
+                join client on contract.client_id = client.client_id
+                join tariff_plan on contract.plan_id = tariff_plan.plan_id
+                join client_contact on client.contact_id = client_contact.contact_id;
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {

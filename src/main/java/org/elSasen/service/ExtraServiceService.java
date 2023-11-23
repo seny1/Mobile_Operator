@@ -28,6 +28,9 @@ public class ExtraServiceService {
     public List<String> getColumnsOfExtraService() {
         return extraServiceDao.getMetaData();
     }
+    public List<String> getGoodColumnsOfExtraService() {
+        return extraServiceDao.getGoodMetaData();
+    }
 
     public List<String> getServices() {
         return extraServiceDao.getServices();

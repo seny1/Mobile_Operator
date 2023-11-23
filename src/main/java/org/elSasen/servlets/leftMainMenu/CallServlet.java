@@ -20,6 +20,7 @@ public class CallServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("callTable", callService.getCallTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", callService.getColumnsOfCall());
+        req.setAttribute("goodColumnNames", callService.getGoodColumnsOfCall());
         req.getRequestDispatcher("leftMainMenu/CallJSP.jsp").forward(req, resp);
     }
 

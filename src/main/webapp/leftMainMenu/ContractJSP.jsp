@@ -11,6 +11,7 @@
 </header>
 <div class="content">
     <%@include file="../leftMenu.jsp" %>
+    <c:if test="${empty param.good}">
     <div class="scroll-table" style="width: 100%">
         <table style="width: 100%">
             <thead>
@@ -67,6 +68,9 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <form class="dropdown" method="get" action="${pageContext.request.contextPath}/contractTable">
+            <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
+        </form>
         <c:if test="${not empty requestScope.errors}">
             <div style="color: red">
                 <c:forEach var="error" items="${requestScope.errors}">
@@ -75,7 +79,49 @@
                 </c:forEach>
             </div>
         </c:if>
-    </div>
+        </div>
+        </c:if>
+
+        <c:if test="${not empty param.good}">
+            <div class="scroll-table" style="width: 100%">
+                <table style="width: 100%">
+                    <thead>
+                    <tr>
+                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
+                            <th>${column}</th>
+                        </c:forEach>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="scroll-table-body">
+                    <table class="table1">
+                        <tbody>
+                        <c:forEach var="contract" items="${requestScope.contractTable}">
+                            <tr>
+                                <td>${contract.contractId}</td>
+                                <td>${contract.plan.planName}</td>
+                                <td>${contract.client.firstName}</td>
+                                <td>${contract.client.firstName}</td>
+                                <td>${contract.client.contact.numberOfContact}</td>
+                                <td>${contract.date}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Сортировать по</button>
+                    <div class="dropdown-content">
+                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
+                            <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=${column}">${column}</a>
+                        </c:forEach>
+                    </div>
+                </div>
+                <form class="dropdown" method="get" action="${pageContext.request.contextPath}/contractTable">
+                    <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
+                </form>
+            </div>
+        </c:if>
 </div>
 </body>
 </html>

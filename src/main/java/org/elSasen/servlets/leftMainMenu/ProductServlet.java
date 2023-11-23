@@ -23,7 +23,7 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("productTable", productService.getProductTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", productService.getColumnsOfProduct());
-        req.getSession().setAttribute("categories", productCategoryService.getCategories());
+        req.setAttribute("goodColumnNames", productService.getGoodColumnsOfProduct());
         req.getRequestDispatcher("leftMainMenu/ProductJSP.jsp").forward(req, resp);
     }
 

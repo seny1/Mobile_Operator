@@ -41,6 +41,9 @@ public class ProductService {
     public List<String> getColumnsOfProduct() {
         return productDao.getMetaData();
     }
+    public List<String> getGoodColumnsOfProduct() {
+        return productDao.getGoodMetaData();
+    }
 
     public Optional<ProductDto> getProductByName(String name) {
         return productDao.getProductByName(name)

@@ -23,8 +23,8 @@ public class ExtraServiceDao {
                 price,
                 service_name,
                 service_category.category_id,
-                service_category.name,
-                service_category.difficulty,
+                service_category.name as category_name,
+                service_category.difficulty as category_difficulty,
                 service_category.description
                 FROM extra_service
                 JOIN service_category on extra_service.category_id = service_category.category_id
@@ -43,8 +43,8 @@ public class ExtraServiceDao {
                         .serviceName(resultSet.getString("service_name"))
                         .category(ServiceCategory.builder()
                                 .categoryId(resultSet.getInt("category_id"))
-                                .name(resultSet.getString("name"))
-                                .difficulty(resultSet.getString("difficulty"))
+                                .name(resultSet.getString("category_name"))
+                                .difficulty(resultSet.getString("category_difficulty"))
                                 .description(resultSet.getString("description"))
                                 .build())
                         .build();
@@ -63,6 +63,29 @@ public class ExtraServiceDao {
                 service_name,
                 category_id
                 FROM extra_service
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT service_id,
+                service_description,
+                price,
+                service_name,
+                service_category.name as category_name,
+                service_category.difficulty as category_difficulty
+                FROM extra_service
+                JOIN service_category on extra_service.category_id = service_category.category_id
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {

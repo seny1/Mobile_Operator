@@ -39,6 +39,9 @@ public class CallService {
     public List<String> getColumnsOfCall() {
         return callDao.getMetaData();
     }
+    public List<String> getGoodColumnsOfCall() {
+        return callDao.getGoodMetaData();
+    }
 
     public static CallService getInstance() {
         return INSTANCE;
