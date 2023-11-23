@@ -38,6 +38,10 @@ public class CheckService {
         checkDao.insertIntoCheckTable(productNamesCount, checkDtoInsert.getClientId());
     }
 
+    public List<String> getGoodMetaData() {
+        return checkDao.getGoodMetaData();
+    }
+
     public List<String> getColumnsOfCheck() {
         return checkDao.getMetaData();
     }

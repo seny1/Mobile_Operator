@@ -257,7 +257,7 @@ body {
 
 .scroll-table-body {
     height: 33vh;
-    overflow-x: auto;
+    overflow-y: auto;
     margin-top: 0;
     margin-bottom: 20px;
     width: 100%;
@@ -600,4 +600,32 @@ select option:hover {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+.horizontal-scroll {
+    overflow-x: scroll;
+    width: 100%;
+}
+.horizontal-scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+.horizontal-scroll::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
+}
+.horizontal-scroll-content {
+    height: 750px;
+    width: 1200px;
+    background-color: #f1f1f1;
+    padding: 24px;
+    margin-right: 24px;
 }

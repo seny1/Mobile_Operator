@@ -77,6 +77,9 @@
                     </form>
                     <a class="close" title="Закрыть" href="#close"></a>
                 </div>
+                <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
+                    <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
+                </form>
                 <c:if test="${not empty requestScope.errors}">
                     <div style="color: red">
                         <c:forEach var="error" items="${requestScope.errors}">
@@ -85,9 +88,6 @@
                         </c:forEach>
                     </div>
                 </c:if>
-                <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
-                    <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
-                </form>
             </div>
         </c:if>
 

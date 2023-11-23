@@ -124,6 +124,44 @@ public class EmployeeDao {
         }
     }
 
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT first_name,
+                       last_name,
+                       department_name,
+                       address,
+                       post_name,
+                       series,
+                       number AS number_of_passport,
+                       birthday,
+                       issue_date,
+                       place_code,
+                       work_number,
+                       personal_number,
+                       login,
+                       password,
+                       role_name
+                FROM employee
+                         JOIN public.department d on d.department_id = employee.department_id
+                         JOIN public.communication_salon cs on cs.salon_id = employee.salon_id
+                         JOIN public.employee_contact ec on ec.contact_id = employee.contact_id
+                         JOIN public.employee_passport ep on employee.passport_id = ep.passport_id
+                         JOIN public.post p on employee.post_id = p.post_id
+                         JOIN public.role r on employee.role_id = r.role_id;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void insertIntoEmployee(Employee employee) {
         String sql = """
                 INSERT INTO employee (department_id, salon_id, first_name, last_name, post_id, passport_id, contact_id, login, password, role_id)

@@ -34,8 +34,8 @@ public class CheckDao {
                        cp.series,
                        cp.number,
                        cp.birthday,
-                       c.first_name,
-                       c.last_name,
+                       c.first_name AS client_first_name,
+                       c.last_name AS client_last_name,
                        cc.contact_id,
                        cc.number,
                        cc.type
@@ -76,8 +76,8 @@ public class CheckDao {
                                         .numberOfPassport(resultSet.getString("number"))
                                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                                         .build())
-                                .firstName(resultSet.getString("first_name"))
-                                .lastName(resultSet.getString("last_name"))
+                                .firstName(resultSet.getString("client_first_name"))
+                                .lastName(resultSet.getString("client_last_name"))
                                 .contact(ClientContact.builder()
                                         .contactId(resultSet.getLong("contact_id"))
                                         .numberOfContact(resultSet.getString("number"))
@@ -97,6 +97,29 @@ public class CheckDao {
         String sql = """
                 SELECT *
                 FROM "Check";
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT product_name,
+                       product_count,
+                       first_name AS client_first_name,
+                       last_name AS client_last_name
+                FROM "Check"
+                JOIN public.product p on "Check".product_id = p.product_id
+                JOIN public.client c on "Check".client_id = c.client_id
                 """;
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(sql)) {

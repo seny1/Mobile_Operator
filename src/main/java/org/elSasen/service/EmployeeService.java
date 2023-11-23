@@ -43,6 +43,9 @@ public class EmployeeService {
         return employeeDao.getMetaData();
     }
 
+    public List<String> getGoodColumnsOfEmployee() {
+        return employeeDao.getGoodMetaData();
+    }
     public static EmployeeService getInstance() {
         return INSTANCE;
     }
