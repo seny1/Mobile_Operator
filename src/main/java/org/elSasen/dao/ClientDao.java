@@ -82,19 +82,19 @@ public class ClientDao {
              var preparedStatementGetCont = connection.prepareStatement(sqlGetContactId);
              var preparedStatementClient = connection.prepareStatement(sqlInsertClient, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementPassCont.setString(1, client.getPassport().getSeries());
-            preparedStatementPassCont.setString(2, client.getPassport().getNumber());
+            preparedStatementPassCont.setString(2, client.getPassport().getNumberOfPassport());
             preparedStatementPassCont.setObject(3, client.getPassport().getBirthday());
-            preparedStatementPassCont.setString(4, client.getContact().getNumber());
+            preparedStatementPassCont.setString(4, client.getContact().getNumberOfContact());
             preparedStatementPassCont.setString(5, client.getContact().getType());
             preparedStatementPassCont.executeUpdate();
 
             preparedStatementGetPass.setString(1, client.getPassport().getSeries());
-            preparedStatementGetPass.setString(2, client.getPassport().getNumber());
+            preparedStatementGetPass.setString(2, client.getPassport().getNumberOfPassport());
             var resultSet = preparedStatementGetPass.executeQuery();
             resultSet.next();
             int tempPassportId = resultSet.getInt("passport_id");
 
-            preparedStatementGetCont.setString(1, client.getContact().getNumber());
+            preparedStatementGetCont.setString(1, client.getContact().getNumberOfContact());
             resultSet = preparedStatementGetCont.executeQuery();
             resultSet.next();
             int tempContactId = resultSet.getInt("contact_id");
@@ -125,6 +125,32 @@ public class ClientDao {
                 """;
         try (var connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+            var columnNames = new ArrayList<String>();
+            for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+            return columnNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getGoodMetaData() {
+        String sql = """
+                SELECT first_name,
+                       last_name,
+                       series,
+                       cp.number AS number_of_passport,
+                       birthday,
+                       cc.number AS number_of_contact,
+                       type
+                FROM client
+                JOIN public.client_passport cp on cp.passport_id = client.passport_id
+                JOIN public.client_contact cc on client.contact_id = cc.contact_id;
+                """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
             var resultSet = preparedStatement.executeQuery();
             var columnNames = new ArrayList<String>();
             for (int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++) {
@@ -173,14 +199,14 @@ public class ClientDao {
                 .passport(ClientPassport.builder()
                         .passportId(resultSet.getLong("passport_id"))
                         .birthday(resultSet.getObject("birthday", LocalDate.class))
-                        .number(resultSet.getString("number_of_passport"))
+                        .numberOfPassport(resultSet.getString("number_of_passport"))
                         .series(resultSet.getString("series"))
                         .build())
                 .firstName(resultSet.getString("first_name"))
                 .lastName(resultSet.getString("last_name"))
                 .contact(ClientContact.builder()
                         .contactId(resultSet.getLong("contact_id"))
-                        .number(resultSet.getString("number_of_contact"))
+                        .numberOfContact(resultSet.getString("number_of_contact"))
                         .type(resultSet.getString("type"))
                         .build())
                 .remainMinutes(resultSet.getInt("remain_minutes"))

@@ -32,7 +32,7 @@ public class ClientContactDao {
             while (resultSet.next()) {
                 clientContact = ClientContact.builder()
                         .contactId(resultSet.getLong("contact_id"))
-                        .number(resultSet.getString("number"))
+                        .numberOfContact(resultSet.getString("number"))
                         .type(resultSet.getString("type"))
                         .build();
                 clientContactList.add(clientContact);

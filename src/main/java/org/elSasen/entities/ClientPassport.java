@@ -11,6 +11,6 @@ import java.time.LocalDate;
 public class ClientPassport {
     long passportId;
     String series;
-    String number;
+    String numberOfPassport;
     LocalDate birthday;
 }

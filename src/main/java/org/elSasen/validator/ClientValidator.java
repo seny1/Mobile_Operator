@@ -24,7 +24,7 @@ public class ClientValidator implements Validator<ClientDtoInsert> {
         }
 
         for (int i = 0; i < clientTable.size(); i++) {
-            String seriesAndNumberOfTable = clientTable.get(i).getPassport().getSeries() + clientTable.get(i).getPassport().getNumber();
+            String seriesAndNumberOfTable = clientTable.get(i).getPassport().getSeries() + clientTable.get(i).getPassport().getNumberOfPassport();
             String seriesAndNumberOfDto = clientDto.getSeries() + clientDto.getNumberOfPassport();
             if (seriesAndNumberOfDto.equals(seriesAndNumberOfTable)) {
                 validationResult.add(Error.of("invalid.passport", "Такие паспортные данные уже есть в базе"));
@@ -34,7 +34,7 @@ public class ClientValidator implements Validator<ClientDtoInsert> {
 
         for (int i = 0; i < clientTable.size(); i++) {
             var numberOfContactOfDto = clientDto.getNumberOfContact();
-            var numberOfContactOfTable = clientTable.get(i).getContact().getNumber();
+            var numberOfContactOfTable = clientTable.get(i).getContact().getNumberOfContact();
             if (numberOfContactOfDto.equals(numberOfContactOfTable)) {
                 validationResult.add(Error.of("invalid.contact", "Такой номер телефона уже есть в клиентской базе"));
                 break;

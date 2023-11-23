@@ -34,7 +34,7 @@ public class ClientPassportDao {
                 clientPassport = ClientPassport.builder()
                         .passportId(resultSet.getLong("passport_id"))
                         .series(resultSet.getString("series"))
-                        .number(resultSet.getString("number"))
+                        .numberOfPassport(resultSet.getString("number"))
                         .birthday(resultSet.getObject("birthday", LocalDate.class))
                         .build();
                 clientPassportList.add(clientPassport);

@@ -29,6 +29,9 @@ public class ClientService {
         return clientDao.getMetaData();
     }
 
+    public List<String> getGoodColumnsOfClient() {
+        return clientDao.getGoodMetaData();
+    }
     public int insertIntoClientTable(ClientDtoInsert clientDtoInsert) {
         var validationResult = clientValidator.isValid(clientDtoInsert);
         if (!validationResult.isValid()) {

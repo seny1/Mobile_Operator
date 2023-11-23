@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class ClientContact {
     long contactId;
-    String number;
+    String numberOfContact;
     String type;
 }

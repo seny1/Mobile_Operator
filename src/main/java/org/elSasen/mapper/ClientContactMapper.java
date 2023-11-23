@@ -10,7 +10,7 @@ public class ClientContactMapper implements Mapper<ClientContact, ClientContactD
     public ClientContactDto mapFrom(ClientContact clientContact) {
         return ClientContactDto.builder()
                 .contactId(clientContact.getContactId())
-                .number(clientContact.getNumber())
+                .number(clientContact.getNumberOfContact())
                 .type(clientContact.getType())
                 .build();
     }

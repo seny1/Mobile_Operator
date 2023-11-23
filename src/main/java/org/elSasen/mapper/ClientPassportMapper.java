@@ -11,7 +11,7 @@ public class ClientPassportMapper implements Mapper<ClientPassport, ClientPasspo
         return ClientPassportDto.builder()
                 .passportId(clientPassport.getPassportId())
                 .series(clientPassport.getSeries())
-                .number(clientPassport.getNumber())
+                .number(clientPassport.getNumberOfPassport())
                 .birthday(clientPassport.getBirthday())
                 .build();
     }
