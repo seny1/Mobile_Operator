@@ -127,6 +127,38 @@
                         </c:forEach>
                     </div>
                 </div>
+                <a href="#win2" class="dropbtn">Фильтр</a>
+                <a href="#x" class="overlay" id="win2"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/clientTable?filter=filter&good=good">
+                        <label class="label" for="firstName">Имя:</label>
+                        <input class="input" type="text" id="firstNameFilter" name="firstNameFilter">
+
+                        <label class="label" for="lastName">Фамилия:</label>
+                        <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
+
+                        <label class="label" for="birthday">Кто родился после:</label>
+                        <input class="input" type="date" id="birthdayUpFilter" name="birthdayUpFilter">
+
+                        <label class="label" for="birthday">Кто родился до:</label>
+                        <input class="input" type="date" id="birthdayDownFilter" name="birthdayDownFilter">
+
+                        <label class="label" for="series">Серия паспорта:</label>
+                        <input class="input" type="text" id="seriesFilter" name="seriesFilter" pattern="^\d{4}$" placeholder="xxxx">
+
+                        <label class="label" for="numberOfPassport">Номер паспорта:</label>
+                        <input class="input" type="text" id="numberOfPassportFilter" name="numberOfPassportFilter" pattern="^\d{6}$" placeholder="xxxxxx">
+
+                        <label class="label" for="numberOfContact">Номер телефона:</label>
+                        <input class="input" type="text" id="numberOfContactFilter" name="numberOfContactFilter" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx">
+
+                        <label class="label" for="type">Тип телефона:</label>
+                        <input class="input" type="text" id="typeFilter" name="typeFilter">
+
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
                 <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                     <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
                 </form>

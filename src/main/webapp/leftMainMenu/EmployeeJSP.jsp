@@ -153,18 +153,16 @@
 
     <c:if test="${not empty param.good}">
         <div class="scroll-table" style="width: 100%">
-            <div class="horizontal-scroll">
-                <table style="width: 100%">
-                    <thead>
-                    <tr>
-                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <th>${column}</th>
-                        </c:forEach>
-                    </tr>
-                    </thead>
-                </table>
+            <div class="big-table">
                 <div class="scroll-table-body" style="overflow-x: hidden">
                     <table class="table1">
+                        <thead>
+                        <tr>
+                            <c:forEach var="column" items="${requestScope.goodColumnNames}">
+                                <th>${column}</th>
+                            </c:forEach>
+                        </tr>
+                        </thead>
                         <tbody>
                         <c:forEach var="employee" items="${requestScope.employeeTable}">
                             <tr>
@@ -194,7 +192,7 @@
                 <div class="dropdown-content">
                     <div class="scroll-table-body">
                         <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <a href="${pageContext.request.contextPath}/employeeTable?orderBy=${column}">${column}</a>
+                            <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=${column}">${column}</a>
                         </c:forEach>
                     </div>
                 </div>

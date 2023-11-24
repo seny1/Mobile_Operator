@@ -22,7 +22,7 @@
                 </label><br>
                 <button class="input_button" type="submit">Отправить</button>
                 <c:if test="${param.error != null}">
-                    <div style="color: red">
+                    <div style="color: red; text-align: center; font-size: 16px; font-weight: bold; margin: 40px">
                         <span>Неправильный логин или пароль!</span>
                     </div>
                 </c:if>
