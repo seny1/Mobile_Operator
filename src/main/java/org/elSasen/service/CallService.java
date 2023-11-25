@@ -9,7 +9,9 @@ import org.elSasen.mapper.CallMapper;
 import org.elSasen.validator.CallValidator;
 import org.elSasen.validator.ValidationResult;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CallService {
@@ -23,6 +25,31 @@ public class CallService {
     public List<CallDto> getCallTable(String orderBy) {
         var callTable = callDao.getCallTable(orderBy);
         return callTable.stream()
+                .map(callMapper::mapFrom)
+                .collect(Collectors.toList());
+    }
+
+    public List<CallDto> getFilterCallTable(String orderBy, Map<String, String> filterMap) {
+        var callTable = callDao.getCallTable(orderBy);
+        var result = new ArrayList<Call>();
+        result = (ArrayList<Call>) callTable;
+        for (int i = 0; i < callTable.size();) {
+            var call = callTable.get(i);
+            if (!filterMap.get("subscriberNumber").isEmpty() && !call.getSubscriberNumber().equals(filterMap.get("subscriberNumber"))) {
+                result.remove(i);
+            } else if (!filterMap.get("callDurationUp").isEmpty() && !(call.getCallDuration() > Double.parseDouble(filterMap.get("callDurationUp")))) {
+                result.remove(i);
+            } else if (!filterMap.get("callDurationDown").isEmpty() && !(call.getCallDuration() < Double.parseDouble(filterMap.get("callDurationDown")))) {
+                result.remove(i);
+            } else if (!filterMap.get("firstName").isEmpty() && !call.getClient().getFirstName().equals(filterMap.get("firstName"))) {
+                result.remove(i);
+            } else if (!filterMap.get("lastName").isEmpty() && !call.getClient().getFirstName().equals(filterMap.get("lastName"))) {
+                result.remove(i);
+            } else {
+                i++;
+            }
+        }
+        return result.stream()
                 .map(callMapper::mapFrom)
                 .collect(Collectors.toList());
     }

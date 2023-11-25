@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Паспорта сотрудников</title>
+    <title>Звонки</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -107,6 +107,29 @@
                         <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=${column}">${column}</a>
                     </c:forEach>
                 </div>
+            </div>
+            <a href="#win2" class="dropbtn">Фильтр</a>
+            <a href="#x" class="overlay" id="win2"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/callTable?filter=filter&good=good">
+                    <label class="label" for="subscriberNumberFilter">Номер абонента:</label>
+                    <input class="input" type="text" id="subscriberNumberFilter" name="subscriberNumberFilter" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$">
+
+                    <label class="label" for="callDurationUpFilter">Продолжительность звонка больше:</label>
+                    <input class="input" type="text" id="callDurationUpFilter" name="callDurationUpFilter" placeholder="xx.xx" pattern="^\d+\.\d+$">
+
+                    <label class="label" for="callDurationDownFilter">Продолжительность звонка меньше:</label>
+                    <input class="input" type="text" id="callDurationDownFilter" name="callDurationDownFilter" placeholder="xx.xx" pattern="^\d+\.\d+$">
+
+                    <label class="label" for="firstNameFilter">Имя клиента:</label>
+                    <input class="input" type="text" id="firstNameFilter" name="firstNameFilter">
+
+                    <label class="label" for="lastNameFilter">Фамилия клиента:</label>
+                    <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
             </div>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/callTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
