@@ -113,7 +113,8 @@ public class CheckDao {
 
     public List<String> getGoodMetaData() {
         String sql = """
-                SELECT product_name,
+                SELECT check_id,
+                       product_name,
                        product_count,
                        first_name AS client_first_name,
                        last_name AS client_last_name

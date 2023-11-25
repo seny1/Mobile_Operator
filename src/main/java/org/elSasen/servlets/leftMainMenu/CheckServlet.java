@@ -11,6 +11,7 @@ import org.elSasen.service.CheckService;
 import org.elSasen.service.ProductService;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet("/checkTable")
 public class CheckServlet extends HttpServlet {
@@ -31,21 +32,33 @@ public class CheckServlet extends HttpServlet {
             req.getSession().setAttribute("products", productService.getProductNames());
             resp.sendRedirect("/checkTable?numberOfTypes=" + req.getParameter("numberOfTypes") + "#win2");
         } else {
-            String[] productNames = new String[Integer.parseInt(req.getParameter("i"))];
-            Integer[] productCounts = new Integer[Integer.parseInt(req.getParameter("i"))];
-
-            for (int i = 1; i < productNames.length + 1; i++) {
-                productNames[i - 1] = req.getParameter("productName" + i);
-                productCounts[i - 1] = Integer.parseInt(req.getParameter("productCount" + i));
-            }
-            var checkDto = CheckDtoInsert.builder()
-                    .productName(productNames)
-                    .productCount(productCounts)
-                    .clientId(Integer.parseInt(req.getParameter("clientID")))
-                    .build();
             try {
-                checkService.insertIntoCheckTable(checkDto);
-                resp.sendRedirect("/checkTable");
+                if (req.getParameter("filter") == null) {
+                    String[] productNames = new String[Integer.parseInt(req.getParameter("i"))];
+                    Integer[] productCounts = new Integer[Integer.parseInt(req.getParameter("i"))];
+
+                    for (int i = 1; i < productNames.length + 1; i++) {
+                        productNames[i - 1] = req.getParameter("productName" + i);
+                        productCounts[i - 1] = Integer.parseInt(req.getParameter("productCount" + i));
+                    }
+                    var checkDto = CheckDtoInsert.builder()
+                            .productName(productNames)
+                            .productCount(productCounts)
+                            .clientId(Integer.parseInt(req.getParameter("clientID")))
+                            .build();
+                    checkService.insertIntoCheckTable(checkDto);
+                    resp.sendRedirect("/checkTable");
+                } else if (req.getParameter("filter") != null) {
+                    var filterMap = new HashMap<String, String>();
+                    filterMap.put("productName", req.getParameter("productNameFilter"));
+                    filterMap.put("productCountUp", req.getParameter("productCountUpFilter"));
+                    filterMap.put("productCountDown", req.getParameter("productCountDownFilter"));
+                    filterMap.put("firstName", req.getParameter("firstNameFilter"));
+                    filterMap.put("lastName", req.getParameter("lastNameFilter"));
+                    req.setAttribute("goodColumnNames", checkService.getGoodMetaData());
+                    req.setAttribute("checkTable", checkService.getFilterCallTable(req.getParameter("orderBy"), filterMap));
+                    req.getRequestDispatcher("leftMainMenu/CheckJSP.jsp").forward(req, resp);
+                }
             } catch (ValidationException exception) {
                 req.setAttribute("errors", exception.getErrors());
                 doGet(req, resp);

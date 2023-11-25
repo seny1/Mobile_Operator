@@ -109,6 +109,7 @@
                     <tbody>
                     <c:forEach var="check" items="${requestScope.checkTable}">
                         <tr>
+                            <td>${check.checkId}</td>
                             <td>${check.product.productName}</td>
                             <td>${check.productCount}</td>
                             <td>${check.client.firstName}</td>
@@ -125,6 +126,29 @@
                         <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=${column}">${column}</a>
                     </c:forEach>
                 </div>
+            </div>
+            <a href="#win3" class="dropbtn">Фильтр</a>
+            <a href="#x" class="overlay" id="win3"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/checkTable?filter=filter&good=good">
+                    <label class="label" for="productNameFilter">Имя продукта:</label>
+                    <input class="input" type="text" id="productNameFilter" name="productNameFilter">
+
+                    <label class="label" for="productCountUpFilter">Количество товара больше чем:</label>
+                    <input class="input" type="text" id="productCountUpFilter" name="productCountUpFilter" pattern="^\d+$">
+
+                    <label class="label" for="productCountDownFilter">Количество товара меньше чем:</label>
+                    <input class="input" type="text" id="productCountDownFilter" name="productCountDownFilter" pattern="^\d+$">
+
+                    <label class="label" for="firstNameFilter">Имя клиента:</label>
+                    <input class="input" type="text" id="firstNameFilter" name="firstNameFilter">
+
+                    <label class="label" for="lastNameFilter">Фамилия клиента:</label>
+                    <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
             </div>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>

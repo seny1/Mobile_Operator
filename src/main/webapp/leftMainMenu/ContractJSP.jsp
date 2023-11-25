@@ -101,7 +101,7 @@
                                 <td>${contract.contractId}</td>
                                 <td>${contract.plan.planName}</td>
                                 <td>${contract.client.firstName}</td>
-                                <td>${contract.client.firstName}</td>
+                                <td>${contract.client.lastName}</td>
                                 <td>${contract.client.contact.numberOfContact}</td>
                                 <td>${contract.date}</td>
                             </tr>
@@ -116,6 +116,32 @@
                             <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=${column}">${column}</a>
                         </c:forEach>
                     </div>
+                </div>
+                <a href="#win2" class="dropbtn">Фильтр</a>
+                <a href="#x" class="overlay" id="win2"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/contractTable?good=good&filter=filter">
+                        <label class="label" for="planNameFilter">Тарифный план:</label>
+                        <input class="input" type="text" id="planNameFilter" name="planNameFilter">
+
+                        <label class="label" for="firstNameFilter">Имя клиента:</label>
+                        <input class="input" type="text" id="firstNameFilter" name="firstNameFilter">
+
+                        <label class="label" for="lastNameFilter">Фамилия клиента:</label>
+                        <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
+
+                        <label class="label" for="numberFilter">Номер телефона клиента:</label>
+                        <input class="input" type="text" id="numberFilter" name="numberFilter" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx">
+
+                        <label class="label" for="dateUpFilter">Дата заключения после:</label>
+                        <input class="input" type="date" id="dateUpFilter" name="dateUpFilter">
+
+                        <label class="label" for="dateDownFilter">Дата заключения до:</label>
+                        <input class="input" type="date" id="dateDownFilter" name="dateDownFilter">
+
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
                 </div>
                 <form class="dropdown" method="get" action="${pageContext.request.contextPath}/contractTable">
                     <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>

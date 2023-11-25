@@ -12,6 +12,7 @@ import org.elSasen.service.TariffPlanService;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 @WebServlet("/contractTable")
 public class ContractServlet extends HttpServlet {
@@ -28,14 +29,27 @@ public class ContractServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var contractDtoInsert = ContractDtoInsert.builder()
-                .clientId(Integer.parseInt(req.getParameter("clientID")))
-                .date(LocalDate.parse(req.getParameter("date")))
-                .planName(req.getParameter("tariffName"))
-                .build();
         try {
-            contractService.insertIntoContract(contractDtoInsert);
-            resp.sendRedirect("/contractTable");
+            if (req.getParameter("filter") == null) {
+                var contractDtoInsert = ContractDtoInsert.builder()
+                        .clientId(Integer.parseInt(req.getParameter("clientID")))
+                        .date(LocalDate.parse(req.getParameter("date")))
+                        .planName(req.getParameter("tariffName"))
+                        .build();
+                contractService.insertIntoContract(contractDtoInsert);
+                resp.sendRedirect("/contractTable");
+            } else if (req.getParameter("filter") != null) {
+                var filterMap = new HashMap<String, String>();
+                filterMap.put("planName", req.getParameter("planNameFilter"));
+                filterMap.put("dateUp", req.getParameter("dateUpFilter"));
+                filterMap.put("dateDown", req.getParameter("dateDownFilter"));
+                filterMap.put("number", req.getParameter("numberFilter"));
+                filterMap.put("firstName", req.getParameter("firstNameFilter"));
+                filterMap.put("lastName", req.getParameter("lastNameFilter"));
+                req.setAttribute("goodColumnNames", contractService.getGoodColumnsOfContract());
+                req.setAttribute("contractTable", contractService.getFilterContractTable(req.getParameter("orderBy"), filterMap));
+                req.getRequestDispatcher("leftMainMenu/ContractJSP.jsp").forward(req, resp);
+            }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
             doGet(req, resp);
