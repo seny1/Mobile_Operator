@@ -98,8 +98,8 @@
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
 
-            <a href="#win3" class="dropbtn" style="display: contents"></a>
-            <a href="#x" class="overlay" id="win3"></a>
+            <a href="#win2" class="dropbtn" style="display: contents"></a>
+            <a href="#x" class="overlay" id="win2"></a>
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?ready=ready">
                     <div class="dropdown">
@@ -182,7 +182,33 @@
                     </c:forEach>
                 </div>
             </div>
-            <form class="dropdown" method="get" action="${pageContext.request.contextPath}/callTable">
+            <a href="#win3" class="dropbtn">Фильтр</a>
+            <a href="#x" class="overlay" id="win3"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?filter=filter&good=good">
+                    <label class="label" for="serviceNameFilter">Название услуги:</label>
+                    <input class="input" type="text" id="serviceNameFilter" name="serviceNameFilter">
+
+                    <label class="label" for="employeeFirstNameFilter">Имя сотрудника:</label>
+                    <input class="input" type="text" id="employeeFirstNameFilter" name="employeeFirstNameFilter">
+
+                    <label class="label" for="employeeLastNameFilter">Фамилия сотрудника:</label>
+                    <input class="input" type="text" id="employeeLastNameFilter" name="employeeLastNameFilter">
+
+                    <label class="label" for="clientFirstNameFilter">Имя клиента:</label>
+                    <input class="input" type="text" id="clientFirstNameFilter" name="clientFirstNameFilter">
+
+                    <label class="label" for="clientLastNameFilter">Фамилия клиента:</label>
+                    <input class="input" type="text" id="clientLastNameFilter" name="clientLastNameFilter">
+
+                    <label class="label" for="modelFilter">Модель устройства:</label>
+                    <input class="input" type="text" id="modelFilter" name="modelFilter">
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
+            <form class="dropdown" method="get" action="${pageContext.request.contextPath}/orderTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>
         </div>

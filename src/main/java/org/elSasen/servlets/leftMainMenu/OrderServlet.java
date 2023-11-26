@@ -15,6 +15,7 @@ import org.elSasen.service.OrderService;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 @WebServlet("/orderTable")
 public class OrderServlet extends HttpServlet {
@@ -32,8 +33,9 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("choose") == null && req.getParameter("ready") == null) {
-            var clientDtoInsert = ClientDtoInsert.builder()
+        if(req.getParameter("filter") == null) {
+            if (req.getParameter("choose") == null && req.getParameter("ready") == null) {
+                var clientDtoInsert = ClientDtoInsert.builder()
                     .firstName(req.getParameter("firstName"))
                     .lastName(req.getParameter("lastName"))
                     .series(req.getParameter("series"))
@@ -42,20 +44,20 @@ public class OrderServlet extends HttpServlet {
                     .numberOfContact(req.getParameter("numberOfContact"))
                     .type(req.getParameter("type"))
                     .build();
-            try {
-                var clientId = clientService.insertIntoClientTable(clientDtoInsert);
-                req.getSession().setAttribute("clientId", clientId);
+                try {
+                    var clientId = clientService.insertIntoClientTable(clientDtoInsert);
+                    req.getSession().setAttribute("clientId", clientId);
+                    resp.sendRedirect("/orderTable#win3");
+                } catch (ValidationException exception) {
+                    req.setAttribute("errors", exception.getErrors());
+                    doGet(req, resp);
+                }
+            } else if (req.getParameter("choose") != null && req.getParameter("choose").equals("Да")) {
                 resp.sendRedirect("/orderTable#win3");
-            } catch (ValidationException exception) {
-                req.setAttribute("errors", exception.getErrors());
-                doGet(req, resp);
-            }
-        } else if (req.getParameter("choose") != null && req.getParameter("choose").equals("Да")) {
-            resp.sendRedirect("/orderTable#win3");
-        } else if (req.getParameter("choose") != null && req.getParameter("choose").equals("Нет")) {
-            resp.sendRedirect("/orderTable#win2");
-        } else if (req.getParameter("ready").equals("ready")) {
-            var orderDtoInsert = OrderDtoInsert.builder()
+            } else if (req.getParameter("choose") != null && req.getParameter("choose").equals("Нет")) {
+                resp.sendRedirect("/orderTable#win2");
+            } else if (req.getParameter("ready").equals("ready")) {
+                var orderDtoInsert = OrderDtoInsert.builder()
                     .serviceName(req.getParameter("serviceName"))
                     .employeeId(Integer.parseInt(req.getParameter("employeeId")))
                     .clientId(Integer.parseInt(req.getParameter("clientId")))
@@ -63,14 +65,26 @@ public class OrderServlet extends HttpServlet {
                     .clientProblem(req.getParameter("clientProblem"))
                     .comment(req.getParameter("comment"))
                     .build();
-            try {
-                orderService.insertIntoOrder(orderDtoInsert);
-                req.getSession().removeAttribute("clientId");
-                resp.sendRedirect("/orderTable");
-            } catch (ValidationException exception) {
-                req.setAttribute("errors", exception.getErrors());
-                doGet(req, resp);
+                try {
+                    orderService.insertIntoOrder(orderDtoInsert);
+                    req.getSession().removeAttribute("clientId");
+                    resp.sendRedirect("/orderTable");
+                } catch (ValidationException exception) {
+                    req.setAttribute("errors", exception.getErrors());
+                    doGet(req, resp);
+                }
             }
+        } else if(req.getParameter("filter") != null){
+            var filterMap = new HashMap<String, String>();
+            filterMap.put("serviceName", req.getParameter("serviceNameFilter"));
+            filterMap.put("employeeFirstName", req.getParameter("employeeFirstNameFilter"));
+            filterMap.put("employeeLastName", req.getParameter("employeeLastNameFilter"));
+            filterMap.put("clientFirstName", req.getParameter("clientFirstNameFilter"));
+            filterMap.put("clientLastName", req.getParameter("clientLastNameFilter"));
+            filterMap.put("model", req.getParameter("modelFilter"));
+            req.setAttribute("goodColumnNames", orderService.getGoodColumnsOfOrder());
+            req.setAttribute("orderTable", orderService.getFilterOrderTable(req.getParameter("orderBy"), filterMap));
+            req.getRequestDispatcher("leftMainMenu/OrderJSP.jsp").forward(req, resp);
         }
     }
 }

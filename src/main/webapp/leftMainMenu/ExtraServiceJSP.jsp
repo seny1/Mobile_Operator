@@ -119,6 +119,26 @@
                     </c:forEach>
                 </div>
             </div>
+            <a href="#win3" class="dropbtn">Фильтр</a>
+            <a href="#x" class="overlay" id="win3"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/extraServiceTable?filter=filter&good=good">
+                    <label class="label" for="serviceNameFilter">Название услуги:</label>
+                    <input class="input" type="text" id="serviceNameFilter" name="serviceNameFilter">
+
+                    <label class="label" for="priceUpFilter">Цена больше чем:</label>
+                    <input class="input" type="text" id="priceUpFilter" name="priceUpFilter">
+
+                    <label class="label" for="priceDownFilter">Цена меньше чем:</label>
+                    <input class="input" type="text" id="priceDownFilter" name="priceDownFilter">
+
+                    <label class="label" for="categoryNameFilter">Название категории:</label>
+                    <input class="input" type="text" id="categoryNameFilter" name="categoryNameFilter">
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/extraServiceTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>

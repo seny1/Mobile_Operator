@@ -11,6 +11,7 @@ import org.elSasen.service.StatusService;
 import org.elSasen.service.TariffPlanService;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet("/tariffPlanTable")
 public class TariffPlanServlet extends HttpServlet {
@@ -25,19 +26,35 @@ public class TariffPlanServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var tariffPlanDtoInsert = TariffPlanDtoInsert.builder()
-                .planName(req.getParameter("planName"))
-                .callMinutes(Integer.parseInt(req.getParameter("callMinutes")))
-                .internetGb(Integer.parseInt(req.getParameter("internetGb")))
-                .smsNumber(Integer.parseInt(req.getParameter("smsNumber")))
-                .price(Integer.parseInt(req.getParameter("price")))
-                .build();
-        try {
-            tariffPlanService.insertIntoTariffPlan(tariffPlanDtoInsert);
-            resp.sendRedirect("/tariffPlanTable");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
-            doGet(req, resp);
-        }
+            if (req.getParameter("filter") == null) {
+                var tariffPlanDtoInsert = TariffPlanDtoInsert.builder()
+                    .planName(req.getParameter("planName"))
+                    .callMinutes(Integer.parseInt(req.getParameter("callMinutes")))
+                    .internetGb(Integer.parseInt(req.getParameter("internetGb")))
+                    .smsNumber(Integer.parseInt(req.getParameter("smsNumber")))
+                    .price(Integer.parseInt(req.getParameter("price")))
+                    .build();
+                try {
+                    tariffPlanService.insertIntoTariffPlan(tariffPlanDtoInsert);
+                    resp.sendRedirect("/tariffPlanTable");
+                } catch (ValidationException exception) {
+                    req.setAttribute("errors", exception.getErrors());
+                    doGet(req, resp);
+                }
+            } else if (req.getParameter("filter") != null) {
+                var filterMap = new HashMap<String, String>();
+                filterMap.put("planName", req.getParameter("planNameFilter"));
+                filterMap.put("callMinutesUp", req.getParameter("callMinutesUpFilter"));
+                filterMap.put("callMinutesDown", req.getParameter("callMinutesDownFilter"));
+                filterMap.put("internetGbUp", req.getParameter("internetGbUpFilter"));
+                filterMap.put("internetGbDown", req.getParameter("internetGbDownFilter"));
+                filterMap.put("smsNumberUp", req.getParameter("smsNumberUpFilter"));
+                filterMap.put("smsNumberDown", req.getParameter("smsNumberDownFilter"));
+                filterMap.put("priceUp", req.getParameter("priceUpFilter"));
+                filterMap.put("priceDown", req.getParameter("priceDownFilter"));
+                req.setAttribute("columnNames", tariffPlanService.getColumnsOfTariffPlan());
+                req.setAttribute("tariffPlanTable", tariffPlanService.getFilterTariffTable(req.getParameter("orderBy"), filterMap));
+                req.getRequestDispatcher("leftMainMenu/TariffPlanJSP.jsp").forward(req, resp);
+            }
     }
 }

@@ -67,6 +67,41 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+        <a href="#win3" class="dropbtn">Фильтр</a>
+        <a href="#x" class="overlay" id="win3"></a>
+        <div class="popup">
+            <form class="form" method="post" action="${pageContext.request.contextPath}/tariffPlanTable?filter=filter">
+                <label class="label" for="planNameFilter">Имя тарифа:</label>
+                <input class="input" type="text" id="planNameFilter" name="planNameFilter">
+
+                <label class="label" for="callMinutesUpFilter">Минут разговоров больше чем:</label>
+                <input class="input" type="text" id="callMinutesUpFilter" name="callMinutesUpFilter">
+
+                <label class="label" for="callMinutesDownFilter">Минут разговоров меньше чем:</label>
+                <input class="input" type="text" id="callMinutesDownFilter" name="callMinutesDownFilter">
+
+                <label class="label" for="internetGbUpFilter">Гигабайт больше чем:</label>
+                <input class="input" type="text" id="internetGbUpFilter" name="internetGbUpFilter">
+
+                <label class="label" for="internetGbDownFilter">Гигабайт меньше чем:</label>
+                <input class="input" type="text" id="internetGbDownFilter" name="internetGbDownFilter">
+
+                <label class="label" for="smsNumberUpFilter">СМС больше чем:</label>
+                <input class="input" type="text" id="smsNumberUpFilter" name="smsNumberUpFilter">
+
+                <label class="label" for="smsNumberDownFilter">СМС меньше чем:</label>
+                <input class="input" type="text" id="smsNumberDownFilter" name="smsNumberDownFilter">
+
+                <label class="label" for="priceUpFilter">Цена больше чем:</label>
+                <input class="input" type="text" id="priceUpFilter" name="priceUpFilter">
+
+                <label class="label" for="priceDownFilter">Цена меньше чем:</label>
+                <input class="input" type="text" id="priceDownFilter" name="priceDownFilter">
+
+                <input class="input" type="submit" value="Отправить">
+            </form>
+            <a class="close" title="Закрыть" href="#close"></a>
+        </div>
         <c:if test="${not empty requestScope.errors}">
             <div style="color: red">
                 <c:forEach var="error" items="${requestScope.errors}">

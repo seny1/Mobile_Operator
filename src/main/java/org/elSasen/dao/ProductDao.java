@@ -26,7 +26,7 @@ public class ProductDao {
                 product.category_id,
                 count,
                 product_category.category_id as id_of_category,
-                product_category.name as service_name,
+                product_category.name as category_name,
                 product_category.description
                 FROM product
                 JOIN product_category on product.category_id = product_category.category_id
@@ -74,7 +74,7 @@ public class ProductDao {
                 price,
                 product_description,
                 product_name,
-                name as service_name,
+                name as category_name,
                 count
                 FROM product
                 JOIN product_category ON product.category_id = product_category.category_id
@@ -167,7 +167,7 @@ public class ProductDao {
                 .productName(resultSet.getString("product_name"))
                 .category(ProductCategory.builder()
                         .categoryId(resultSet.getInt("category_id"))
-                        .name(resultSet.getString("service_name"))
+                        .name(resultSet.getString("category_name"))
                         .description(resultSet.getString("description"))
                         .build())
                 .count(resultSet.getInt("count"))
