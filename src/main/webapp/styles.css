@@ -114,8 +114,8 @@ body {
 .buttons-on-left {
     width: 100%;
     overflow-y: scroll;
-    max-height: 730px;
     display: inline-block;
+    max-height: 655px;
 }
 .buttons-on-left::-webkit-scrollbar {
     width: .4em;
@@ -618,3 +618,29 @@ select option:hover {
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
+
+.account-container {
+    max-width: 800px;
+    padding: 20px;
+    margin-left: 0;
+}
+
+.profile {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.profile h2 {
+    margin-bottom: 10px;
+}
+
+.profile p {
+    margin-bottom: 10px;
+}
+
+.label {
+    font-weight: bold;
+}
+

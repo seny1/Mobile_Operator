@@ -72,6 +72,11 @@ public class OrderService {
         var order = orderMapper.mapFrom(orderDtoInsert);
         orderDao.insertIntoOrder(order);
     }
+
+    public void updateStatus(int orderId, String statusName) {
+        orderDao.updateStatus(orderId, statusName);
+    }
+
     public static OrderService getInstance() {
         return INSTANCE;
     }

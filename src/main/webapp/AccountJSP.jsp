@@ -5,14 +5,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<%@include file="headerJSP.jsp"%>
-    <div class="account-main">
-        <div class="background-righter"></div>
-        <div class="info-container">
-            <h1>Основная информация</h1>
-            <div>Имя: <span>${sessionScope.user.firstName}</span></div>
-            <div>Фамилия: <span>${sessionScope.user.lastName}</span></div>
-            <div>Паспорт:
+<%@include file="headerJSP.jsp" %>
+<div class="account-container">
+    <h1>Личный кабинет</h1>
+    <div class="profile">
+        <h2>Информация о пользователе</h2>
+        <div class="profile-info">
+            <p><span class="label">Имя:</span> ${sessionScope.user.firstName}</p>
+            <p><span class="label">Фамилия:</span> ${sessionScope.user.lastName}</p>
+            <p><span class="label">Паспортные данные:</span>
                 <ul>
                     <li>Серия: ${sessionScope.user.passport.series} </li>
                     <li>Номер: ${sessionScope.user.passport.number} </li>
@@ -20,16 +21,17 @@
                     <li>Дата выдачи: ${sessionScope.user.passport.issueDate} </li>
                     <li>Код подразделения: ${sessionScope.user.passport.placeCode}</li>
                 </ul>
-            </div>
-            <div>Департамент: <span>${sessionScope.user.department.departmentName}</span></div>
-            <div>Должность: <span>${sessionScope.user.post.postName}</span></div>
-            <div>Контакты:
+            </p>
+            <p><span class="label">Департамент:</span> ${sessionScope.user.department.departmentName}</p>
+            <p><span class="label">Должность:</span> ${sessionScope.user.post.postName}</p>
+            <p><span class="label">Контакты:</span>
                 <ul>
                     <li>Личный номер: <span>${sessionScope.user.contact.personalNumber}</span></li>
                     <li>Рабочий номер: <span>${sessionScope.user.contact.workNumber}</span></li>
                 </ul>
-            </div>
+            </p>
         </div>
     </div>
+</div>
 </body>
 </html>

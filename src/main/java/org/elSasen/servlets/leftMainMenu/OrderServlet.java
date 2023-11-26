@@ -33,8 +33,8 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter("filter") == null) {
-            if (req.getParameter("choose") == null && req.getParameter("ready") == null) {
+        if (req.getParameter("filter") == null) {
+            if (req.getParameter("choose") == null && req.getParameter("ready") == null && req.getParameter("update") == null) {
                 var clientDtoInsert = ClientDtoInsert.builder()
                     .firstName(req.getParameter("firstName"))
                     .lastName(req.getParameter("lastName"))
@@ -56,7 +56,7 @@ public class OrderServlet extends HttpServlet {
                 resp.sendRedirect("/orderTable#win3");
             } else if (req.getParameter("choose") != null && req.getParameter("choose").equals("Нет")) {
                 resp.sendRedirect("/orderTable#win2");
-            } else if (req.getParameter("ready").equals("ready")) {
+            } else if (req.getParameter("ready") != null && req.getParameter("ready").equals("ready")) {
                 var orderDtoInsert = OrderDtoInsert.builder()
                     .serviceName(req.getParameter("serviceName"))
                     .employeeId(Integer.parseInt(req.getParameter("employeeId")))
@@ -74,7 +74,13 @@ public class OrderServlet extends HttpServlet {
                     doGet(req, resp);
                 }
             }
-        } else if(req.getParameter("filter") != null){
+            if (req.getParameter("update") != null) {
+                int orderId = Integer.parseInt(req.getParameter("orderId"));
+                String statusName = req.getParameter("statusName");
+                orderService.updateStatus(orderId, statusName);
+                doGet(req, resp);
+            }
+        } else if(req.getParameter("filter") != null) {
             var filterMap = new HashMap<String, String>();
             filterMap.put("serviceName", req.getParameter("serviceNameFilter"));
             filterMap.put("employeeFirstName", req.getParameter("employeeFirstNameFilter"));

@@ -17,6 +17,7 @@ public class OrderDao {
     private final String DEFAULT_ORDER_BY = "order_id";
     private final ClientDeviceDao clientDeviceDao = ClientDeviceDao.getInstance();
     private final ExtraServiceDao extraServiceDao = ExtraServiceDao.getInstance();
+    private final StatusDao statusDao = StatusDao.getInstance();
     public List<Order> getOrderTable(String orderBy) {
         if (orderBy == null) {
             orderBy = DEFAULT_ORDER_BY;
@@ -268,6 +269,22 @@ public class OrderDao {
             preparedStatement.setInt(4, tempDeviceId);
             preparedStatement.setString(5, order.getComment());
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateStatus(int orderId, String statusName) {
+        String sql = """
+                UPDATE "Order"
+                SET status_id = ?
+                WHERE order_id = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, statusDao.getStatusIdByName(statusName));
+            preparedStatement.setInt(2, orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

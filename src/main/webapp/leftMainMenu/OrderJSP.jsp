@@ -208,6 +208,24 @@
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
+            <a href="#win4" class="dropbtn">Обновить статус</a>
+            <a href="#x" class="overlay" id="win4"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?update=update&good=good">
+                    <label class="label" for="orderId">ID заказа:</label>
+                    <input class="input" type="text" id="orderId" name="orderId">
+
+                    <label class="label" for="statusName">Статус:</label>
+                    <select class="input" type="text" id="statusName" name="statusName">
+                        <option>В работе</option>
+                        <option>Готов</option>
+                        <option>Завершен</option>
+                    </select>
+
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/orderTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>
