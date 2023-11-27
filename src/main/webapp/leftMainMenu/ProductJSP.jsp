@@ -45,6 +45,7 @@
                 </c:forEach>
             </div>
         </div>
+    <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
         <a href="#win1" class="dropbtn">Добавить запись</a>
         <a href="#x" class="overlay" id="win1"></a>
         <div class="popup">
@@ -75,6 +76,8 @@
             </form>
             <a class="close" title="Закрыть" href="#close"></a>
         </div>
+    </c:if>
+
         <form class="dropdown" method="get" action="${pageContext.request.contextPath}/produtTable">
             <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
         </form>

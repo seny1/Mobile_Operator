@@ -45,38 +45,41 @@
                         </c:forEach>
                     </div>
                 </div>
-                <a href="#win1" class="dropbtn">Добавить запись</a>
-                <a href="#x" class="overlay" id="win1"></a>
-                <div class="popup">
-                    <form class="form" method="post" action="${pageContext.request.contextPath}/clientTable">
-                        <label class="label" for="firstName">Имя:</label>
-                        <input class="input" type="text" id="firstName" name="firstName" required>
+                <c:if test="${sessionScope.user.role.roleId == 1}">
+                    <a href="#win1" class="dropbtn">Добавить запись</a>
+                    <a href="#x" class="overlay" id="win1"></a>
+                    <div class="popup">
+                        <form class="form" method="post" action="${pageContext.request.contextPath}/clientTable">
+                            <label class="label" for="firstName">Имя:</label>
+                            <input class="input" type="text" id="firstName" name="firstName" required>
 
-                        <label class="label" for="lastName">Фамилия:</label>
-                        <input class="input" type="text" id="lastName" name="lastName" required>
+                            <label class="label" for="lastName">Фамилия:</label>
+                            <input class="input" type="text" id="lastName" name="lastName" required>
 
-                        <label class="label" for="birthday">Дата рождения:</label>
-                        <input class="input" type="date" id="birthday" name="birthday" required>
+                            <label class="label" for="birthday">Дата рождения:</label>
+                            <input class="input" type="date" id="birthday" name="birthday" required>
 
-                        <label class="label" for="series">Серия паспорта:</label>
-                        <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" placeholder="xxxx" required>
+                            <label class="label" for="series">Серия паспорта:</label>
+                            <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" placeholder="xxxx" required>
 
-                        <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                        <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" placeholder="xxxxxx" required>
+                            <label class="label" for="numberOfPassport">Номер паспорта:</label>
+                            <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" placeholder="xxxxxx" required>
 
-                        <label class="label" for="numberOfContact">Номер телефона:</label>
-                        <input class="input" type="text" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx" required>
+                            <label class="label" for="numberOfContact">Номер телефона:</label>
+                            <input class="input" type="text" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx" required>
 
-                        <label class="label" for="type">Тип телефона:</label>
-                        <select id="type" name="type">
-                            <option value="mobile">Мобильный</option>
-                            <option value="home">Домашний</option>
-                            <option value="work">Рабочий</option>
-                        </select>
-                        <input class="input" type="submit" value="Отправить">
-                    </form>
-                    <a class="close" title="Закрыть" href="#close"></a>
-                </div>
+                            <label class="label" for="type">Тип телефона:</label>
+                            <select id="type" name="type">
+                                <option value="mobile">Мобильный</option>
+                                <option value="home">Домашний</option>
+                                <option value="work">Рабочий</option>
+                            </select>
+                            <input class="input" type="submit" value="Отправить">
+                        </form>
+                        <a class="close" title="Закрыть" href="#close"></a>
+                    </div>
+                </c:if>
+
                 <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                     <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
                 </form>

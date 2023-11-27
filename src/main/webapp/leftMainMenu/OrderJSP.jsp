@@ -46,91 +46,93 @@
                     </c:forEach>
                 </div>
             </div>
+            <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2 || sessionScope.user.department.departmentId == 4}">
+                <a href="#win1" class="dropbtn">Добавить запись</a>
+                <a href="#x" class="overlay" id="win1"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable">
+                        <div class="dropdown">
+                            <label class="label" for="choose">Клиент уже есть в базе?</label>
+                            <input class="input-box" type="text" id="choose" list="dropdown-options" name="choose" required>
+                            <datalist id="dropdown-options">
+                                <option value="Да">Да</option>
+                                <option value="Нет">Нет</option>
+                            </datalist>
+                        </div>
 
-            <a href="#win1" class="dropbtn">Добавить запись</a>
-            <a href="#x" class="overlay" id="win1"></a>
-            <div class="popup">
-                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable">
-                    <div class="dropdown">
-                        <label class="label" for="choose">Клиент уже есть в базе?</label>
-                        <input class="input-box" type="text" id="choose" list="dropdown-options" name="choose" required>
-                        <datalist id="dropdown-options">
-                            <option value="Да">Да</option>
-                            <option value="Нет">Нет</option>
-                        </datalist>
-                    </div>
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
 
-                    <input class="input" type="submit" value="Отправить">
-                </form>
-                <a class="close" title="Закрыть" href="#close"></a>
-            </div>
+                <a href="#win2" class="dropbtn" style="display: contents"></a>
+                <a href="#x" class="overlay" id="win2"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable">
+                        <label class="label" for="firstName">Имя:</label>
+                        <input class="input" type="text" id="firstName" name="firstName" required>
 
-            <a href="#win2" class="dropbtn" style="display: contents"></a>
-            <a href="#x" class="overlay" id="win2"></a>
-            <div class="popup">
-                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable">
-                    <label class="label" for="firstName">Имя:</label>
-                    <input class="input" type="text" id="firstName" name="firstName" required>
+                        <label class="label" for="lastName">Фамилия:</label>
+                        <input class="input" type="text" id="lastName" name="lastName" required>
 
-                    <label class="label" for="lastName">Фамилия:</label>
-                    <input class="input" type="text" id="lastName" name="lastName" required>
+                        <label class="label" for="birthday">Дата рождения:</label>
+                        <input class="input" type="date" id="birthday" name="birthday" required>
 
-                    <label class="label" for="birthday">Дата рождения:</label>
-                    <input class="input" type="date" id="birthday" name="birthday" required>
+                        <label class="label" for="series">Серия паспорта:</label>
+                        <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" required>
 
-                    <label class="label" for="series">Серия паспорта:</label>
-                    <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" required>
+                        <label class="label" for="numberOfPassport">Номер паспорта:</label>
+                        <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" required>
 
-                    <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                    <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" required>
+                        <label class="label" for="numberOfContact">Номер телефона:</label>
+                        <input class="input" type="tel" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" required>
 
-                    <label class="label" for="numberOfContact">Номер телефона:</label>
-                    <input class="input" type="tel" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" required>
+                        <label class="label" for="type">Тип телефона:</label>
+                        <select id="type" name="type">
+                            <option value="mobile">Мобильный</option>
+                            <option value="home">Домашний</option>
+                            <option value="work">Рабочий</option>
+                        </select>
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
 
-                    <label class="label" for="type">Тип телефона:</label>
-                    <select id="type" name="type">
-                        <option value="mobile">Мобильный</option>
-                        <option value="home">Домашний</option>
-                        <option value="work">Рабочий</option>
-                    </select>
-                    <input class="input" type="submit" value="Отправить">
-                </form>
-                <a class="close" title="Закрыть" href="#close"></a>
-            </div>
+                <a href="#win2" class="dropbtn" style="display: contents"></a>
+                <a href="#x" class="overlay" id="win2"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?ready=ready">
+                        <div class="dropdown">
+                            <label class="label" for="serviceName">Услуга:</label>
+                            <input class="input-box" type="text" id="serviceName" list="dropdown-options2" name="serviceName" required>
+                            <datalist id="dropdown-options2">
+                                <c:forEach var="service" items="${sessionScope.services}">
+                                    <option value="${service}">${service}</option>
+                                </c:forEach>
+                            </datalist>
+                        </div>
 
-            <a href="#win2" class="dropbtn" style="display: contents"></a>
-            <a href="#x" class="overlay" id="win2"></a>
-            <div class="popup">
-                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?ready=ready">
-                    <div class="dropdown">
-                        <label class="label" for="serviceName">Услуга:</label>
-                        <input class="input-box" type="text" id="serviceName" list="dropdown-options2" name="serviceName" required>
-                        <datalist id="dropdown-options2">
-                            <c:forEach var="service" items="${sessionScope.services}">
-                                <option value="${service}">${service}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
+                        <label class="label" for="employeeId">ID сотрудника:</label>
+                        <input class="input-box" type="text" id="employeeId" name="employeeId" pattern="^\d+$" required>
 
-                    <label class="label" for="employeeId">ID сотрудника:</label>
-                    <input class="input-box" type="text" id="employeeId" name="employeeId" pattern="^\d+$" required>
+                        <label class="label" for="clientId">ID клиента:</label>
+                        <input class="input-box" type="text" id="clientId" name="clientId" value="${sessionScope.clientId}" pattern="^\d+$" required>
 
-                    <label class="label" for="clientId">ID клиента:</label>
-                    <input class="input-box" type="text" id="clientId" name="clientId" value="${sessionScope.clientId}" pattern="^\d+$" required>
+                        <label class="label" for="model">Модель устройства:</label>
+                        <input class="input-box" type="text" id="model" name="model" required>
 
-                    <label class="label" for="model">Модель устройства:</label>
-                    <input class="input-box" type="text" id="model" name="model" required>
+                        <label class="label" for="clientProblem">Проблема клиента:</label>
+                        <input class="input-box" type="text" id="clientProblem" name="clientProblem" required>
 
-                    <label class="label" for="clientProblem">Проблема клиента:</label>
-                    <input class="input-box" type="text" id="clientProblem" name="clientProblem" required>
+                        <label class="label" for="comment">Комментарий:</label>
+                        <input class="input-box" type="text" id="comment" name="comment" required>
 
-                    <label class="label" for="comment">Комментарий:</label>
-                    <input class="input-box" type="text" id="comment" name="comment" required>
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
+            </c:if>
 
-                    <input class="input" type="submit" value="Отправить">
-                </form>
-                <a class="close" title="Закрыть" href="#close"></a>
-            </div>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/callTable">
                 <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
             </form>
@@ -208,24 +210,27 @@
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
-            <a href="#win4" class="dropbtn">Обновить статус</a>
-            <a href="#x" class="overlay" id="win4"></a>
-            <div class="popup">
-                <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?update=update&good=good">
-                    <label class="label" for="orderId">ID заказа:</label>
-                    <input class="input" type="text" id="orderId" name="orderId">
+            <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2 || sessionScope.user.department.departmentId == 4}">
+                <a href="#win4" class="dropbtn">Обновить статус</a>
+                <a href="#x" class="overlay" id="win4"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?update=update&good=good">
+                        <label class="label" for="orderId">ID заказа:</label>
+                        <input class="input" type="text" id="orderId" name="orderId">
 
-                    <label class="label" for="statusName">Статус:</label>
-                    <select class="input" type="text" id="statusName" name="statusName">
-                        <option>В работе</option>
-                        <option>Готов</option>
-                        <option>Завершен</option>
-                    </select>
+                        <label class="label" for="statusName">Статус:</label>
+                        <select class="input" type="text" id="statusName" name="statusName">
+                            <option>В работе</option>
+                            <option>Готов</option>
+                            <option>Завершен</option>
+                        </select>
 
-                    <input class="input" type="submit" value="Отправить">
-                </form>
-                <a class="close" title="Закрыть" href="#close"></a>
-            </div>
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
+            </c:if>
+
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/orderTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>

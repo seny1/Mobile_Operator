@@ -44,33 +44,35 @@
                 </c:forEach>
             </div>
         </div>
-        <a href="#win1" class="dropbtn">Добавить запись</a>
-        <a href="#x" class="overlay" id="win1"></a>
-        <div class="popup">
-            <form class="form" method="post" action="${pageContext.request.contextPath}/extraServiceTable">
-                <label class="label" for="serviceName">Название услуги:</label>
-                <input class="input" type="text" id="serviceName" name="serviceName" required>
+        <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+            <a href="#win1" class="dropbtn">Добавить запись</a>
+            <a href="#x" class="overlay" id="win1"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/extraServiceTable">
+                    <label class="label" for="serviceName">Название услуги:</label>
+                    <input class="input" type="text" id="serviceName" name="serviceName" required>
 
-                <label class="label" for="price">Стоимость услуги:</label>
-                <input class="input" type="text" id="price" name="price" pattern="^\d+$" required>
+                    <label class="label" for="price">Стоимость услуги:</label>
+                    <input class="input" type="text" id="price" name="price" pattern="^\d+$" required>
 
-                <div class="dropdown">
-                    <label class="label" for="serviceCategory">Категория услуги:</label>
-                    <input class="input-box" type="text" id="serviceCategory" list="dropdown-options" name="serviceCategory" required>
-                    <datalist id="dropdown-options">
-                        <c:forEach var="serviceCategory" items="${sessionScope.serviceCategories}">
-                            <option value="${serviceCategory}">${serviceCategory}</option>
-                        </c:forEach>
-                    </datalist>
-                </div>
+                    <div class="dropdown">
+                        <label class="label" for="serviceCategory">Категория услуги:</label>
+                        <input class="input-box" type="text" id="serviceCategory" list="dropdown-options" name="serviceCategory" required>
+                        <datalist id="dropdown-options">
+                            <c:forEach var="serviceCategory" items="${sessionScope.serviceCategories}">
+                                <option value="${serviceCategory}">${serviceCategory}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
 
-                <label class="label" for="description">Описание услуги:</label>
-                <input class="input" type="text" id="description" name="description" required>
+                    <label class="label" for="description">Описание услуги:</label>
+                    <input class="input" type="text" id="description" name="description" required>
 
-                <input class="input" type="submit" value="Отправить">
-            </form>
-            <a class="close" title="Закрыть" href="#close"></a>
-        </div>
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
+        </c:if>
         <form class="dropdown" method="get" action="${pageContext.request.contextPath}/extraServiceTablet">
             <a href="?good=good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить всю информацию</a>
         </form>
