@@ -51,22 +51,22 @@
                     <div class="popup">
                         <form class="form" method="post" action="${pageContext.request.contextPath}/clientTable">
                             <label class="label" for="firstName">Имя:</label>
-                            <input class="input" type="text" id="firstName" name="firstName" required>
+                            <input class="input" value="${param.firstName}" type="text" id="firstName" name="firstName" required>
 
                             <label class="label" for="lastName">Фамилия:</label>
-                            <input class="input" type="text" id="lastName" name="lastName" required>
+                            <input class="input" value="${param.lastName}" type="text" id="lastName" name="lastName" required>
 
                             <label class="label" for="birthday">Дата рождения:</label>
-                            <input class="input" type="date" id="birthday" name="birthday" required>
+                            <input class="input" value="${param.birthday}" type="date" id="birthday" name="birthday" required>
 
                             <label class="label" for="series">Серия паспорта:</label>
-                            <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" placeholder="xxxx" required>
+                            <input class="input" value="${param.series}" type="text" id="series" name="series" pattern="^\d{4}$" placeholder="xxxx" required>
 
                             <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                            <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" placeholder="xxxxxx" required>
+                            <input class="input" value="${param.numberOfPassport}" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" placeholder="xxxxxx" required>
 
                             <label class="label" for="numberOfContact">Номер телефона:</label>
-                            <input class="input" type="text" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx" required>
+                            <input class="input" value="${param.numberOfContact}" type="text" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx" required>
 
                             <label class="label" for="type">Тип телефона:</label>
                             <select id="type" name="type">
@@ -162,6 +162,22 @@
                     </form>
                     <a class="close" title="Закрыть" href="#close"></a>
                 </div>
+                <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+                    <a href="#win3" class="dropbtn">Удалить запись</a>
+                    <a href="#x" class="overlay" id="win3"></a>
+                    <div class="popup">
+                        <form class="form" method="post" action="${pageContext.request.contextPath}/clientTable?delete=delete&good=good">
+                            <label class="label" for="seriesDelete">Серия паспорта:</label>
+                            <input class="input" value="${param.seriesDelete}" type="text" id="seriesDelete" name="seriesDelete" required>
+
+                            <label class="label" for="numberOfPassportDelete">Номер паспорта:</label>
+                            <input class="input" value="${param.numberOfPassportDelete}" type="text" id="numberOfPassportDelete" name="numberOfPassportDelete" required>
+
+                            <input class="input" type="submit" value="Отправить">
+                        </form>
+                        <a class="close" title="Закрыть" href="#close"></a>
+                    </div>
+                </c:if>
                 <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                     <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
                 </form>

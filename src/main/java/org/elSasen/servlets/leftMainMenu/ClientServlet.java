@@ -29,7 +29,7 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            if (req.getParameter("filter") == null) {
+            if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
                 var clientDtoInsert = ClientDtoInsert.builder()
                         .firstName(req.getParameter("firstName"))
                         .lastName(req.getParameter("lastName"))
@@ -54,6 +54,9 @@ public class ClientServlet extends HttpServlet {
                 req.setAttribute("goodColumnNames", clientService.getGoodColumnsOfClient());
                 req.setAttribute("clientTable", clientService.getFilterClientTable(req.getParameter("orderBy"), filterMap));
                 req.getRequestDispatcher("leftMainMenu/ClientJSP.jsp").forward(req, resp);
+            } else if (req.getParameter("delete") != null) {
+                clientService.deleteClient(req.getParameter("seriesDelete"), req.getParameter("numberOfPassportDelete"));
+                resp.sendRedirect("/clientTable?good=good");
             }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

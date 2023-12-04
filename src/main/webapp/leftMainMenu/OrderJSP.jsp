@@ -70,22 +70,22 @@
                 <div class="popup">
                     <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable">
                         <label class="label" for="firstName">Имя:</label>
-                        <input class="input" type="text" id="firstName" name="firstName" required>
+                        <input class="input" value="${param.firstName}" type="text" id="firstName" name="firstName" required>
 
                         <label class="label" for="lastName">Фамилия:</label>
-                        <input class="input" type="text" id="lastName" name="lastName" required>
+                        <input class="input" value="${param.lastName}" type="text" id="lastName" name="lastName" required>
 
                         <label class="label" for="birthday">Дата рождения:</label>
-                        <input class="input" type="date" id="birthday" name="birthday" required>
+                        <input class="input" value="${param.birthday}" type="date" id="birthday" name="birthday" required>
 
                         <label class="label" for="series">Серия паспорта:</label>
-                        <input class="input" type="text" id="series" name="series" pattern="^\d{4}$" required>
+                        <input class="input" value="${param.series}" type="text" id="series" name="series" pattern="^\d{4}$" required>
 
                         <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                        <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" required>
+                        <input class="input" value="${param.numberOfPassport}" type="text" id="numberOfPassport" name="numberOfPassport" pattern="^\d{6}$" required>
 
                         <label class="label" for="numberOfContact">Номер телефона:</label>
-                        <input class="input" type="tel" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" required>
+                        <input class="input" value="${param.numberOfContact}" type="tel" id="numberOfContact" name="numberOfContact" pattern="^\+7\d{10}$" required>
 
                         <label class="label" for="type">Тип телефона:</label>
                         <select id="type" name="type">
@@ -98,13 +98,13 @@
                     <a class="close" title="Закрыть" href="#close"></a>
                 </div>
 
-                <a href="#win2" class="dropbtn" style="display: contents"></a>
-                <a href="#x" class="overlay" id="win2"></a>
+                <a href="#win3" class="dropbtn" style="display: contents"></a>
+                <a href="#x" class="overlay" id="win3"></a>
                 <div class="popup">
                     <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?ready=ready">
                         <div class="dropdown">
                             <label class="label" for="serviceName">Услуга:</label>
-                            <input class="input-box" type="text" id="serviceName" list="dropdown-options2" name="serviceName" required>
+                            <input class="input-box" value="${param.serviceName}" type="text" id="serviceName" list="dropdown-options2" name="serviceName" required>
                             <datalist id="dropdown-options2">
                                 <c:forEach var="service" items="${sessionScope.services}">
                                     <option value="${service}">${service}</option>
@@ -113,19 +113,19 @@
                         </div>
 
                         <label class="label" for="employeeId">ID сотрудника:</label>
-                        <input class="input-box" type="text" id="employeeId" name="employeeId" pattern="^\d+$" required>
+                        <input class="input-box" value="${param.employeeId}" type="text" id="employeeId" name="employeeId" pattern="^\d+$" required>
 
                         <label class="label" for="clientId">ID клиента:</label>
                         <input class="input-box" type="text" id="clientId" name="clientId" value="${sessionScope.clientId}" pattern="^\d+$" required>
 
                         <label class="label" for="model">Модель устройства:</label>
-                        <input class="input-box" type="text" id="model" name="model" required>
+                        <input class="input-box" value="${param.model}" type="text" id="model" name="model" required>
 
                         <label class="label" for="clientProblem">Проблема клиента:</label>
-                        <input class="input-box" type="text" id="clientProblem" name="clientProblem" required>
+                        <input class="input-box" value="${param.clientProblem}" type="text" id="clientProblem" name="clientProblem" required>
 
                         <label class="label" for="comment">Комментарий:</label>
-                        <input class="input-box" type="text" id="comment" name="comment" required>
+                        <input class="input-box" value="${param.comment}" type="text" id="comment" name="comment" required>
 
                         <input class="input" type="submit" value="Отправить">
                     </form>

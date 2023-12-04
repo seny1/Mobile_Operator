@@ -25,6 +25,7 @@ public class ProductServlet extends HttpServlet {
         req.setAttribute("productTable", productService.getProductTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", productService.getColumnsOfProduct());
         req.setAttribute("goodColumnNames", productService.getGoodColumnsOfProduct());
+        req.getSession().setAttribute("categories", productCategoryService.getCategories());
         req.getRequestDispatcher("leftMainMenu/ProductJSP.jsp").forward(req, resp);
     }
 

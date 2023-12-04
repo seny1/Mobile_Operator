@@ -26,11 +26,11 @@ public class ProductDao {
                 product.category_id,
                 count,
                 product_category.category_id as id_of_category,
-                product_category.name as category_name,
+                product_category.name as name,
                 product_category.description
                 FROM product
                 JOIN product_category on product.category_id = product_category.category_id
-                ORDER BY 
+                ORDER BY
                 """ + orderBy;
         try (var connection = ConnectionManager.get();
             var preparedStatement = connection.prepareStatement(sql)) {
@@ -167,7 +167,7 @@ public class ProductDao {
                 .productName(resultSet.getString("product_name"))
                 .category(ProductCategory.builder()
                         .categoryId(resultSet.getInt("category_id"))
-                        .name(resultSet.getString("category_name"))
+                        .name(resultSet.getString("name"))
                         .description(resultSet.getString("description"))
                         .build())
                 .count(resultSet.getInt("count"))

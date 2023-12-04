@@ -51,7 +51,7 @@
                 <form class="form" method="post" action="${pageContext.request.contextPath}/contractTable">
                     <div class="dropdown">
                         <label class="label" for="tariffName">Название тарифа:</label>
-                        <input class="input-box" type="text" id="tariffName" list="dropdown-options" name="tariffName" required>
+                        <input class="input-box" value="${param.tariffName}" type="text" id="tariffName" list="dropdown-options" name="tariffName" required>
                         <datalist id="dropdown-options">
                             <c:forEach var="planName" items="${sessionScope.planNames}">
                                 <option value="${planName}">${planName}</option>
@@ -60,10 +60,10 @@
                     </div>
 
                     <label class="label" for="clientID">ID клиента:</label>
-                    <input class="input" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
+                    <input class="input" value="${param.clientID}" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
 
                     <label class="label" for="date">Дата:</label>
-                    <input class="input" type="date" id="date" name="date" required>
+                    <input class="input" value="${param.date}" type="date" id="date" name="date" required>
 
                     <input class="input" type="submit" value="Отправить">
                 </form>

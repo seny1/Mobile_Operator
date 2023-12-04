@@ -7,6 +7,7 @@ import org.elSasen.entities.Client;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ClientMapper;
 import org.elSasen.validator.ClientValidator;
+import org.elSasen.validator.Error;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -76,6 +77,11 @@ public class ClientService {
         return clientDao.insertIntoClientTable(client);
     }
 
+    public void deleteClient(String series, String number) {
+        if (!clientDao.deleteClient(series, number)) {
+            throw new ValidationException(List.of(Error.of("invalid.passport", "Клиента с таким паспортом не существует")));
+        }
+    }
     public Optional<ClientDto> getClientById(int id) {
         return clientDao.findClientById(id)
                 .map(clientMapper::mapFrom);

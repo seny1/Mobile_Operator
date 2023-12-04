@@ -18,6 +18,7 @@ public class ClientDao {
     private static final ClientDao INSTANCE = new ClientDao();
 
     private final String DEFAULT_ORDER_BY = "client_id";
+    private final ClientPassportDao clientPassportDao = ClientPassportDao.getInstance();
 
     public List<Client> getClientTable(String orderBy) {
         if (orderBy == null) {
@@ -173,7 +174,8 @@ public class ClientDao {
                        last_name,
                        cc.contact_id,
                        cc.number as number_of_contact,
-                       type
+                       type,
+                       remain_minutes
                 FROM client
                 JOIN public.client_passport cp on cp.passport_id = client.passport_id
                 JOIN public.client_contact cc on client.contact_id = cc.contact_id
@@ -188,6 +190,23 @@ public class ClientDao {
             }
             var client = buildClient(resultSet);
             return Optional.ofNullable(client);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteClient(String series, String numberOfPassport) {
+        String sql = """
+                DELETE FROM client WHERE passport_id = ?;
+                """;
+        var passportId = clientPassportDao.getPassportBySeriesNumber(series, numberOfPassport);
+        if (passportId.isEmpty()) {
+            return false;
+        }
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, passportId.get());
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

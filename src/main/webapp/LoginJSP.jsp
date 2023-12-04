@@ -9,7 +9,7 @@
   <body>
         <div class="login_fon">
             <form method="post" action="${pageContext.request.contextPath}/login">
-                <h2 class="login_text">Login</h2>
+                <h2 class="login_text">Войти</h2>
                 <label for="loginId">
                     <div class="input-form">
                         <input type="text" name="login" id="loginId" value="${param.login}" placeholder="login">

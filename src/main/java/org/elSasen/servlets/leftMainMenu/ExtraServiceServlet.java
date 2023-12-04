@@ -23,6 +23,7 @@ public class ExtraServiceServlet extends HttpServlet {
         req.setAttribute("extraServiceTable", extraServiceService.getExtraServiceTable(req.getParameter("orderBy")));
         req.setAttribute("columnNames", extraServiceService.getColumnsOfExtraService());
         req.setAttribute("goodColumnNames", extraServiceService.getGoodColumnsOfExtraService());
+        req.getSession().setAttribute("serviceCategories", extraServiceService.getServices());
         req.getRequestDispatcher("leftMainMenu/ExtraServiceJSP.jsp").forward(req, resp);
     }
 

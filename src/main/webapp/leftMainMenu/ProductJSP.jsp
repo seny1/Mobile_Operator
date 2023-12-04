@@ -51,17 +51,17 @@
         <div class="popup">
             <form class="form" method="post" action="${pageContext.request.contextPath}/productTable">
                 <label class="label" for="price">Стоимость</label>
-                <input class="input" type="text" id="price" name="price" pattern="^\d+(\.\d+)*$" required>
+                <input class="input" type="text" id="price" name="price" pattern="^\d+(\.\d+)*$" value="${param.price}" required>
 
                 <label class="label" for="productDescription">Описание товара:</label>
-                <input class="input" type="text" id="productDescription" name="productDescription" required>
+                <input class="input" type="text" id="productDescription" name="productDescription" value="${param.productDescription}" required>
 
                 <label class="label" for="productName">Название товара:</label>
-                <input class="input" type="text" id="productName" name="productName" required>
+                <input class="input" type="text" id="productName" name="productName" value="${param.productName}"  required>
 
                 <div class="dropdown">
                     <label class="label" for="categoryName">Категория товара:</label>
-                    <input class="input-box" type="text" id="categoryName" list="dropdown-options" name="categoryName" required>
+                    <input class="input-box" type="text" id="categoryName" list="dropdown-options" name="categoryName" value="${param.categoryName}" required>
                     <datalist id="dropdown-options">
                         <c:forEach var="category" items="${sessionScope.categories}">
                             <option value="${category}">${category}</option>
@@ -70,7 +70,7 @@
                 </div>
 
                 <label class="label" for="productCount">Количество товара:</label>
-                <input class="input" type="text" id="productCount" name="productCount" pattern="^\d+$" required>
+                <input class="input" type="text" id="productCount" name="productCount" pattern="^\d+$" value="${param.productCount}" required>
 
                 <input class="input" type="submit" value="Отправить">
             </form>
@@ -158,7 +158,3 @@
 </div>
 </body>
 </html>
-
-
-
-

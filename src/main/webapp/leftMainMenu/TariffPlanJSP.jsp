@@ -50,19 +50,19 @@
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/tariffPlanTable">
                     <label class="label" for="planName">Имя плана:</label>
-                    <input class="input" type="text" id="planName" name="planName"  required>
+                    <input class="input" value="${param.planName}" type="text" id="planName" name="planName"  required>
 
                     <label class="label" for="callMinutes">Минуты:</label>
-                    <input class="input" type="text" id="callMinutes" name="callMinutes" pattern="^\d+" required>
+                    <input class="input" value="${param.callMinutes}" type="text" id="callMinutes" name="callMinutes" pattern="^\d+" required>
 
                     <label class="label" for="internetGb">Гигабайты:</label>
-                    <input class="input" type="text" id="internetGb" name="internetGb" pattern="^\d+" required>
+                    <input class="input" value="${param.internetGb}" type="text" id="internetGb" name="internetGb" pattern="^\d+" required>
 
                     <label class="label" for="smsNumber">Сообщения:</label>
-                    <input class="input" type="text" id="smsNumber" name="smsNumber" pattern="^\d+" required>
+                    <input class="input" value="${param.smsNumber}" type="text" id="smsNumber" name="smsNumber" pattern="^\d+" required>
 
                     <label class="label" for="price">Стоимость:</label>
-                    <input class="input" type="text" id="price" name="price" pattern="^\d+" required>
+                    <input class="input" value="${param.price}" type="text" id="price" name="price" pattern="^\d+" required>
 
                     <input class="input" type="submit" value="Отправить">
                 </form>

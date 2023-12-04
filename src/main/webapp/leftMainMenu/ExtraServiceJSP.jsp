@@ -50,14 +50,14 @@
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/extraServiceTable">
                     <label class="label" for="serviceName">Название услуги:</label>
-                    <input class="input" type="text" id="serviceName" name="serviceName" required>
+                    <input class="input" value="${param.serviceName}" type="text" id="serviceName" name="serviceName" required>
 
                     <label class="label" for="price">Стоимость услуги:</label>
-                    <input class="input" type="text" id="price" name="price" pattern="^\d+$" required>
+                    <input class="input" value="${param.price}" type="text" id="price" name="price" pattern="^\d+$" required>
 
                     <div class="dropdown">
                         <label class="label" for="serviceCategory">Категория услуги:</label>
-                        <input class="input-box" type="text" id="serviceCategory" list="dropdown-options" name="serviceCategory" required>
+                        <input class="input-box" value="${param.serviceCategory}" type="text" id="serviceCategory" list="dropdown-options" name="serviceCategory" required>
                         <datalist id="dropdown-options">
                             <c:forEach var="serviceCategory" items="${sessionScope.serviceCategories}">
                                 <option value="${serviceCategory}">${serviceCategory}</option>
@@ -66,7 +66,7 @@
                     </div>
 
                     <label class="label" for="description">Описание услуги:</label>
-                    <input class="input" type="text" id="description" name="description" required>
+                    <input class="input" value="${param.description}" type="text" id="description" name="description" required>
 
                     <input class="input" type="submit" value="Отправить">
                 </form>

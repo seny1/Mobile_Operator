@@ -48,7 +48,7 @@
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/checkTable">
                     <label class="label" for="numberOfTypes">Количество товаров разных типов:</label>
-                    <input class="input" type="text" id="numberOfTypes" name="numberOfTypes" pattern="^\d+$" required>
+                    <input class="input" value="${param.numberOfTypes}" type="text" id="numberOfTypes" name="numberOfTypes" pattern="^\d+$" required>
                     <input class="input" type="submit" value="Отправить">
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>

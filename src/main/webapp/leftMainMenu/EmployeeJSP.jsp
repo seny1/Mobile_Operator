@@ -60,42 +60,42 @@
                     <div class="scroll scroll1">
                         <form class="form" method="post" action="${pageContext.request.contextPath}/employeeTable">
                             <label class="label" for="firstName">Имя сотрудника:</label>
-                            <input class="input" type="text" id="firstName" name="firstName" required>
+                            <input class="input" value="${param.firstName}" type="text" id="firstName" name="firstName" required>
 
                             <label class="label" for="lastName">Фамилия сотрудника:</label>
-                            <input class="input" type="text" id="lastName" name="lastName" required>
+                            <input class="input" value="${param.lastName}" type="text" id="lastName" name="lastName" required>
 
                             <label class="label" for="series">Серия паспорта:</label>
-                            <input class="input" type="text" id="series" name="series" pattern="\d{4}" placeholder="xxxx" required>
+                            <input class="input" value="${param.series}" type="text" id="series" name="series" pattern="\d{4}" placeholder="xxxx" required>
 
                             <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                            <input class="input" type="text" id="numberOfPassport" name="numberOfPassport" pattern="\d{6}" placeholder="xxxxxx" required>
+                            <input class="input" value="${param.numberOfPassport}" type="text" id="numberOfPassport" name="numberOfPassport" pattern="\d{6}" placeholder="xxxxxx" required>
 
                             <label class="label" for="birthday">Дата рождения:</label>
-                            <input class="input" type="date" id="birthday" name="birthday" required>
+                            <input class="input" value="${param.birthday}" type="date" id="birthday" name="birthday" required>
 
                             <label class="label" for="issueDate">Дата выдачи паспорта:</label>
-                            <input class="input" type="date" id="issueDate" name="issueDate" required>
+                            <input class="input" value="${param.issueDate}" type="date" id="issueDate" name="issueDate" required>
 
                             <label class="label" for="placeCode">Код подразделения:</label>
-                            <input class="input" type="text" id="placeCode" name="placeCode" pattern="^\d{3}\-\d{3}$" placeholder="xxx-xxx" required>
+                            <input class="input" value="${param.placeCode}" type="text" id="placeCode" name="placeCode" pattern="^\d{3}\-\d{3}$" placeholder="xxx-xxx" required>
 
                             <label class="label" for="personalNumber">Личный номер телефона:</label>
-                            <input class="input" type="text" id="personalNumber" name="personalNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$"
+                            <input class="input" value="${param.personalNumber}" type="text" id="personalNumber" name="personalNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$"
                                    required>
 
                             <label class="label" for="workNumber">Рабочий номер телефона:</label>
-                            <input class="input" type="text" id="workNumber" name="workNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
+                            <input class="input" value="${param.workNumber}" type="text" id="workNumber" name="workNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
 
                             <label class="label" for="login">Логин:</label>
-                            <input class="input" type="text" id="login" name="login" required>
+                            <input class="input" value="${param.login}" type="text" id="login" name="login" required>
 
                             <label class="label" for="password">Пароль:</label>
-                            <input class="input" type="text" id="password" name="password" required>
+                            <input class="input" value="${param.password}" type="text" id="password" name="password" required>
 
                             <div class="dropdown">
                                 <label class="label" for="department">Департамент:</label>
-                                <input class="input-box" type="text" id="department" list="dropdown-options1" name="department" required>
+                                <input class="input-box" value="${param.department}" type="text" id="department" list="dropdown-options1" name="department" required>
                                 <datalist id="dropdown-options1">
                                     <c:forEach var="department" items="${sessionScope.departments}">
                                         <option value="${department}">${department}</option>
@@ -105,7 +105,7 @@
                             <br>
                             <div class="dropdown">
                                 <label class="label" for="salon">Салон:</label>
-                                <input class="input-box" type="text" id="salon" list="dropdown-options2" name="salon" required>
+                                <input class="input-box" value="${param.salon}" type="text" id="salon" list="dropdown-options2" name="salon" required>
                                 <datalist id="dropdown-options2">
                                     <c:forEach var="salon" items="${sessionScope.salons}">
                                         <option value="${salon}">${salon}</option>
@@ -115,7 +115,7 @@
                             <br>
                             <div class="dropdown">
                                 <label class="label" for="post">Должность:</label>
-                                <input class="input-box" type="text" id="post" list="dropdown-options3" name="post" required>
+                                <input class="input-box" value="${param.post}" type="text" id="post" list="dropdown-options3" name="post" required>
                                 <datalist id="dropdown-options3">
                                     <c:forEach var="post" items="${sessionScope.posts}">
                                         <option value="${post}">${post}</option>
@@ -125,7 +125,7 @@
                             <br>
                             <div class="dropdown">
                                 <label class="label" for="role">Роль:</label>
-                                <input class="input-box" type="text" id="role" list="dropdown-options4" name="role" required>
+                                <input class="input-box" value="${param.role}" type="text" id="role" list="dropdown-options4" name="role" required>
                                 <datalist id="dropdown-options4">
                                     <c:forEach var="role" items="${sessionScope.roles}">
                                         <option value="${role}">${role}</option>

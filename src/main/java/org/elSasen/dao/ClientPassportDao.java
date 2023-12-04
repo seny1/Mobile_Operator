@@ -1,12 +1,16 @@
 package org.elSasen.dao;
 
 import org.elSasen.entities.ClientPassport;
+import org.elSasen.exception.ValidationException;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ClientPassportDao {
 
@@ -40,6 +44,26 @@ public class ClientPassportDao {
                 clientPassportList.add(clientPassport);
             }
             return clientPassportList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Integer> getPassportBySeriesNumber(String series, String number) {
+        String sql = """
+                SELECT passport_id
+                FROM client_passport
+                WHERE series = ? AND number = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, series);
+            preparedStatement.setString(2, number);
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getInt("passport_id"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

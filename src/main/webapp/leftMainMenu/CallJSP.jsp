@@ -49,13 +49,13 @@
                 <div class="popup">
                     <form class="form" method="post" action="${pageContext.request.contextPath}/callTable">
                         <label class="label" for="clientID">ID клиента:</label>
-                        <input class="input" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
+                        <input class="input" value="${param.clientID}" type="text" id="clientID" name="clientID" pattern="^\d+$" required>
 
                         <label class="label" for="subscriberNumber">Номер абонента:</label>
-                        <input class="input" type="text" id="subscriberNumber" name="subscriberNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
+                        <input class="input" value="${param.subscriberNumber}" type="text" id="subscriberNumber" name="subscriberNumber" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$" required>
 
                         <label class="label" for="callDuration">Продолжительность звонка:</label>
-                        <input class="input" type="text" id="callDuration" name="callDuration" pattern="^\d+\.\d+$" placeholder="xx.xx" required>
+                        <input class="input" value="${param.callDuration}" type="text" id="callDuration" name="callDuration" pattern="^\d+\.\d+$" placeholder="xx.xx" required>
 
                         <input class="input" type="submit" value="Отправить">
                     </form>
