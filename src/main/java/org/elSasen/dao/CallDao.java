@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.String;
+import java.util.Optional;
 
 public class CallDao {
 
@@ -93,6 +94,43 @@ public class CallDao {
             return columnNames;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public boolean deleteCall(String id){
+        String sql = """
+            DELETE FROM call WHERE call_id = ?
+            """;
+        var callId = getCallById(id);
+        if(callId.isEmpty()){
+            return false;
+        }
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, callId.get());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    };
+    public Optional<Integer> getCallById(String id){
+        String sql = """
+            SELECT call_id FROM call
+            WHERE call_id = ?
+            """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getInt("call_id"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NumberFormatException e){
+            return Optional.empty();
         }
     }
     public List<String> getGoodMetaData() {

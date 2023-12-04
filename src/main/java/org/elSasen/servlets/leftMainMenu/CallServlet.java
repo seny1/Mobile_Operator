@@ -28,7 +28,7 @@ public class CallServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            if (req.getParameter("filter") == null) {
+            if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
                 var callDtoInsert = CallDtoInsert.builder()
                         .clientId(Integer.parseInt(req.getParameter("clientID")))
                         .subscriberNumber(req.getParameter("subscriberNumber"))
@@ -46,6 +46,9 @@ public class CallServlet extends HttpServlet {
                 req.setAttribute("goodColumnNames", callService.getGoodColumnsOfCall());
                 req.setAttribute("callTable", callService.getFilterCallTable(req.getParameter("orderBy"), filterMap));
                 req.getRequestDispatcher("leftMainMenu/CallJSP.jsp").forward(req, resp);
+            } else if (req.getParameter("delete") != null){
+                callService.deleteCall(req.getParameter("idDelete"));
+                resp.sendRedirect("/callTable?good=good");
             }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

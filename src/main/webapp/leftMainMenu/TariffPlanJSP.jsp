@@ -70,6 +70,25 @@
             </div>
         </c:if>
 
+        <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+            <a href="#win4" class="dropbtn">Удалить запись</a>
+            <a href="#x" class="overlay" id="win4"></a>
+            <div class="popup">
+                <form class="form" method="post" action="${pageContext.request.contextPath}/tariffPlanTable?delete=delete&good=good">
+                    <div class="dropdown">
+                        <label class="label" for="nameDelete">Название тарифа:</label>
+                        <input class="input-box" type="text" id="nameDelete" list="dropdown-options-name" name="nameDelete" value="${param.nameDelete}" required>
+                        <datalist id="dropdown-options-name">
+                            <c:forEach var="nameDelete" items="${sessionScope.names}">
+                                <option value="${nameDelete}">${nameDelete}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
+                    <input class="input" type="submit" value="Отправить">
+                </form>
+                <a class="close" title="Закрыть" href="#close"></a>
+            </div>
+        </c:if>
         <a href="#win3" class="dropbtn">Фильтр</a>
         <a href="#x" class="overlay" id="win3"></a>
         <div class="popup">

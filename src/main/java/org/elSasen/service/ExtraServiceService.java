@@ -9,6 +9,7 @@ import org.elSasen.entities.Product;
 import org.elSasen.entities.ServiceCategory;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ExtraServiceMapper;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.ExtraServiceValidator;
 
 import java.util.ArrayList;
@@ -60,6 +61,12 @@ public class ExtraServiceService {
 
     public List<String> getServices() {
         return extraServiceDao.getServices();
+    }
+
+    public void deleteService(String name){
+        if(!extraServiceDao.deleteService(name)){
+            throw new ValidationException(List.of(Error.of("invalid.product", "Услуги с таким названием не существует")));
+        }
     }
 
     public void insertIntoService(ExtraServiceDtoInsert extraServiceDtoInsert) {

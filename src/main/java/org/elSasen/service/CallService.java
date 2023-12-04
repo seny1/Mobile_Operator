@@ -7,11 +7,13 @@ import org.elSasen.entities.Call;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.CallMapper;
 import org.elSasen.validator.CallValidator;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CallService {
@@ -61,6 +63,16 @@ public class CallService {
         }
         var call = callMapper.mapFrom(callDtoInsert);
         callDao.insertIntoCallTable(call);
+    }
+
+    public void deleteCall(String id){
+        if(!callDao.deleteCall(id) ){
+            throw new ValidationException(List.of(Error.of("invalid.call", "Звонка с таким идентификатором не существует")));
+        }
+    }
+
+    public Optional<Integer> getIdOfCall(String id){
+        return callDao.getCallById(id);
     }
 
     public List<String> getColumnsOfCall() {

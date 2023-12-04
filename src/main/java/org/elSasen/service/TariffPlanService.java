@@ -8,6 +8,7 @@ import org.elSasen.entities.Check;
 import org.elSasen.entities.TariffPlan;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.TariffPlanMapper;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.TariffPlanValidator;
 import org.elSasen.validator.ValidationResult;
 
@@ -60,6 +61,12 @@ public class TariffPlanService {
         return result.stream()
             .map(tariffPlanMapper::mapFrom)
             .collect(Collectors.toList());
+    }
+
+    public void deleteTariff(String name){
+        if(!tariffPlanDao.deleteTariff(name)){
+            throw new ValidationException(List.of(Error.of("invalid.name", "Тарифа с таким названием не существует")));
+        }
     }
 
     public List<String> getPlans() {

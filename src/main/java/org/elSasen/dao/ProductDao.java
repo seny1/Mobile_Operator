@@ -91,7 +91,40 @@ public class ProductDao {
             throw new RuntimeException(e);
         }
     }
+    public boolean deleteProduct(String name){
+        String sql = """
+            DELETE FROM product WHERE product_name = ?
+            """;
+        var productName = getProductName(name);
+        if(productName.isEmpty()){
+            return false;
+        }
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, productName.get());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public Optional<String> getProductName(String name){
+        String sql = """
+            SELECT product_name FROM product 
+            WHERE product_name = ?
+            """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getString("product_name"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void insertIntoProductTable(Product product) {
         String getCategoryId = """
                 SELECT category_id

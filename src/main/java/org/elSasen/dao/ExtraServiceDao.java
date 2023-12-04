@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ExtraServiceDao {
     private static final ExtraServiceDao INSTANCE = new ExtraServiceDao();
@@ -112,6 +113,41 @@ public class ExtraServiceDao {
             var resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean deleteService(String name){
+        String sql = """
+            DELETE FROM extra_service
+            WHERE service_name = ?
+            """;
+        var serviceName = getServiceName(name);
+        if(serviceName.isEmpty()){
+            return false;
+        }
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, serviceName.get());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<String> getServiceName(String name){
+        String sql = """
+            SELECT service_name FROM extra_service
+            WHERE service_name = ?
+            """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getString("service_name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
