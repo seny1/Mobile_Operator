@@ -113,6 +113,25 @@
                     </tbody>
                 </table>
             </div>
+            <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+                <a href="#win4" class="dropbtn">Удалить запись</a>
+                <a href="#x" class="overlay" id="win4"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/extraServiceTable?delete=delete&good=good">
+                        <div class="dropdown">
+                            <label class="label" for="nameDelete">Название услуги:</label>
+                            <input class="input-box" type="text" id="nameDelete" list="dropdown-options-name" name="nameDelete" value="${param.nameDelete}" required>
+                            <datalist id="dropdown-options-name">
+                                <c:forEach var="nameDelete" items="${sessionScope.names}">
+                                    <option value="${nameDelete}">${nameDelete}</option>
+                                </c:forEach>
+                            </datalist>
+                        </div>
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
+            </c:if>
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
@@ -144,6 +163,14 @@
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/extraServiceTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>
+            <c:if test="${not empty requestScope.errors}">
+                <div style="color: red">
+                    <c:forEach var="error" items="${requestScope.errors}">
+                        <span>${error.message}</span>
+                        <br>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </c:if>
 </div>

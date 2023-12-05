@@ -6,10 +6,7 @@ import org.elSasen.util.ConnectionManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TariffPlanDao {
     private static final TariffPlanDao INSTANCE = new TariffPlanDao();
@@ -85,6 +82,38 @@ public class TariffPlanDao {
                 plans.add(resultSet.getString(1));
             }
             return plans;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean deleteTariff(String name){
+        String sql = """
+            DELETE FROM tariff_plan WHERE plan_name = ?
+            """;
+        var planName = getPlanName(name);
+        if(planName.isEmpty()){
+            return false;
+        }
+        try (var connection = ConnectionManager.get();
+            var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, planName.get());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public Optional<String> getPlanName(String name){
+        String sql = """
+            SELECT plan_name FROM tariff_plan WHERE plan_name = ?
+            """;
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getString("plan_name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

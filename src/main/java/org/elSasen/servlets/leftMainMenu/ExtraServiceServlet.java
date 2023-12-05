@@ -24,34 +24,43 @@ public class ExtraServiceServlet extends HttpServlet {
         req.setAttribute("columnNames", extraServiceService.getColumnsOfExtraService());
         req.setAttribute("goodColumnNames", extraServiceService.getGoodColumnsOfExtraService());
         req.getSession().setAttribute("serviceCategories", extraServiceService.getServices());
+        req.getSession().setAttribute("names", extraServiceService.getServices());
         req.getRequestDispatcher("leftMainMenu/ExtraServiceJSP.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("filter") == null) {
-            var extraServiceDtoInsert = ExtraServiceDtoInsert.builder()
-                .serviceDescription(req.getParameter("description"))
-                .serviceName(req.getParameter("serviceName"))
-                .price(Double.parseDouble(req.getParameter("price")))
-                .categoryName(req.getParameter("serviceCategory"))
-                .build();
-            try {
-                extraServiceService.insertIntoService(extraServiceDtoInsert);
-                resp.sendRedirect("/extraServiceTable");
-            } catch (ValidationException exception) {
-                req.setAttribute("errors", exception.getErrors());
-                doGet(req, resp);
+        try {
+            if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
+                var extraServiceDtoInsert = ExtraServiceDtoInsert.builder()
+                    .serviceDescription(req.getParameter("description"))
+                    .serviceName(req.getParameter("serviceName"))
+                    .price(Double.parseDouble(req.getParameter("price")))
+                    .categoryName(req.getParameter("serviceCategory"))
+                    .build();
+                try {
+                    extraServiceService.insertIntoService(extraServiceDtoInsert);
+                    resp.sendRedirect("/extraServiceTable");
+                } catch (ValidationException exception) {
+                    req.setAttribute("errors", exception.getErrors());
+                    doGet(req, resp);
+                }
+            } else if(req.getParameter("filter") != null) {
+                var filterMap = new HashMap<String, String>();
+                filterMap.put("serviceName", req.getParameter("serviceNameFilter"));
+                filterMap.put("priceUp", req.getParameter("priceUpFilter"));
+                filterMap.put("priceDown", req.getParameter("priceDownFilter"));
+                filterMap.put("categoryName", req.getParameter("categoryNameFilter"));
+                req.setAttribute("goodColumnNames", extraServiceService.getGoodColumnsOfExtraService());
+                req.setAttribute("extraServiceTable", extraServiceService.getFilterExtraServiceTable(req.getParameter("orderBy"), filterMap));
+                req.getRequestDispatcher("leftMainMenu/ExtraServiceJSP.jsp").forward(req, resp);
+            } else if (req.getParameter("delete") != null){
+                extraServiceService.deleteService(req.getParameter("nameDelete"));
+                resp.sendRedirect("/extraServiceTable?good=good");
             }
-        } else if(req.getParameter("filter") != null) {
-            var filterMap = new HashMap<String, String>();
-            filterMap.put("serviceName", req.getParameter("serviceNameFilter"));
-            filterMap.put("priceUp", req.getParameter("priceUpFilter"));
-            filterMap.put("priceDown", req.getParameter("priceDownFilter"));
-            filterMap.put("categoryName", req.getParameter("categoryNameFilter"));
-            req.setAttribute("goodColumnNames", extraServiceService.getGoodColumnsOfExtraService());
-            req.setAttribute("extraServiceTable", extraServiceService.getFilterExtraServiceTable(req.getParameter("orderBy"), filterMap));
-            req.getRequestDispatcher("leftMainMenu/ExtraServiceJSP.jsp").forward(req, resp);
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
         }
     }
 }

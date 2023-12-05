@@ -8,6 +8,7 @@ import org.elSasen.entities.Product;
 import org.elSasen.entities.TariffPlan;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ProductMapper;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.ProductValidator;
 import org.elSasen.validator.ValidationResult;
 
@@ -37,6 +38,12 @@ public class ProductService {
         }
         var product = productMapper.mapFrom(productDtoInsert);
         productDao.insertIntoProductTable(product);
+    }
+
+    public void deleteProduct(String name){
+        if(!productDao.deleteProduct(name)){
+            throw new ValidationException(List.of(Error.of("invalid.product", "Продукта с таким названием не существует")));
+        }
     }
     public List<String> getProductNames() {
         return productDao.getProductNames();
