@@ -31,7 +31,7 @@ public class ContractServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            if (req.getParameter("filter") == null) {
+            if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
                 var contractDtoInsert = ContractDtoInsert.builder()
                         .clientId(Integer.parseInt(req.getParameter("clientID")))
                         .date(LocalDate.parse(req.getParameter("date")))
@@ -50,6 +50,9 @@ public class ContractServlet extends HttpServlet {
                 req.setAttribute("goodColumnNames", contractService.getGoodColumnsOfContract());
                 req.setAttribute("contractTable", contractService.getFilterContractTable(req.getParameter("orderBy"), filterMap));
                 req.getRequestDispatcher("leftMainMenu/ContractJSP.jsp").forward(req, resp);
+            } else if (req.getParameter("delete") != null) {
+                contractService.deleteContract(Integer.parseInt(req.getParameter("contractIdDelete")));
+                resp.sendRedirect("/contractTable?good=good");
             }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

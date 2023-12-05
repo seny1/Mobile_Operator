@@ -37,7 +37,7 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            if (req.getParameter("filter") == null) {
+            if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
                 var employeeDtoinsert = EmployeeDtoInsert.builder()
                         .departmentName(req.getParameter("department"))
                         .salonAddress(req.getParameter("salon"))
@@ -71,6 +71,9 @@ public class EmployeeServlet extends HttpServlet {
                 req.setAttribute("goodColumnNames", employeeService.getGoodColumnsOfEmployee());
                 req.setAttribute("employeeTable", employeeService.getFilterEmployeeTable(req.getParameter("orderBy"), filterMap));
                 req.getRequestDispatcher("leftMainMenu/EmployeeJSP.jsp").forward(req, resp);
+            } else if (req.getParameter("delete") != null) {
+                employeeService.deleteClient(req.getParameter("loginDelete"));
+                resp.sendRedirect("/employeeTable?good=good");
             }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

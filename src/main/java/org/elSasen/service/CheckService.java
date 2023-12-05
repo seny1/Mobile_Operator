@@ -9,6 +9,7 @@ import org.elSasen.entities.Check;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.CheckMapper;
 import org.elSasen.validator.CheckValidator;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.ValidationResult;
 
 import java.util.ArrayList;
@@ -66,6 +67,12 @@ public class CheckService {
             productNamesCount.put(checkDtoInsert.getProductName()[i], checkDtoInsert.getProductCount()[i]);
         }
         checkDao.insertIntoCheckTable(productNamesCount, checkDtoInsert.getClientId());
+    }
+
+    public void deleteCheck(int checkId) {
+        if (!checkDao.deleteCheck(checkId)) {
+            throw new ValidationException(List.of(Error.of("invalid.check", "Чека с таким ID не существует")));
+        }
     }
 
     public List<String> getGoodMetaData() {

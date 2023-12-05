@@ -8,6 +8,7 @@ import org.elSasen.entities.ExtraService;
 import org.elSasen.entities.Order;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.OrderMapper;
+import org.elSasen.validator.Error;
 import org.elSasen.validator.OrderValidator;
 import org.elSasen.validator.ValidationResult;
 
@@ -71,6 +72,12 @@ public class OrderService {
         }
         var order = orderMapper.mapFrom(orderDtoInsert);
         orderDao.insertIntoOrder(order);
+    }
+
+    public void deleteOrder(int orderIdDelete) {
+        if (!orderDao.deleteOrder(orderIdDelete)) {
+            throw new ValidationException(List.of(Error.of("invalid.order", "Заказа с таким ID не существует")));
+        }
     }
 
     public void updateStatus(int orderId, String statusName) {

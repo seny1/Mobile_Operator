@@ -9,6 +9,7 @@ import org.elSasen.entities.Contract;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.ContractMapper;
 import org.elSasen.validator.ContractValidator;
+import org.elSasen.validator.Error;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -57,6 +58,11 @@ public class ContractService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteContract(int contractId) {
+        if (!contractDao.deleteContract(contractId)) {
+            throw new ValidationException(List.of(Error.of("invalid.contract", "Контракта с таким id не существует")));
+        }
+    }
     public void insertIntoContract(ContractDtoInsert contractDtoInsert) {
         var validationResult = contractValidator.isValid(contractDtoInsert);
         if (!validationResult.isValid()) {

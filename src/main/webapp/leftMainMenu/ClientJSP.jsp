@@ -181,6 +181,14 @@
                 <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                     <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
                 </form>
+                <c:if test="${not empty requestScope.errors}">
+                    <div style="color: red">
+                        <c:forEach var="error" items="${requestScope.errors}">
+                            <span>${error.message}</span>
+                            <br>
+                        </c:forEach>
+                    </div>
+                </c:if>
             </div>
         </c:if>
     </div>

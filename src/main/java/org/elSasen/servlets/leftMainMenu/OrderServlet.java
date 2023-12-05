@@ -33,7 +33,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("filter") == null) {
+        if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
             if (req.getParameter("choose") == null && req.getParameter("ready") == null && req.getParameter("update") == null) {
                 var clientDtoInsert = ClientDtoInsert.builder()
                     .firstName(req.getParameter("firstName"))
@@ -91,6 +91,9 @@ public class OrderServlet extends HttpServlet {
             req.setAttribute("goodColumnNames", orderService.getGoodColumnsOfOrder());
             req.setAttribute("orderTable", orderService.getFilterOrderTable(req.getParameter("orderBy"), filterMap));
             req.getRequestDispatcher("leftMainMenu/OrderJSP.jsp").forward(req, resp);
+        } else if (req.getParameter("delete") != null) {
+            orderService.deleteOrder(Integer.parseInt(req.getParameter("orderIdDelete")));
+            resp.sendRedirect("/orderTable?good=good");
         }
     }
 }

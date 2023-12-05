@@ -8,6 +8,7 @@ import org.elSasen.entities.Employee;
 import org.elSasen.exception.ValidationException;
 import org.elSasen.mapper.EmployeeMapper;
 import org.elSasen.validator.EmployeeValidator;
+import org.elSasen.validator.Error;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -73,6 +74,12 @@ public class EmployeeService {
         return result.stream()
                 .map(employeeMapper::mapFrom)
                 .collect(Collectors.toList());
+    }
+
+    public void deleteClient(String login) {
+        if (!employeeDao.deleteClient(login)) {
+            throw new ValidationException(List.of(Error.of("invalid.login", "Сотрудника с таким логином не существует")));
+        }
     }
 
     public List<String> getColumnsOfEmployee() {

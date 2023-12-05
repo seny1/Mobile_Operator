@@ -193,6 +193,21 @@ public class EmployeeDao {
         }
     }
 
+    public boolean deleteClient(String login) {
+        String sql = """
+                DELETE
+                FROM employee
+                WHERE login = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, login);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private Employee buildEmployee(ResultSet resultSet) throws SQLException {
         return Employee.builder()
                 .employeeId(resultSet.getLong("employee_id"))
@@ -240,4 +255,5 @@ public class EmployeeDao {
     public static EmployeeDao getInstance() {
         return INSTANCE;
     }
+
 }

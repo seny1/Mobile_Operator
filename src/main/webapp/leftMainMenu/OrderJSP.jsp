@@ -163,6 +163,7 @@
                     <tbody>
                     <c:forEach var="order" items="${requestScope.orderTable}">
                         <tr>
+                            <td>${order.orderId}</td>
                             <td>${order.service.serviceName}</td>
                             <td>${order.employee.firstName}</td>
                             <td>${order.employee.lastName}</td>
@@ -230,10 +231,30 @@
                     <a class="close" title="Закрыть" href="#close"></a>
                 </div>
             </c:if>
+            <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+                <a href="#win5" class="dropbtn">Удалить запись</a>
+                <a href="#x" class="overlay" id="win5"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/orderTable?delete=delete&good=good">
+                        <label class="label" for="orderIdDelete">ID заказа:</label>
+                        <input class="input" value="${param.orderIdDelete}" type="text" id="orderIdDelete" name="orderIdDelete" required>
 
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
+            </c:if>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/orderTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>
+            <c:if test="${not empty requestScope.errors}">
+                <div style="color: red">
+                    <c:forEach var="error" items="${requestScope.errors}">
+                        <span>${error.message}</span>
+                        <br>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </c:if>
 </div>

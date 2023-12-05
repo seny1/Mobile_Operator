@@ -3,6 +3,7 @@ package org.elSasen.dao;
 import org.elSasen.entities.*;
 import org.elSasen.util.ConnectionManager;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -88,6 +89,21 @@ public class CheckDao {
                 checkSet.add(check);
             }
             return checkSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteCheck(int checkId) {
+        String sql = """
+                DELETE
+                FROM "Check"
+                WHERE check_id = ?
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, checkId);
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -225,7 +225,8 @@ public class OrderDao {
 
     public List<String> getGoodMetaData() {
         String sql = """
-                SELECT service_name,
+                SELECT order_id,
+                       service_name,
                        e.first_name AS employee_first_name,
                        e.last_name AS employee_last_name,
                        c.first_name AS client_first_name,
@@ -270,6 +271,21 @@ public class OrderDao {
             preparedStatement.setString(5, order.getComment());
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteOrder(int orderIdDelete) {
+        String sql = """
+                DELETE
+                FROM "Order"
+                WHERE order_id = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, orderIdDelete);
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

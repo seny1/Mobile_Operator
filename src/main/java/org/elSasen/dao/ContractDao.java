@@ -104,6 +104,22 @@ public class ContractDao {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteContract(int contractId) {
+        String sql = """
+                DELETE
+                FROM contract
+                WHERE contract_id = ?;
+                """;
+        try (var connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, contractId);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<String> getGoodMetaData() {
         String sql = """
                 SELECT contract_id,

@@ -150,9 +150,30 @@
                 </form>
                 <a class="close" title="Закрыть" href="#close"></a>
             </div>
+            <c:if test="${sessionScope.user.role.roleId == 1}">
+                <a href="#win4" class="dropbtn">Удалить запись</a>
+                <a href="#x" class="overlay" id="win4"></a>
+                <div class="popup">
+                    <form class="form" method="post" action="${pageContext.request.contextPath}/checkTable?delete=delete&good=good">
+                        <label class="label" for="checkIdDelete">ID чека:</label>
+                        <input class="input" value="${param.checkIdDelete}" type="text" id="checkIdDelete" name="checkIdDelete" required>
+
+                        <input class="input" type="submit" value="Отправить">
+                    </form>
+                    <a class="close" title="Закрыть" href="#close"></a>
+                </div>
+            </c:if>
             <form class="dropdown" method="get" action="${pageContext.request.contextPath}/clientTable">
                 <a href="?good" class="dropbtn" style="width: 220px; display: inline-block">Отобразить информацию с ID</a>
             </form>
+            <c:if test="${not empty requestScope.errors}">
+                <div style="color: red">
+                    <c:forEach var="error" items="${requestScope.errors}">
+                        <span>${error.message}</span>
+                        <br>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </c:if>
 </div>

@@ -33,7 +33,7 @@ public class CheckServlet extends HttpServlet {
             resp.sendRedirect("/checkTable?numberOfTypes=" + req.getParameter("numberOfTypes") + "#win2");
         } else {
             try {
-                if (req.getParameter("filter") == null) {
+                if (req.getParameter("filter") == null && req.getParameter("delete") == null) {
                     String[] productNames = new String[Integer.parseInt(req.getParameter("i"))];
                     Integer[] productCounts = new Integer[Integer.parseInt(req.getParameter("i"))];
 
@@ -58,6 +58,9 @@ public class CheckServlet extends HttpServlet {
                     req.setAttribute("goodColumnNames", checkService.getGoodMetaData());
                     req.setAttribute("checkTable", checkService.getFilterCallTable(req.getParameter("orderBy"), filterMap));
                     req.getRequestDispatcher("leftMainMenu/CheckJSP.jsp").forward(req, resp);
+                } else if (req.getParameter("delete") != null) {
+                    checkService.deleteCheck(Integer.parseInt(req.getParameter("checkIdDelete")));
+                    resp.sendRedirect("/checkTable?good=good");
                 }
             } catch (ValidationException exception) {
                 req.setAttribute("errors", exception.getErrors());
