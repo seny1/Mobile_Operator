@@ -16,9 +16,17 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID сотрудника</th>
+                    <th>ID департамента</th>
+                    <th>ID салона</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>ID должности</th>
+                    <th>ID паспорта</th>
+                    <th>ID контакта</th>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                    <th>ID роли</th>
                 </tr>
                 </thead>
             </table>
@@ -160,9 +168,21 @@
                     <table class="table1">
                         <thead>
                         <tr>
-                            <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                                <th>${column}</th>
-                            </c:forEach>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Департамент</th>
+                            <th>Салон</th>
+                            <th>Должность</th>
+                            <th>Серия паспорта</th>
+                            <th>Номер паспорта</th>
+                            <th>Дата рождения</th>
+                            <th>Дата выдачи</th>
+                            <th>Код подразделения</th>
+                            <th>Рабочий номер</th>
+                            <th>Личный номер</th>
+                            <th>Логин</th>
+                            <th>Пароль</th>
+                            <th>Роль</th>
                         </tr>
                         </thead>
                         <tbody>

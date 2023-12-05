@@ -15,9 +15,10 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID продукта</th>
+                    <th>Кол-во продукта</th>
+                    <th>ID чека</th>
+                    <th>ID клиента</th>
                 </tr>
                 </thead>
             </table>
@@ -98,9 +99,11 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID чека</th>
+                    <th>Имя продукта</th>
+                    <th>Кол-во продукта</th>
+                    <th>Имя клиента</th>
+                    <th>Фамилия клиента</th>
                 </tr>
                 </thead>
             </table>

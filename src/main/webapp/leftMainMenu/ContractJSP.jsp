@@ -16,9 +16,10 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID контракта</th>
+                <th>ID тарифного плана</th>
+                <th>ID клиента</th>
+                <th>Дата заключения</th>
             </tr>
             </thead>
         </table>
@@ -90,9 +91,12 @@
                 <table style="width: 100%">
                     <thead>
                     <tr>
-                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <th>${column}</th>
-                        </c:forEach>
+                        <th>ID контракта</th>
+                        <th>Название тарифного плана</th>
+                        <th>Имя клиента</th>
+                        <th>Фамилия клиента</th>
+                        <th>Номер телефона</th>
+                        <th>Дата заключения</th>
                     </tr>
                     </thead>
                 </table>

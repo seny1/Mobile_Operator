@@ -14,9 +14,9 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnsNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID контакта</th>
+                <th>Рабочий номер</th>
+                <th>Личный номер</th>
             </tr>
             </thead>
         </table>

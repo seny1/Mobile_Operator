@@ -14,9 +14,10 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID департамента</th>
+                <th>Название департамента</th>
+                <th>Время начала рабочего дня</th>
+                <th>Время конца рабочего дня</th>
             </tr>
             </thead>
         </table>

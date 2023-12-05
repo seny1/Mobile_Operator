@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION before_delete_service_func()
     RETURNS TRIGGER
     LANGUAGE plpgsql AS
 $$
-
 BEGIN
     DELETE
     FROM "Order"

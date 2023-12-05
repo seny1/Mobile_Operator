@@ -14,9 +14,10 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID паспорта</th>
+                <th>Серия</th>
+                <th>Номер</th>
+                <th>Дата рождения</th>
             </tr>
             </thead>
         </table>

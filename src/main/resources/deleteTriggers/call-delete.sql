@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION before_delete_call_func()
     RETURNS TRIGGER
     LANGUAGE plpgsql AS
 $$
-
 BEGIN
     UPDATE client
     SET remain_minutes = remain_minutes + OLD.call_duration
