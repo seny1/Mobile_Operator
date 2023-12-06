@@ -36,19 +36,19 @@ public class ClientService {
         results = (ArrayList<Client>) clientTable;
         for (int i = 0; i < clientTable.size();) {
             var client = clientTable.get(i);
-            if (!filterMap.get("firstName").isEmpty() && !client.getFirstName().equals(filterMap.get("firstName"))) {
+            if (!filterMap.get("firstName").isEmpty() && !client.getFirstName().startsWith(filterMap.get("firstName"))) {
                 results.remove(i);
-            } else if (!filterMap.get("lastName").isEmpty() && !client.getLastName().equals(filterMap.get("lastName"))) {
+            } else if (!filterMap.get("lastName").isEmpty() && !client.getLastName().startsWith(filterMap.get("lastName"))) {
                 results.remove(i);
-            } else if (!filterMap.get("series").isEmpty() && !client.getPassport().getSeries().equals(filterMap.get("series"))) {
+            } else if (!filterMap.get("series").isEmpty() && !client.getPassport().getSeries().startsWith(filterMap.get("series"))) {
                 results.remove(i);
-            } else if (!filterMap.get("numberOfPassport").isEmpty() && !client.getPassport().getNumberOfPassport().equals(filterMap.get("numberOfPassport"))) {
+            } else if (!filterMap.get("numberOfPassport").isEmpty() && !client.getPassport().getNumberOfPassport().startsWith(filterMap.get("numberOfPassport"))) {
                 results.remove(i);
             } else if (!filterMap.get("birthdayUp").isEmpty() && client.getPassport().getBirthday().isBefore(LocalDate.parse(filterMap.get("birthdayUp")))) {
                 results.remove(i);
             } else if (!filterMap.get("birthdayDown").isEmpty() && client.getPassport().getBirthday().isAfter(LocalDate.parse(filterMap.get("birthdayDown")))) {
                 results.remove(i);
-            } else if (!filterMap.get("numberOfContact").isEmpty() && !client.getContact().getNumberOfContact().equals(filterMap.get("numberOfContact"))) {
+            } else if (!filterMap.get("numberOfContact").isEmpty() && !client.getContact().getNumberOfContact().contains(filterMap.get("numberOfContact"))) {
                 results.remove(i);
             } else if (!filterMap.get("type").isEmpty() && !client.getContact().getType().equals(filterMap.get("type"))) {
                 results.remove(i);

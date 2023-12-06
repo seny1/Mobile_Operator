@@ -138,7 +138,7 @@
                         <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
 
                         <label class="label" for="numberFilter">Номер телефона клиента:</label>
-                        <input class="input" type="text" id="numberFilter" name="numberFilter" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx">
+                        <input class="input" type="text" id="numberFilter" name="numberFilter">
 
                         <label class="label" for="dateUpFilter">Дата заключения после:</label>
                         <input class="input" type="date" id="dateUpFilter" name="dateUpFilter">

@@ -62,7 +62,7 @@ public class EmployeeServlet extends HttpServlet {
                 filterMap.put("firstName", req.getParameter("firstNameFilter"));
                 filterMap.put("lastName", req.getParameter("lastNameFilter"));
                 filterMap.put("department", req.getParameter("departmentFilter"));
-                filterMap.put("address", req.getParameter("addressFilter"));
+                filterMap.put("address", req.getParameter("salonFilter"));
                 filterMap.put("post", req.getParameter("postFilter"));
                 filterMap.put("series", req.getParameter("seriesFilter"));
                 filterMap.put("numberOfPassport", req.getParameter("numberOfPassportFilter"));

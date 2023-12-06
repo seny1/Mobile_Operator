@@ -37,15 +37,15 @@ public class CallService {
         result = (ArrayList<Call>) callTable;
         for (int i = 0; i < callTable.size();) {
             var call = callTable.get(i);
-            if (!filterMap.get("subscriberNumber").isEmpty() && !call.getSubscriberNumber().equals(filterMap.get("subscriberNumber"))) {
+            if (!filterMap.get("subscriberNumber").isEmpty() && !call.getSubscriberNumber().contains(filterMap.get("subscriberNumber"))) {
                 result.remove(i);
             } else if (!filterMap.get("callDurationUp").isEmpty() && !(call.getCallDuration() > Double.parseDouble(filterMap.get("callDurationUp")))) {
                 result.remove(i);
             } else if (!filterMap.get("callDurationDown").isEmpty() && !(call.getCallDuration() < Double.parseDouble(filterMap.get("callDurationDown")))) {
                 result.remove(i);
-            } else if (!filterMap.get("firstName").isEmpty() && !call.getClient().getFirstName().equals(filterMap.get("firstName"))) {
+            } else if (!filterMap.get("firstName").isEmpty() && !call.getClient().getFirstName().startsWith(filterMap.get("firstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("lastName").isEmpty() && !call.getClient().getFirstName().equals(filterMap.get("lastName"))) {
+            } else if (!filterMap.get("lastName").isEmpty() && !call.getClient().getLastName().startsWith(filterMap.get("lastName"))) {
                 result.remove(i);
             } else {
                 i++;

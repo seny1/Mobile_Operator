@@ -38,15 +38,15 @@ public class CheckService {
         result = (ArrayList<Check>) checkTable;
         for (int i = 0; i < checkTable.size();) {
             var check = checkTable.get(i);
-            if (!filterMap.get("productName").isEmpty() && !check.getProduct().getProductName().equals(filterMap.get("productName"))) {
+            if (!filterMap.get("productName").isEmpty() && !check.getProduct().getProductName().startsWith(filterMap.get("productName"))) {
                 result.remove(i);
             } else if (!filterMap.get("productCountUp").isEmpty() && !(check.getProductCount() > Integer.parseInt(filterMap.get("productCountUp")))) {
                 result.remove(i);
             } else if (!filterMap.get("productCountDown").isEmpty() && !(check.getProductCount() < Integer.parseInt(filterMap.get("productCountDown")))) {
                 result.remove(i);
-            } else if (!filterMap.get("firstName").isEmpty() && !check.getClient().getFirstName().equals(filterMap.get("firstName"))) {
+            } else if (!filterMap.get("firstName").isEmpty() && !check.getClient().getFirstName().startsWith(filterMap.get("firstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("lastName").isEmpty() && !check.getClient().getLastName().equals(filterMap.get("lastName"))) {
+            } else if (!filterMap.get("lastName").isEmpty() && !check.getClient().getLastName().startsWith(filterMap.get("lastName"))) {
                 result.remove(i);
             } else {
                 i++;

@@ -37,17 +37,17 @@ public class ContractService {
         result = (ArrayList<Contract>) contractTable;
         for (int i = 0; i < contractTable.size();) {
             var contract = contractTable.get(i);
-            if (!filterMap.get("planName").isEmpty() && !contract.getPlan().getPlanName().equals(filterMap.get("planName"))) {
+            if (!filterMap.get("planName").isEmpty() && !contract.getPlan().getPlanName().startsWith(filterMap.get("planName"))) {
                 result.remove(i);
             } else if (!filterMap.get("dateUp").isEmpty() && contract.getDate().isBefore(LocalDate.parse(filterMap.get("dateUp")))) {
                 result.remove(i);
             } else if (!filterMap.get("dateDown").isEmpty() && contract.getDate().isAfter(LocalDate.parse(filterMap.get("dateDown")))) {
                 result.remove(i);
-            } else if (!filterMap.get("number").isEmpty() && !contract.getClient().getContact().getNumberOfContact().equals(filterMap.get("number"))) {
+            } else if (!filterMap.get("number").isEmpty() && !contract.getClient().getContact().getNumberOfContact().contains(filterMap.get("number"))) {
                 result.remove(i);
-            } else if (!filterMap.get("firstName").isEmpty() && !contract.getClient().getFirstName().equals(filterMap.get("firstName"))) {
+            } else if (!filterMap.get("firstName").isEmpty() && !contract.getClient().getFirstName().startsWith(filterMap.get("firstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("lastName").isEmpty() && !contract.getClient().getFirstName().equals(filterMap.get("lastName"))) {
+            } else if (!filterMap.get("lastName").isEmpty() && !contract.getClient().getLastName().startsWith(filterMap.get("lastName"))) {
                 result.remove(i);
             } else {
                 i++;

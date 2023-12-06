@@ -154,13 +154,13 @@
                         <input class="input" type="date" id="birthdayDownFilter" name="birthdayDownFilter">
 
                         <label class="label" for="series">Серия паспорта:</label>
-                        <input class="input" type="text" id="seriesFilter" name="seriesFilter" pattern="^\d{4}$" placeholder="xxxx">
+                        <input class="input" type="text" id="seriesFilter" name="seriesFilter">
 
                         <label class="label" for="numberOfPassport">Номер паспорта:</label>
-                        <input class="input" type="text" id="numberOfPassportFilter" name="numberOfPassportFilter" pattern="^\d{6}$" placeholder="xxxxxx">
+                        <input class="input" type="text" id="numberOfPassportFilter" name="numberOfPassportFilter">
 
                         <label class="label" for="numberOfContact">Номер телефона:</label>
-                        <input class="input" type="text" id="numberOfContactFilter" name="numberOfContactFilter" pattern="^\+7\d{10}$" placeholder="+7xxxxxxxxxx">
+                        <input class="input" type="text" id="numberOfContactFilter" name="numberOfContactFilter">
 
                         <label class="label" for="type">Тип телефона:</label>
                         <input class="input" type="text" id="typeFilter" name="typeFilter">

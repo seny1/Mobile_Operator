@@ -119,7 +119,7 @@
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/callTable?filter=filter&good=good">
                     <label class="label" for="subscriberNumberFilter">Номер абонента:</label>
-                    <input class="input" type="text" id="subscriberNumberFilter" name="subscriberNumberFilter" placeholder="+7xxxxxxxxxx" pattern="^\+7\d{10}$">
+                    <input class="input" type="text" id="subscriberNumberFilter" name="subscriberNumberFilter">
 
                     <label class="label" for="callDurationUpFilter">Продолжительность звонка больше:</label>
                     <input class="input" type="text" id="callDurationUpFilter" name="callDurationUpFilter" placeholder="xx.xx" pattern="^\d+\.\d+$">

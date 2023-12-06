@@ -49,9 +49,9 @@ public class EmployeeService {
         result = (ArrayList<Employee>) employeeTable;
         for (int i = 0; i < employeeTable.size(); ) {
             var employee = employeeTable.get(i);
-            if (!filterMap.get("firstName").isEmpty() && !employee.getFirstName().equals(filterMap.get("firstName"))) {
+            if (!filterMap.get("firstName").isEmpty() && !employee.getFirstName().startsWith(filterMap.get("firstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("lastName").isEmpty() && !(employee.getLastName().equals(filterMap.get("lastName")))) {
+            } else if (!filterMap.get("lastName").isEmpty() && !(employee.getLastName().startsWith(filterMap.get("lastName")))) {
                 result.remove(i);
             } else if (!filterMap.get("department").isEmpty() && !employee.getDepartment().getDepartmentName().equals(filterMap.get("department"))) {
                 result.remove(i);
@@ -59,9 +59,9 @@ public class EmployeeService {
                 result.remove(i);
             } else if (!filterMap.get("post").isEmpty() && !(employee.getPost().getPostName().equals(filterMap.get("post")))) {
                 result.remove(i);
-            } else if (!filterMap.get("series").isEmpty() && !(employee.getPassport().getSeries().equals(filterMap.get("series")))) {
+            } else if (!filterMap.get("series").isEmpty() && !(employee.getPassport().getSeries().startsWith(filterMap.get("series")))) {
                 result.remove(i);
-            } else if (!filterMap.get("numberOfPassport").isEmpty() && !employee.getPassport().getNumber().equals(filterMap.get("numberOfPassport"))) {
+            } else if (!filterMap.get("numberOfPassport").isEmpty() && !employee.getPassport().getNumber().startsWith(filterMap.get("numberOfPassport"))) {
                 result.remove(i);
             } else if (!filterMap.get("birthdayUp").isEmpty() && employee.getPassport().getBirthday().isAfter(LocalDate.parse(filterMap.get("birthdayUp")))) {
                 result.remove(i);

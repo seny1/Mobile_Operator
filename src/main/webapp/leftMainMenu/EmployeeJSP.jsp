@@ -229,20 +229,42 @@
                     <label class="label" for="lastNameFilter">Фамилия сотрудника:</label>
                     <input class="input" type="text" id="lastNameFilter" name="lastNameFilter">
 
-                    <label class="label" for="departmentFilter">Департамент:</label>
-                    <input class="input" type="text" id="departmentFilter" name="departmentFilter">
-
-                    <label class="label" for="addressFilter">Адрес:</label>
-                    <input class="input" type="text" id="addressFilter" name="addressFilter">
-
-                    <label class="label" for="postFilter">Должность:</label>
-                    <input class="input" type="text" id="postFilter" name="postFilter">
+                    <div class="dropdown">
+                        <label class="label" for="department">Департамент:</label>
+                        <input class="input-box" type="text" id="departmentFilter" list="dropdown-options6" name="departmentFilter">
+                        <datalist id="dropdown-options6">
+                            <c:forEach var="department" items="${sessionScope.departments}">
+                                <option value="${department}">${department}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
+                    <br>
+                    <div class="dropdown">
+                        <label class="label" for="salonFilter">Салон:</label>
+                        <input class="input-box" type="text" id="salonFilter" list="dropdown-options7" name="salonFilter">
+                        <datalist id="dropdown-options7">
+                            <c:forEach var="salon" items="${sessionScope.salons}">
+                                <option value="${salon}">${salon}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
+                    <br>
+                    <div class="dropdown">
+                        <label class="label" for="postFilter">Должность:</label>
+                        <input class="input-box" type="text" id="postFilter" list="dropdown-options7" name="postFilter">
+                        <datalist id="dropdown-options8">
+                            <c:forEach var="post" items="${sessionScope.posts}">
+                                <option value="${post}">${post}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
+                    <br>
 
                     <label class="label" for="seriesFilter">Серия паспорта:</label>
-                    <input class="input" type="text" id="seriesFilter" name="seriesFilter" pattern="^\d{4}$">
+                    <input class="input" type="text" id="seriesFilter" name="seriesFilter">
 
                     <label class="label" for="numberOfPassportFilter">Номер паспорта:</label>
-                    <input class="input" type="text" id="numberOfPassportFilter" name="numberOfPassportFilter" pattern="^\d{6}$">
+                    <input class="input" type="text" id="numberOfPassportFilter" name="numberOfPassportFilter">
 
                     <label class="label" for="birthdayUpFilter">Дата рождения до:</label>
                     <input class="input" type="date" id="birthdayUpFilter" name="birthdayUpFilter">
