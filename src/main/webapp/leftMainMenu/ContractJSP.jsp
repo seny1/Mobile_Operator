@@ -40,9 +40,10 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/contractTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/contractTable?orderBy=contract_id">ID контракта</a>
+                <a href="${pageContext.request.contextPath}/contractTable?orderBy=plan_id">ID тарифного плана</a>
+                <a href="${pageContext.request.contextPath}/contractTable?orderBy=client_id">ID клиента</a>
+                <a href="${pageContext.request.contextPath}/contractTable?orderBy=date">Дата</a>
             </div>
         </div>
         <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
@@ -119,9 +120,12 @@
                 <div class="dropdown">
                     <button class="dropbtn">Сортировать по</button>
                     <div class="dropdown-content">
-                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=${column}">${column}</a>
-                        </c:forEach>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=contract_id">ID контракта</a>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=plan_name">Название плана</a>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=first_name">Имя клиента</a>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=last_name">Фамилия клиента</a>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=number_of_phone">Номер телефона</a>
+                        <a href="${pageContext.request.contextPath}/contractTable?good=good&orderBy=date">Дата</a>
                     </div>
                 </div>
                 <a href="#win2" class="dropbtn">Фильтр</a>

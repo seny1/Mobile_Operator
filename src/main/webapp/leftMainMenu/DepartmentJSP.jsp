@@ -38,9 +38,10 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/departmentTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/departmentTable?orderBy=department_id">ID департамента</a>
+                <a href="${pageContext.request.contextPath}/departmentTable?orderBy=department_name">Название департамента</a>
+                <a href="${pageContext.request.contextPath}/departmentTable?orderBy=start_time">Начало рабочего дня</a>
+                <a href="${pageContext.request.contextPath}/departmentTable?orderBy=end_time">Конец рабочего дня</a>
             </div>
         </div>
     </div>

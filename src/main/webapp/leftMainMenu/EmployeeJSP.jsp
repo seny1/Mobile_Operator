@@ -55,9 +55,17 @@
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
                     <div class="scroll-table-body">
-                        <c:forEach var="column" items="${requestScope.columnNames}">
-                            <a href="${pageContext.request.contextPath}/employeeTable?orderBy=${column}">${column}</a>
-                        </c:forEach>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=employee_id">ID сотрудника</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=department_id">ID департамента</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=salon_id">ID салона</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=first_name">Имя</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=last_name">Фамилия</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=post_id">ID должности</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=passport_id">ID паспорта</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=contact_id">ID контакта</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=login">Логин</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=password">Пароль</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?orderBy=role_id">ID роли</a>
                     </div>
                 </div>
             </div>
@@ -213,9 +221,20 @@
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
                     <div class="scroll-table-body">
-                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=${column}">${column}</a>
-                        </c:forEach>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=first_name">Имя</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=last_name">Фамилия</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=department_name">Департамент</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=address">Адрес салона</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=post_name">Должность</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=series">Серия паспорта</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=birthday">Дата рождения</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=issue_date">Дата выдачи паспорта</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=place_code">Код подразделения</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=work_number">Рабочий номер</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=personal_number">Личный номер</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=login">Логин</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=password">Пароль</a>
+                        <a href="${pageContext.request.contextPath}/employeeTable?good=good&orderBy=role_name">Роль</a>
                     </div>
                 </div>
             </div>

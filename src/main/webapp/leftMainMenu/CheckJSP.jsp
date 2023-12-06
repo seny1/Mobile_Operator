@@ -39,9 +39,10 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <a href="${pageContext.request.contextPath}/checkTable?orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/checkTable?orderBy=product_id">ID продукта</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?orderBy=product_count">Кол-во продукта</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?orderBy=check_id">ID чека</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?orderBy=client_id">ID клиента</a>
                 </div>
             </div>
             <a href="#win1" class="dropbtn">Добавить запись</a>
@@ -125,9 +126,11 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=check_id">ID чека</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=product_name">Название продукта</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=product_count">Кол-во продукта</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=client_first_name">Имя клиента</a>
+                    <a href="${pageContext.request.contextPath}/checkTable?good=good&orderBy=client_last_name">Фамилия клиента</a>
                 </div>
             </div>
             <a href="#win3" class="dropbtn">Фильтр</a>

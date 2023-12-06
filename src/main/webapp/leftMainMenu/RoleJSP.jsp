@@ -32,13 +32,13 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="dropdown">
-                <button class="dropbtn">Сортировать по</button>
-                <div class="dropdown-content">
-                    <a href="${pageContext.request.contextPath}/roleTable?orderBy=role_id">ID роли</a>
-                    <a href="${pageContext.request.contextPath}/roleTable?orderBy=role_name">Название роли</a>
-                    <a href="${pageContext.request.contextPath}/roleTable?orderBy=description">Описание роли</a>
-                </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Сортировать по</button>
+            <div class="dropdown-content">
+                <a href="${pageContext.request.contextPath}/roleTable?orderBy=role_id">ID роли</a>
+                <a href="${pageContext.request.contextPath}/roleTable?orderBy=role_name">Название роли</a>
+                <a href="${pageContext.request.contextPath}/roleTable?orderBy=description">Описание роли</a>
             </div>
         </div>
     </div>

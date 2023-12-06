@@ -43,9 +43,12 @@
                 <div class="dropdown">
                     <button class="dropbtn">Сортировать по</button>
                     <div class="dropdown-content">
-                        <c:forEach var="column" items="${requestScope.columnNames}">
-                            <a href="${pageContext.request.contextPath}/clientTable?orderBy=${column}">${column}</a>
-                        </c:forEach>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=client_id">ID клиента</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=passport_id">ID паспорта</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=first_name">Имя</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=last_name">Фамилия</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=contact_id">ID контакта</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?orderBy=remain_minutes">Оставшиеся минуты</a>
                     </div>
                 </div>
                 <c:if test="${sessionScope.user.role.roleId == 1}">
@@ -132,9 +135,13 @@
                 <div class="dropdown">
                     <button class="dropbtn">Сортировать по</button>
                     <div class="dropdown-content">
-                        <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                            <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=${column}">${column}</a>
-                        </c:forEach>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=first_name">Имя</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=last_name">Фамилия</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=series">Серия паспорта</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=number_of_passport">Номер паспорта</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=birthday">Дата рождения</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=number_of_contact">Номер телефона</a>
+                        <a href="${pageContext.request.contextPath}/clientTable?good=good&orderBy=type">Тип телефона</a>
                     </div>
                 </div>
                 <a href="#win2" class="dropbtn">Фильтр</a>

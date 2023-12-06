@@ -39,9 +39,10 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <a href="${pageContext.request.contextPath}/callTable?orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/callTable?orderBy=call_id">ID звонка</a>
+                    <a href="${pageContext.request.contextPath}/callTable?orderBy=client_id">ID клиента</a>
+                    <a href="${pageContext.request.contextPath}/callTable?orderBy=subscriber_number">Номер абонента</a>
+                    <a href="${pageContext.request.contextPath}/callTable?orderBy=call_duration">Продолжительность вызова</a>
                 </div>
             </div>
             <c:if test="${sessionScope.user.role.roleId == 1}">
@@ -109,9 +110,11 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=call_id">ID звонка</a>
+                    <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=subscriber_number">Номер абонента</a>
+                    <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=call_duration">Продолжительность вызова</a>
+                    <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=first_name">Имя клиента</a>
+                    <a href="${pageContext.request.contextPath}/callTable?good=good&orderBy=last_name">Фамилия клиента</a>
                 </div>
             </div>
             <a href="#win2" class="dropbtn">Фильтр</a>
