@@ -14,9 +14,9 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID категории</th>
+                <th>Название категории</th>
+                <th>Описание категории</th>
             </tr>
             </thead>
         </table>
@@ -36,9 +36,9 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/productCategoryTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/productCategoryTable?orderBy=category_id">ID категории</a>
+                <a href="${pageContext.request.contextPath}/productCategoryTable?orderBy=name">Название категории</a>
+                <a href="${pageContext.request.contextPath}/productCategoryTable?orderBy=description">Описание категории</a>
             </div>
         </div>
     </div>

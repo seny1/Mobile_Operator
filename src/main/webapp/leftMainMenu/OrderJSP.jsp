@@ -15,9 +15,13 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID услуги</th>
+                    <th>ID сотрудника</th>
+                    <th>ID клиента</th>
+                    <th>ID заказа</th>
+                    <th>ID статуса заказа</th>
+                    <th>ID устройства</th>
+                    <th>Комментарий</th>
                 </tr>
                 </thead>
             </table>
@@ -41,9 +45,13 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.columnNames}">
-                        <a href="${pageContext.request.contextPath}/orderTable?orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=id_service">ID услуги</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=id_employee">ID сотрудника</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=id_client">ID клиента</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=order_id">ID заказа</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=id_status">ID статуса заказа</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=id_device">ID устройства</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?orderBy=comment">Комментарий</a>
                 </div>
             </div>
             <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2 || sessionScope.user.department.departmentId == 4}">
@@ -152,9 +160,13 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID заказа</th>
+                    <th>Название услуги</th>
+                    <th>Фамилия сотрудника</th>
+                    <th>Фамилия клиента</th>
+                    <th>Статус</th>
+                    <th>Название модели</th>
+                    <th>Описание проблемы</th>
                 </tr>
                 </thead>
             </table>
@@ -165,9 +177,7 @@
                         <tr>
                             <td>${order.orderId}</td>
                             <td>${order.service.serviceName}</td>
-                            <td>${order.employee.firstName}</td>
                             <td>${order.employee.lastName}</td>
-                            <td>${order.client.firstName}</td>
                             <td>${order.client.lastName}</td>
                             <td>${order.status.name}</td>
                             <td>${order.device.model}</td>
@@ -180,9 +190,13 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=order_id">ID заказа</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=service_name">Название услуги</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=employee_last_name">Фамилия сотрудника</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=client_last_name">Фамилия клиента</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=status_name">Статус</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=model">Название модели</a>
+                    <a href="${pageContext.request.contextPath}/orderTable?good=good&orderBy=client_problem">Описание проблемы</a>
                 </div>
             </div>
             <a href="#win3" class="dropbtn">Фильтр</a>

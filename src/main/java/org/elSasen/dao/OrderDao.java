@@ -23,12 +23,12 @@ public class OrderDao {
             orderBy = DEFAULT_ORDER_BY;
         }
         String sql = """
-                SELECT "Order".service_id,
-                "Order".employee_id,
-                "Order".client_id,
+                SELECT "Order".service_id as id_service,
+                "Order".employee_id as id_employee,
+                "Order".client_id as id_client,
                 "Order".order_id,
-                "Order".status_id,
-                "Order".device_id,
+                "Order".status_id as id_status,
+                "Order".device_id as id_device,
                 "Order".comment,
                 es.service_id,
                 es.service_description,
@@ -53,7 +53,7 @@ public class OrderDao {
                 c.contact_id,
                 c.remain_minutes,
                 s.status_id,
-                s.name,
+                s.name as status_name,
                 s.description,
                 cd.device_id,
                 cd.model,
@@ -111,7 +111,7 @@ public class OrderDao {
             while (resultSet.next()) {
                 order = Order.builder()
                         .service(ExtraService.builder()
-                                .serviceId(resultSet.getLong("service_id"))
+                                .serviceId(resultSet.getLong("id_service"))
                                 .serviceDescription(resultSet.getString("service_description"))
                                 .price(resultSet.getDouble("price"))
                                 .serviceName(resultSet.getString("service_name"))
@@ -123,7 +123,7 @@ public class OrderDao {
                                         .build())
                                 .build())
                         .employee(Employee.builder()
-                                .employeeId(resultSet.getLong("employee_id"))
+                                .employeeId(resultSet.getLong("id_employee"))
                                 .department(Department.builder()
                                         .departmentId(resultSet.getLong("department_id"))
                                         .departmentName(resultSet.getString("department_name"))
@@ -164,7 +164,7 @@ public class OrderDao {
                                         .build())
                                 .build())
                         .client(Client.builder()
-                                .clientId(resultSet.getLong("client_id"))
+                                .clientId(resultSet.getLong("id_client"))
                                 .passport(ClientPassport.builder()
                                         .passportId(resultSet.getLong("passport_id"))
                                         .birthday(resultSet.getObject("birthday", LocalDate.class))
@@ -181,12 +181,12 @@ public class OrderDao {
                                 .build())
                         .orderId(resultSet.getInt("order_id"))
                         .status(Status.builder()
-                                .statusId(resultSet.getInt("status_id"))
-                                .name(resultSet.getString("name"))
+                                .statusId(resultSet.getInt("id_status"))
+                                .name(resultSet.getString("status_name"))
                                 .description(resultSet.getString("description"))
                                 .build())
                         .device(ClientDevice.builder()
-                                .deviceId(resultSet.getInt("device_id"))
+                                .deviceId(resultSet.getInt("id_device"))
                                 .model(resultSet.getString("model"))
                                 .clientProblem(resultSet.getString("client_problem"))
                                 .build())

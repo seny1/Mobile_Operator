@@ -15,9 +15,12 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID продукта</th>
+                <th>Цена</th>
+                <th>Описание продукта</th>
+                <th>Название продукта</th>
+                <th>ID категории</th>
+                <th>Количество</th>
             </tr>
             </thead>
         </table>
@@ -40,9 +43,12 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/productTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=product_id">ID продукта</a>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=price">Цена</a>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=product_description">Описание продукта</a>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=product_name">Название продукта</a>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=category_id">ID категории</a>
+                <a href="${pageContext.request.contextPath}/productTable?orderBy=count">Количество</a>
             </div>
         </div>
     <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
@@ -97,9 +103,12 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID продукта</th>
+                    <th>Цена</th>
+                    <th>Описание продукта</th>
+                    <th>Название продукта</th>
+                    <th>Название категории</th>
+                    <th>Количество</th>
                 </tr>
                 </thead>
             </table>
@@ -141,9 +150,12 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=product_id">ID продукта</a>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=price">Цена</a>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=product_description">Описание продукта</a>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=product_name">Название продукта</a>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=name">Название категории</a>
+                    <a href="${pageContext.request.contextPath}/productTable?good=good&orderBy=count">Количество</a>
                 </div>
             </div>
             <a href="#win3" class="dropbtn">Фильтр</a>

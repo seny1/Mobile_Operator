@@ -14,9 +14,9 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID статуса</th>
+                <th>Название статуса</th>
+                <th>Описание статуса</th>
             </tr>
             </thead>
         </table>
@@ -36,9 +36,9 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/statusTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/statusTable?orderBy=status_id">ID статуса</a>
+                <a href="${pageContext.request.contextPath}/statusTable?orderBy=name">Название статуса</a>
+                <a href="${pageContext.request.contextPath}/statusTable?orderBy=description">Описание статуса</a>
             </div>
         </div>
     </div>

@@ -14,9 +14,12 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID тарифа</th>
+                <th>Название тарифа</th>
+                <th>Минуты</th>
+                <th>Гигабайты</th>
+                <th>СМС</th>
+                <th>Цена</th>
             </tr>
             </thead>
         </table>
@@ -39,9 +42,12 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=plan_id">ID тарифа</a>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=plan_name">Название тарифа</a>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=call_minutes">Минуты</a>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=internet_gb">Гигабайты</a>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=sms_number">СМС</a>
+                <a href="${pageContext.request.contextPath}/tariffPlanTable?orderBy=price">Цена</a>
             </div>
         </div>
         <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">

@@ -15,9 +15,11 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID услуги</th>
+                <th>Описание услуги</th>
+                <th>Цена</th>
+                <th>Название услуги</th>
+                <th>ID категории услуг</th>
             </tr>
             </thead>
         </table>
@@ -39,9 +41,11 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=service_id">ID услуги</a>
+                <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=service_description">Описание услуги</a>
+                <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=price">Цена</a>
+                <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=service_name">Название услуги</a>
+                <a href="${pageContext.request.contextPath}/extraServiceTable?orderBy=category_id">ID категории услуг</a>
             </div>
         </div>
         <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
@@ -91,9 +95,12 @@
             <table style="width: 100%">
                 <thead>
                 <tr>
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <th>${column}</th>
-                    </c:forEach>
+                    <th>ID услуги</th>
+                    <th>Описание услуги</th>
+                    <th>Цена</th>
+                    <th>Название услуги</th>
+                    <th>Название категории услуг</th>
+                    <th>Сложность услуги</th>
                 </tr>
                 </thead>
             </table>
@@ -135,9 +142,12 @@
             <div class="dropdown">
                 <button class="dropbtn">Сортировать по</button>
                 <div class="dropdown-content">
-                    <c:forEach var="column" items="${requestScope.goodColumnNames}">
-                        <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=${column}">${column}</a>
-                    </c:forEach>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=service_id">ID услуги</a>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=service_description">Описание услуги</a>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=price">Цена</a>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=service_name">Название услуги</a>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=category_name">Название категории услуг</a>
+                    <a href="${pageContext.request.contextPath}/extraServiceTable?good=good&orderBy=category_difficulty">Сложность услуги</a>
                 </div>
             </div>
             <a href="#win3" class="dropbtn">Фильтр</a>

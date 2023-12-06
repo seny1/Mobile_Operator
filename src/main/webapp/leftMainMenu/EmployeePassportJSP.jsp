@@ -14,9 +14,12 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <th>${column}</th>
-                </c:forEach>
+                <th>ID паспорта</th>
+                <th>Серия</th>
+                <th>Номер</th>
+                <th>День рождения</th>
+                <th>Дата выдачи</th>
+                <th>Код подразделения</th>
             </tr>
             </thead>
         </table>
@@ -39,9 +42,12 @@
         <div class="dropdown">
             <button class="dropbtn">Сортировать по</button>
             <div class="dropdown-content">
-                <c:forEach var="column" items="${requestScope.columnNames}">
-                    <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=${column}">${column}</a>
-                </c:forEach>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=passport_id">ID паспорта</a>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=series">Серия</a>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=number">Номер</a>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=birthday">День рождения</a>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=issue_date">Дата выдачи</a>
+                <a href="${pageContext.request.contextPath}/employeePassportTable?orderBy=place_code">Код подразделения</a>
             </div>
         </div>
     </div>
