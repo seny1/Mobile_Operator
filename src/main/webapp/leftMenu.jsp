@@ -16,17 +16,17 @@
         <form method="get" action="${pageContext.request.contextPath}/checkTable">
             <button class="button_scroll">Чеки</button>
         </form>
-        <c:if test="${sessionScope.user.role.roleId == 1}">
+        <c:if test="${sessionScope.user.role.roleId == 5}">
             <form method="get" action="${pageContext.request.contextPath}/clientContactTable">
                 <button class="button_scroll">Номера клиентов</button>
             </form>
         </c:if>
-        <c:if test="${sessionScope.user.role.roleId == 1}">
+        <c:if test="${sessionScope.user.role.roleId == 5}">
             <form method="get" action="${pageContext.request.contextPath}/clientDeviceTable">
                 <button class="button_scroll">Устройства клиентов</button>
             </form>
         </c:if>
-        <c:if test="${sessionScope.user.role.roleId == 1}">
+        <c:if test="${sessionScope.user.role.roleId == 5}">
             <form method="get" action="${pageContext.request.contextPath}/clientPassportTable">
                 <button class="button_scroll">Паспорта клиентов</button>
             </form>
@@ -47,12 +47,12 @@
                 <button class="button_scroll">Сотрудники</button>
             </form>
         </c:if>
-        <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+        <c:if test="${sessionScope.user.role.roleId == 5 || sessionScope.user.role.roleId == 5}">
             <form method="get" action="${pageContext.request.contextPath}/employeeContactTable">
                 <button class="button_scroll">Контакты сотрудников</button>
             </form>
         </c:if>
-        <c:if test="${sessionScope.user.role.roleId == 1 || sessionScope.user.role.roleId == 2}">
+        <c:if test="${sessionScope.user.role.roleId == 5 || sessionScope.user.role.roleId == 5}">
             <form method="get" action="${pageContext.request.contextPath}/employeePassportTable">
                 <button class="button_scroll">Паспорта сотрудников</button>
             </form>
