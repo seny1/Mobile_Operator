@@ -36,17 +36,17 @@ public class OrderService {
         result = (ArrayList<Order>) orderTable;
         for (int i = 0; i < orderTable.size();) {
             var order = orderTable.get(i);
-            if (!filterMap.get("serviceName").isEmpty() && !order.getService().getServiceName().equals(filterMap.get("serviceName"))) {
+            if (!filterMap.get("serviceName").isEmpty() && !order.getService().getServiceName().startsWith(filterMap.get("serviceName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("employeeFirstName").isEmpty() && !order.getEmployee().getFirstName().equals(filterMap.get("employeeFirstName"))) {
+            } else if (!filterMap.get("employeeFirstName").isEmpty() && !order.getEmployee().getFirstName().startsWith(filterMap.get("employeeFirstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("employeeLastName").isEmpty() && !order.getEmployee().getLastName().equals(filterMap.get("employeeLastName"))) {
+            } else if (!filterMap.get("employeeLastName").isEmpty() && !order.getEmployee().getLastName().startsWith(filterMap.get("employeeLastName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("clientFirstName").isEmpty() && !order.getClient().getFirstName().equals(filterMap.get("clientFirstName"))) {
+            } else if (!filterMap.get("clientFirstName").isEmpty() && !order.getClient().getFirstName().startsWith(filterMap.get("clientFirstName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("clientLastName").isEmpty() && !order.getClient().getLastName().equals(filterMap.get("clientLastName"))) {
+            } else if (!filterMap.get("clientLastName").isEmpty() && !order.getClient().getLastName().startsWith(filterMap.get("clientLastName"))) {
                 result.remove(i);
-            } else if (!filterMap.get("model").isEmpty() && !order.getDevice().getModel().equals(filterMap.get("model"))) {
+            } else if (!filterMap.get("model").isEmpty() && !order.getDevice().getModel().contains(filterMap.get("model"))) {
                 result.remove(i);
             }
             else {

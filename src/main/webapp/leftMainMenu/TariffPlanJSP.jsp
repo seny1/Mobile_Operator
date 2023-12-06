@@ -103,28 +103,28 @@
                 <input class="input" type="text" id="planNameFilter" name="planNameFilter">
 
                 <label class="label" for="callMinutesUpFilter">Минут разговоров больше чем:</label>
-                <input class="input" type="text" id="callMinutesUpFilter" name="callMinutesUpFilter">
+                <input class="input" type="text" id="callMinutesUpFilter" name="callMinutesUpFilter" pattern="^\d*$">
 
                 <label class="label" for="callMinutesDownFilter">Минут разговоров меньше чем:</label>
-                <input class="input" type="text" id="callMinutesDownFilter" name="callMinutesDownFilter">
+                <input class="input" type="text" id="callMinutesDownFilter" name="callMinutesDownFilter" pattern="^\d*$">
 
                 <label class="label" for="internetGbUpFilter">Гигабайт больше чем:</label>
-                <input class="input" type="text" id="internetGbUpFilter" name="internetGbUpFilter">
+                <input class="input" type="text" id="internetGbUpFilter" name="internetGbUpFilter" pattern="^\d*$">
 
                 <label class="label" for="internetGbDownFilter">Гигабайт меньше чем:</label>
-                <input class="input" type="text" id="internetGbDownFilter" name="internetGbDownFilter">
+                <input class="input" type="text" id="internetGbDownFilter" name="internetGbDownFilter" pattern="^\d*$">
 
                 <label class="label" for="smsNumberUpFilter">СМС больше чем:</label>
-                <input class="input" type="text" id="smsNumberUpFilter" name="smsNumberUpFilter">
+                <input class="input" type="text" id="smsNumberUpFilter" name="smsNumberUpFilter" pattern="^\d*$">
 
                 <label class="label" for="smsNumberDownFilter">СМС меньше чем:</label>
-                <input class="input" type="text" id="smsNumberDownFilter" name="smsNumberDownFilter">
+                <input class="input" type="text" id="smsNumberDownFilter" name="smsNumberDownFilter" pattern="^\d*$">
 
                 <label class="label" for="priceUpFilter">Цена больше чем:</label>
-                <input class="input" type="text" id="priceUpFilter" name="priceUpFilter">
+                <input class="input" type="text" id="priceUpFilter" name="priceUpFilter" pattern="^\d*$">
 
                 <label class="label" for="priceDownFilter">Цена меньше чем:</label>
-                <input class="input" type="text" id="priceDownFilter" name="priceDownFilter">
+                <input class="input" type="text" id="priceDownFilter" name="priceDownFilter" pattern="^\d*$">
 
                 <input class="input" type="submit" value="Отправить">
             </form>

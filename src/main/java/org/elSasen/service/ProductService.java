@@ -61,7 +61,7 @@ public class ProductService {
         result = (ArrayList<Product>) productTable;
         for (int i = 0; i < productTable.size();) {
             var product = productTable.get(i);
-            if (!filterMap.get("productName").isEmpty() && !product.getProductName().equals(filterMap.get("productName"))) {
+            if (!filterMap.get("productName").isEmpty() && !product.getProductName().startsWith(filterMap.get("productName"))) {
                 result.remove(i);
             } else if (!filterMap.get("priceUp").isEmpty() && !(product.getPrice() > Integer.parseInt(filterMap.get("priceUp")))) {
                 result.remove(i);

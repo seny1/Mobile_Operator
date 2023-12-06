@@ -163,19 +163,19 @@
             <div class="popup">
                 <form class="form" method="post" action="${pageContext.request.contextPath}/productTable?filter=filter&good=good">
                     <label class="label" for="productNameFilter">Имя продукта:</label>
-                    <input class="input" type="text" id="productNameFilter" name="productNameFilter">
+                    <input class="input" type="text" id="productNameFilter" name="productNameFilter" pattern="^\d*$">
 
                     <label class="label" for="priceUpFilter">Цена больше чем:</label>
-                    <input class="input" type="text" id="priceUpFilter" name="priceUpFilter">
+                    <input class="input" type="text" id="priceUpFilter" name="priceUpFilter" pattern="^\d*$">
 
                     <label class="label" for="priceDownFilter">Цена меньше чем:</label>
-                    <input class="input" type="text" id="priceDownFilter" name="priceDownFilter">
+                    <input class="input" type="text" id="priceDownFilter" name="priceDownFilter" pattern="^\d*$">
 
                     <label class="label" for="countUpFilter">Количество товара больше чем:</label>
-                    <input class="input" type="text" id="countUpFilter" name="countUpFilter">
+                    <input class="input" type="text" id="countUpFilter" name="countUpFilter" pattern="^\d*$">
 
                     <label class="label" for="countDownFilter">Количество товара меньше чем:</label>
-                    <input class="input" type="text" id="countDownFilter" name="countDownFilter">
+                    <input class="input" type="text" id="countDownFilter" name="countDownFilter" pattern="^\d*$">
 
                     <input class="input" type="submit" value="Отправить">
                 </form>

@@ -158,10 +158,10 @@
                     <input class="input" type="text" id="serviceNameFilter" name="serviceNameFilter">
 
                     <label class="label" for="priceUpFilter">Цена больше чем:</label>
-                    <input class="input" type="text" id="priceUpFilter" name="priceUpFilter">
+                    <input class="input" type="text" id="priceUpFilter" name="priceUpFilter" pattern="^\d*$">
 
                     <label class="label" for="priceDownFilter">Цена меньше чем:</label>
-                    <input class="input" type="text" id="priceDownFilter" name="priceDownFilter">
+                    <input class="input" type="text" id="priceDownFilter" name="priceDownFilter" pattern="^\d*$">
 
                     <label class="label" for="categoryNameFilter">Название категории:</label>
                     <input class="input" type="text" id="categoryNameFilter" name="categoryNameFilter">

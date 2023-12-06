@@ -42,13 +42,13 @@ public class ExtraServiceService {
         result = (ArrayList<ExtraService>) extraServiceTable;
         for (int i = 0; i < extraServiceTable.size();) {
             var extraService = extraServiceTable.get(i);
-            if (!filterMap.get("serviceName").isEmpty() && !extraService.getServiceName().equals(filterMap.get("serviceName"))) {
+            if (!filterMap.get("serviceName").isEmpty() && !extraService.getServiceName().startsWith(filterMap.get("serviceName"))) {
                 result.remove(i);
             } else if (!filterMap.get("priceUp").isEmpty() && !(extraService.getPrice() > Integer.parseInt(filterMap.get("priceUp")))) {
                 result.remove(i);
             } else if (!filterMap.get("priceDown").isEmpty() && !(extraService.getPrice() < Integer.parseInt(filterMap.get("priceDown")))) {
                 result.remove(i);
-            } else if (!filterMap.get("categoryName").isEmpty() && !(extraService.getCategory().getName().equals(filterMap.get("categoryName")))) {
+            } else if (!filterMap.get("categoryName").isEmpty() && !(extraService.getCategory().getName().startsWith(filterMap.get("categoryName")))) {
                 result.remove(i);
             } else {
                 i++;

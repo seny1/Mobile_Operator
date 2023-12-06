@@ -35,7 +35,7 @@ public class TariffPlanService {
         result = (ArrayList<TariffPlan>) tariffPlanTable;
         for (int i = 0; i < tariffPlanTable.size();) {
             var tariff = tariffPlanTable.get(i);
-            if (!filterMap.get("planName").isEmpty() && !tariff.getPlanName().equals(filterMap.get("planName"))) {
+            if (!filterMap.get("planName").isEmpty() && !tariff.getPlanName().startsWith(filterMap.get("planName"))) {
                 result.remove(i);
             } else if (!filterMap.get("callMinutesUp").isEmpty() && !(tariff.getCallMinutes() > Integer.parseInt(filterMap.get("callMinutesUp")))) {
                 result.remove(i);
